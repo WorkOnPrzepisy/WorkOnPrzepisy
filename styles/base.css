@@ -215,6 +215,7 @@
     display: block;
     transition: all 0.5s;
     position: relative;
+    white-space: nowrap;
 }
 
 .footer .footer-nav ul li a::before {
