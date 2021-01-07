@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eat Me - Search recipes</title>
+    <link rel="stylesheet" href="../styles/search-view.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="nav"></nav>
+        <header class="banner"></header>
+        <main class="main">
+
+            <form action="" class="search-form">
+                <div class="form-row row first-row-inputs">
+                    <input type="search" name="search-input" id="search-input" class="search-input m10">
+                    <div class="search-buttons">
+                        <button class="search-btn-1 m10" type="submit">Search</button>                
+                        <button class="hide-filters-btn m10">Hide filters</button>    
+                    </div>
+                </div>
+                <span class="filters">
+                    <div class="form-row row search-selects">
+                        <select id="meal-ingredients" name="meal-ingredients" class="m10">
+                            <option value="">Select ingredient</option>
+                        </select>
+        
+                        <select id="meal-category" name="meal-category" class="m10">
+                            <option value="">Select category</option>
+                        </select>
+        
+                        <select id="meal-area" name="meal-area" class="m10">
+                            <option value="">Select area</option>
+                        </select>
+                    </div>
+                    <div class="form-row row search-ingradients">
+                        <p class="ingredients-empty-info m10">No ingradients selected</p>
+                    </div>
+                    <div class="form-row row fourth-row-buttons">
+                        <button class="clear-filters-btn m10">Clear filters</button>
+                        <button class="search-btn-2 m10" type="submit">Search</button>
+                    </div>
+                </span>
+                <span class="results">                
+                    <div class="form-row results-wrapper">
+                        <h2 class="results-info m10">Your results:</h2>
+                        <div class="row results-content">RESULTS</div>
+                    </div>
+                    <div class="form-row row sixth-row-buttons">
+                        <button class="random-pick-btn m10">Pick for me</button>
+                    </div>
+                </span>
+            </form>
+
+        </main>
+        <footer class="footer"></footer>
+    </div>
+    <script src="../scripts/search.view.js"></script>
+</body>
+</html>
