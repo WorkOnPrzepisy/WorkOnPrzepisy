@@ -77,8 +77,14 @@
     color: var(--dark-texts-color);
 }
 
-.search-form button:hover {
+.search-form button:enabled:hover {
     transform: translateY(-3px);
+}
+
+.search-form button:disabled {
+    background-color: var(--dark-texts-color);
+    color: var(--light-texts-color);
+    cursor: default;
 }
 
 .filters {
@@ -149,6 +155,24 @@
     cursor: pointer;
 }
 
+.ingredients-selected {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ingredients-selected .ingredient-selected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 3px solid var(--main-color); */
+    padding: 30px;
+    border-radius: 30px;
+}
+
+.ingredients-selected .ingredient-selected img {
+    margin-bottom: 10px;
+}
+
 .fourth-row-buttons button {
     height: 35px;
     border-radius: 20px;
@@ -161,6 +185,53 @@
     border-radius: 20px;
     width: 10%;
     min-width: 100px;
+    display: none;
+}
+
+.results {
+    display: none;
+}
+
+.results-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    
+}
+
+.results-content .meal {
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 210px;
+    height: 220px;
+    margin: 10px;
+    margin-bottom: 40px;
+    background-color: var(--buttons-color);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.results-content .meal p {
+    margin-bottom: 10px;
+    color: var(--main-color);
+}
+
+.results-content .meal img {
+    width: 90%;
+    height: 65%;
+    border-radius: 10px;
+}
+
+.results-content .meal button {
+    margin-top: 10px;
+    width: 50%;
+    height: 11%;
+    background-color: var(--main-color);
+    border-radius: 10px;
+    color: var(--light-texts-color);
 }
 
 .footer {
