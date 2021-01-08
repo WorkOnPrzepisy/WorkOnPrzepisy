@@ -199,7 +199,6 @@ const createMeals = (mealsJson) => {
         if (mealsJson.meals.length > 1) {
             randomPickBtn.style.display = "block";    
         }
-        resultsInfo.innerText = "Results:";
         for (meal of mealsJson.meals) {
             const mealDiv = document.createElement("div");
             mealDiv.className = "meal";
@@ -209,8 +208,8 @@ const createMeals = (mealsJson) => {
             mealDetails.innerText = "Details";
             mealDetails.type = "button"
             let strMeal = meal.strMeal;
-            if (strMeal.length > 15) {
-                strMeal = `${strMeal.substring(0, 15)}...`
+            if (strMeal.length > 20) {
+                strMeal = `${strMeal.substring(0, 20)}...`
             }
             mealP.append(strMeal);
             mealImg.src = `${meal.strMealThumb}/preview`;
@@ -219,6 +218,11 @@ const createMeals = (mealsJson) => {
             mealDiv.append(mealDetails);
             resultsContentDiv.append(mealDiv);
             resultsIds.push(meal.idMeal);
+        }
+        if (resultsIds.length === 1) {
+            resultsInfo.innerText = `${resultsIds.length} Result:`;
+        } else {
+            resultsInfo.innerText = `${resultsIds.length} Results:`;
         }
     } else {
         resultsInfo.innerText = "No results";
