@@ -29,6 +29,7 @@
     background-color: var(--main-color);
     padding-left: 60px;
     padding-right: 60px;
+    z-index: 100;
 }
 
 .nav .brand-logo-wrapper {
@@ -190,6 +191,7 @@
 .main {
     padding: 50px;
     padding-top: 120px;
+    min-height: calc(100vh - 150px);
 }
 
 .footer {
