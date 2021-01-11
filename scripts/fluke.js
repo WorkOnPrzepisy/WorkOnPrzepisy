@@ -9,23 +9,28 @@ const isFluke = function() {
 }
 const pageIsFluke = isFluke();
 
-if(pageIsFluke){
-    const title = document.querySelector('title');
-    title.innerText = "Fluke";
-}else{
-    const title = document.querySelector('title');
-    title.innerText = "Recipe";
-}
-
-
-const downloadApi = async() => {
-    apiDownoand = await (await fetch(apiRandomMeal)).json();;
+const downloadApi = async(api) => {
+    apiDownoand = await (await fetch(api)).json();;
     //console.log(apiDownoand.meals[0]);
     return apiDownoand.meals[0]
 
 }
 
-let apiDownoand = downloadApi();
+const downloadSuitableApi = (pageIsFluke) => {
+    if(pageIsFluke){
+        const title = document.querySelector('title');
+        title.innerText = "Fluke";
+        let apiDownoandSuitable = downloadApi(apiRandomMeal);
+        console.log(apiDownoandSuitable);
+        return apiDownoandSuitable;
+    }else{
+        const title = document.querySelector('title');
+        title.innerText = "Recipe";
+        /* TODO przycisk more na innych stronach !!! */
+    }
+}
+
+let apiDownoand = downloadSuitableApi(pageIsFluke);
 
 //console.log(apiDownoand);
 
