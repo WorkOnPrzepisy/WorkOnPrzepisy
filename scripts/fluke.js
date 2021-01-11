@@ -35,7 +35,7 @@ const addInHTMl = apiDownoand.then( resp => {
     const tabObiectIngredients = [];
     for(let i = 1; i <= 20; i++){
         //const {`${strIngredient}$[i]`}
-        if(resp[`strIngredient${i}`] !== "") {
+        if(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null) {
             tabObiectIngredients.push({ measure : resp[`strMeasure${i}`], ingredient : resp[`strIngredient${i}`]});
         }else{
             break;

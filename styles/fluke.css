@@ -94,11 +94,14 @@ body,
 .carousel-inner .item {
   height: 100%;
 }
-.item {
+.item.active {
   background: url("../img/flukeBanner.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+
 }
 
 .container-recipe {
@@ -115,7 +118,6 @@ body,
   height: 600px;
   display: flex;
   justify-content: space-around;
-  align-items: center;
 }
 
 #title-dish {
@@ -125,22 +127,12 @@ body,
   text-align: center;
 }
 
-/*
-.content-img {
-  width: 50%;
-}*/
-
 .content-img #img-dish {
-  margin: 100px;
+  margin-left: 7vw;
   border-radius: 8px;
   width: 500px;
   height: 530px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
-.content-list-ingredients {
-  width: 400px;
-  height: 650px;
 }
 
 .content-list-ingredients h3 {
@@ -152,12 +144,31 @@ body,
 }
 
 .list-ingredients-columns{
+    margin-left: 5vw;
+    margin-right: 7vw;
     display: flex;
     justify-content: space-around;
+}
+
+#list-ingredients{
+    margin-right: 5vw;
 }
 
 .li-ingredient {
   font-family: "Segoe UI", sans-serif;
   font-size: 1.3em;
   color: var(--dark-texts-color);
+}
+
+#icon-add-recipe{
+    border: 0;
+    height: 55px;
+    width: 55px;
+    background: url("../img/iconAddRecipe.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: fixed;
+    right: 0;
+    top: 350px
 }
