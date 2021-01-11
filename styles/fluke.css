@@ -94,14 +94,11 @@ body,
 .carousel-inner .item {
   height: 100%;
 }
-.item.active {
+.item {
   background: url("../img/flukeBanner.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-
 }
 
 .container-recipe {
@@ -115,12 +112,13 @@ body,
 }
 
 .content-dish {
-  height: 600px;
+    margin-bottom: 15px;
+  height: 530px;
   display: flex;
   justify-content: space-around;
 }
 
-#title-dish {
+#title-dish{
   font-family: "Lobster";
   font-size: 2.5em;
   color: var(--main-color);
@@ -135,7 +133,14 @@ body,
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-.content-list-ingredients h3 {
+.content-list-ingredients {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content-list-ingredients h3,.instructions-title {
   padding-bottom: 30px;
   font-family: "Lobster";
   font-size: 2em;
@@ -143,32 +148,66 @@ body,
   text-align: center;
 }
 
-.list-ingredients-columns{
-    margin-left: 5vw;
-    margin-right: 7vw;
-    display: flex;
-    justify-content: space-around;
+.list-ingredients-columns {
+  margin-left: 5vw;
+  margin-right: 7vw;
+  display: flex;
+  justify-content: space-around;
 }
 
-#list-ingredients{
-    margin-right: 5vw;
+#list-ingredients {
+  margin-right: 5vw;
 }
 
-.li-ingredient {
+.li-ingredient, .instructions{
   font-family: "Segoe UI", sans-serif;
   font-size: 1.3em;
   color: var(--dark-texts-color);
 }
 
-#icon-add-recipe{
-    border: 0;
-    height: 55px;
-    width: 55px;
-    background: url("../img/iconAddRecipe.png");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    position: fixed;
-    right: 0;
-    top: 350px
+#icon-add-recipe {
+    margin-right: 1vw;
+  border: 0;
+  height: 55px;
+  width: 55px;
+  background: url("../img/iconAddRecipe.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: fixed;
+  right: 0;
+  top: 450px;
+}
+
+.content-generate-list {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button{
+  margin-bottom: 20px;
+  padding: 10px 55px;
+  border-radius: 15px;
+  border: none;
+  background-color: #2aa1b7;
+  color: #d8d7db;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  outline: none;
+  cursor: pointer;
+}
+
+.content-description{
+    margin-left: 12vh;
+    margin-right: 12vh;
+    margin-bottom: 10vh;
+}
+
+.instructions{
+    text-align: center;
+}
+
+.content-draw-recipe{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10vh;
 }

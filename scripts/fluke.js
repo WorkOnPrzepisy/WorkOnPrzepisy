@@ -18,10 +18,13 @@ const downloadApi = async(api) => {
 
 const downloadSuitableApi = (pageIsFluke) => {
     if(pageIsFluke){
+        let buttonFluke = document.querySelector('#button-draw-recipe');
+        //console.log(buttonFluke);
+        buttonFluke.removeAttribute("style");
         const title = document.querySelector('title');
         title.innerText = "Fluke";
         let apiDownoandSuitable = downloadApi(apiRandomMeal);
-        console.log(apiDownoandSuitable);
+        //console.log(apiDownoandSuitable);
         return apiDownoandSuitable;
     }else{
         const title = document.querySelector('title');
@@ -30,15 +33,17 @@ const downloadSuitableApi = (pageIsFluke) => {
     }
 }
 
+const addElementsFromApi = () =>{
+
 let apiDownoand = downloadSuitableApi(pageIsFluke);
 
 //console.log(apiDownoand);
 
 const addInHTMl = apiDownoand.then( resp => {
-    console.log(resp);
+    //console.log(resp);
     const {strMeal, strMealThumb, strInstructions} = resp;
     const tabObiectIngredients = [];
-    for(let i = 1; i <= 20; i++){
+    for(let i = 1; i <= 20; i++){ //while???????????
         //const {`${strIngredient}$[i]`}
         if(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null) {
             tabObiectIngredients.push({ measure : resp[`strMeasure${i}`], ingredient : resp[`strIngredient${i}`]});
@@ -53,13 +58,21 @@ const addInHTMl = apiDownoand.then( resp => {
     error in unpacking api: ${e}`)});
     
 addInHTMl.then( resp => {
-    console.log(resp);
+    //console.log(resp);
     const hTitleDish = document.querySelector('#title-dish');
     const imgDish = document.querySelector('#img-dish');
     const listIngredients = document.querySelector('#list-ingredients');
     const listIngredientscol2 = document.querySelector('#list-ingredients-col2');
+    const description = document.querySelector('.content-description');
+    const p = document.createElement('p');
+
     hTitleDish.innerText = resp.strMeal;
     imgDish.src = resp.strMealThumb;
+    p.classList.add('instructions');
+
+    p.innerText = resp.strInstructions;
+    description.appendChild(p);
+
 
     tabObiectIngredientsLength = resp.tabObiectIngredients.length;
 
@@ -78,3 +91,28 @@ addInHTMl.then( resp => {
 }).catch(e => {
     console.dir(`
     error in unpacking api: ${e}`)});
+}
+
+const removalAddedElementsToHtml = () => {
+    const hTitleDish = document.querySelector('#title-dish');
+    const imgDish = document.querySelector('#img-dish');
+    const listIngredients = document.querySelectorAll('.li-ingredient');
+    const instructions = document.querySelector('.instructions');
+
+    hTitleDish.innerText = "";
+    imgDish.src = "";
+    for(el of listIngredients){
+        el.remove();
+    }
+    instructions.remove();
+    
+}
+
+
+addElementsFromApi();
+const buttonFluke = document.querySelector('#button-draw-recipe');
+
+buttonFluke.addEventListener('click', () => {
+    let apiDownoand = downloadSuitableApi(pageIsFluke);
+    addElementsFromApi();removalAddedElementsToHtml();
+})
