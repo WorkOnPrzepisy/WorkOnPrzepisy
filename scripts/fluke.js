@@ -1,118 +1,122 @@
-const apiRandomMeal = "https://www.themealdb.com/api/json/v1/1/random.php"
-$('#carouselFade').carousel();
+const apiRandomMeal = "https://www.themealdb.com/api/json/v1/1/random.php";
+$("#carouselFade").carousel();
 
 const isFluke = function() {
     let pageIsFluke;
     hrefInPage = window.location.href;
-    pageIsFluke = hrefInPage.slice(hrefInPage.indexOf('=') + 1);
+    pageIsFluke = hrefInPage.slice(hrefInPage.indexOf("=") + 1);
     return Boolean(pageIsFluke);
-}
+};
 const pageIsFluke = isFluke();
 
 const downloadApi = async(api) => {
-    apiDownoand = await (await fetch(api)).json();;
+    apiDownoand = await (await fetch(api)).json();
     //console.log(apiDownoand.meals[0]);
-    return apiDownoand.meals[0]
-
-}
+    return apiDownoand.meals[0];
+};
 
 const downloadSuitableApi = (pageIsFluke) => {
-    if(pageIsFluke){
-        let buttonFluke = document.querySelector('#button-draw-recipe');
+    if (pageIsFluke) {
+        let buttonFluke = document.querySelector("#button-draw-recipe");
         //console.log(buttonFluke);
         buttonFluke.removeAttribute("style");
-        const title = document.querySelector('title');
+        const title = document.querySelector("title");
         title.innerText = "Fluke";
         let apiDownoandSuitable = downloadApi(apiRandomMeal);
         //console.log(apiDownoandSuitable);
         return apiDownoandSuitable;
-    }else{
-        const title = document.querySelector('title');
+    } else {
+        const title = document.querySelector("title");
         title.innerText = "Recipe";
         /* TODO przycisk more na innych stronach !!! */
     }
-}
+};
 
-const addElementsFromApi = () =>{
+const addElementsFromApi = () => {
+    let apiDownoand = downloadSuitableApi(pageIsFluke);
 
-let apiDownoand = downloadSuitableApi(pageIsFluke);
+    //console.log(apiDownoand);
 
-//console.log(apiDownoand);
+    const addInHTMl = apiDownoand
+        .then((resp) => {
+            console.log(resp);
+            const { strMeal, strMealThumb, strInstructions } = resp;
+            const tabObiectIngredients = [];
+            let i = 1;
+            console.log(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null);
+            while (!!(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null)) {
+                tabObiectIngredients.push({
+                    measure: resp[`strMeasure${i}`],
+                    ingredient: resp[`strIngredient${i}`],
+                });
+                i++;
+            }
+            console.log(tabObiectIngredients);
+            //console.log(strMeal, strMealThumb,tabObiectIngredients);
+            return { strMeal, strMealThumb, tabObiectIngredients, strInstructions };
+        })
+        .catch((e) => {
+            console.dir(`
+    error in unpacking api: ${e}`);
+        });
 
-const addInHTMl = apiDownoand.then( resp => {
-    //console.log(resp);
-    const {strMeal, strMealThumb, strInstructions} = resp;
-    const tabObiectIngredients = [];
-    for(let i = 1; i <= 20; i++){ //while???????????
-        //const {`${strIngredient}$[i]`}
-        if(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null) {
-            tabObiectIngredients.push({ measure : resp[`strMeasure${i}`], ingredient : resp[`strIngredient${i}`]});
-        }else{
-            break;
-        }   
-    }
-    //console.log(strMeal, strMealThumb,tabObiectIngredients);
-    return {strMeal, strMealThumb,tabObiectIngredients, strInstructions};
-}). catch(e => {
-    console.dir(`
-    error in unpacking api: ${e}`)});
-    
-addInHTMl.then( resp => {
-    //console.log(resp);
-    const hTitleDish = document.querySelector('#title-dish');
-    const imgDish = document.querySelector('#img-dish');
-    const listIngredients = document.querySelector('#list-ingredients');
-    const listIngredientscol2 = document.querySelector('#list-ingredients-col2');
-    const description = document.querySelector('.content-description');
-    const p = document.createElement('p');
+    addInHTMl
+        .then((resp) => {
+            //console.log(resp);
+            const hTitleDish = document.querySelector("#title-dish");
+            const imgDish = document.querySelector("#img-dish");
+            const listIngredients = document.querySelector("#list-ingredients");
+            const listIngredientscol2 = document.querySelector(
+                "#list-ingredients-col2"
+            );
+            const description = document.querySelector(".content-description");
+            const p = document.createElement("p");
 
-    hTitleDish.innerText = resp.strMeal;
-    imgDish.src = resp.strMealThumb;
-    p.classList.add('instructions');
+            hTitleDish.innerText = resp.strMeal;
+            imgDish.src = resp.strMealThumb;
+            p.classList.add("instructions");
 
-    p.innerText = resp.strInstructions;
-    description.appendChild(p);
+            p.innerText = resp.strInstructions;
+            description.appendChild(p);
 
+            for (let i = 0; i < resp.tabObiectIngredients.length; i++) {
+                const li = document.createElement("li");
+                li.classList.add("li-ingredient");
 
-    tabObiectIngredientsLength = resp.tabObiectIngredients.length;
-
-    for(let i = 0; i < resp.tabObiectIngredients.length; i++){
-        const li = document.createElement('li');
-        li.classList.add("li-ingredient");
-
-        if(i < 10){
-        li.innerText = `${resp.tabObiectIngredients[i].measure} - ${resp.tabObiectIngredients[i].ingredient}`;
-        listIngredients.appendChild(li);
-        } else{
-            li.innerText = `${resp.tabObiectIngredients[i].measure} - ${resp.tabObiectIngredients[i].ingredient}`;
-            listIngredientscol2.appendChild(li);
-        }
-    }
-}).catch(e => {
-    console.dir(`
-    error in unpacking api: ${e}`)});
-}
+                if (i < 10) {
+                    li.innerText = `${resp.tabObiectIngredients[i].measure} - ${resp.tabObiectIngredients[i].ingredient}`;
+                    listIngredients.appendChild(li);
+                } else {
+                    li.innerText = `${resp.tabObiectIngredients[i].measure} - ${resp.tabObiectIngredients[i].ingredient}`;
+                    listIngredientscol2.appendChild(li);
+                }
+            }
+        })
+        .catch((e) => {
+            console.dir(`
+    error in unpacking api: ${e}`);
+        });
+};
 
 const removalAddedElementsToHtml = () => {
-    const hTitleDish = document.querySelector('#title-dish');
-    const imgDish = document.querySelector('#img-dish');
-    const listIngredients = document.querySelectorAll('.li-ingredient');
-    const instructions = document.querySelector('.instructions');
+    const hTitleDish = document.querySelector("#title-dish");
+    const imgDish = document.querySelector("#img-dish");
+    const listIngredients = document.querySelectorAll(".li-ingredient");
+    const instructions = document.querySelector(".instructions");
 
     hTitleDish.innerText = "";
     imgDish.src = "";
-    for(el of listIngredients){
+    for (el of listIngredients) {
         el.remove();
     }
     instructions.remove();
-    
-}
-
+};
 
 addElementsFromApi();
-const buttonFluke = document.querySelector('#button-draw-recipe');
+const buttonFluke = document.querySelector("#button-draw-recipe");
 
-buttonFluke.addEventListener('click', () => {
+buttonFluke.addEventListener("click", () => {
     let apiDownoand = downloadSuitableApi(pageIsFluke);
-    addElementsFromApi();removalAddedElementsToHtml();
-})
+    addElementsFromApi();
+    removalAddedElementsToHtml();
+});
