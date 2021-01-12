@@ -4,7 +4,7 @@ $("#carouselFade").carousel();
 const isFluke = function() {
     let pageIsFluke;
     hrefInPage = window.location.href;
-    pageIsFluke = hrefInPage.slice(hrefInPage.indexOf("=") + 1);
+    pageIsFluke = hrefInPage.slice(hrefInPage.indexOf("=") + 1, hrefInPage.indexOf("&"));
     return Boolean(pageIsFluke);
 };
 const pageIsFluke = isFluke();
@@ -23,11 +23,16 @@ const downloadSuitableApi = (pageIsFluke) => {
         const title = document.querySelector("title");
         title.innerText = "Fluke";
         let apiDownoandSuitable = downloadApi(apiRandomMeal);
-        //console.log(apiDownoandSuitable);
+        console.log(apiDownoandSuitable);
         return apiDownoandSuitable;
     } else {
         const title = document.querySelector("title");
         title.innerText = "Recipe";
+        hrefInPage = window.location.href;
+        const idMeals = hrefInPage.slice(hrefInPage.indexOf("&") + 1);
+        console.log(idMeals);
+        let apiDownoandSuitable = downloadApi(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeals}`);
+        return apiDownoandSuitable;
         /* TODO przycisk more na innych stronach !!! */
     }
 };
@@ -39,11 +44,11 @@ const addElementsFromApi = () => {
 
     const addInHTMl = apiDownoand
         .then((resp) => {
-            console.log(resp);
+            //console.log(resp);
             const { strMeal, strMealThumb, strInstructions } = resp;
             const tabObiectIngredients = [];
             let i = 1;
-            console.log(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null);
+            //console.log(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null);
             while (!!(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null)) {
                 tabObiectIngredients.push({
                     measure: resp[`strMeasure${i}`],
@@ -51,7 +56,7 @@ const addElementsFromApi = () => {
                 });
                 i++;
             }
-            console.log(tabObiectIngredients);
+            //console.log(tabObiectIngredients);
             //console.log(strMeal, strMealThumb,tabObiectIngredients);
             return { strMeal, strMealThumb, tabObiectIngredients, strInstructions };
         })
@@ -62,7 +67,7 @@ const addElementsFromApi = () => {
 
     addInHTMl
         .then((resp) => {
-            //console.log(resp);
+            console.log(resp);
             const hTitleDish = document.querySelector("#title-dish");
             const imgDish = document.querySelector("#img-dish");
             const listIngredients = document.querySelector("#list-ingredients");
@@ -120,3 +125,9 @@ buttonFluke.addEventListener("click", () => {
     addElementsFromApi();
     removalAddedElementsToHtml();
 });
+
+const buttonGeneratePDF = document.querySelector("#button-generate-list");
+
+buttonGeneratePDF.addEventListener('click', () => {
+    const doc = new jsPDF(); // Not work
+})

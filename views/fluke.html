@@ -2,87 +2,87 @@
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>Fluke</title>
-   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-   <link rel="stylesheet" type="text/css" href="../styles/base.css" />
-   <link rel="preconnect" href="https://fonts.gstatic.com">
-   <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="../styles/fluke.css" defer />
-   <script type="text/javaScript" src="../scripts/fluke.js" defer></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fluke</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../styles/base.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/fluke.css" />
+
 
 </head>
 
 <body>
-   <div class="container">
-      <nav class="nav">
-         <div class="brand-logo-wrapper">
-            <a href="#">
-               <img class="brand-logo" src="../img/logo.png" />
+    <div class="container">
+        <nav class="nav">
+            <div class="brand-logo-wrapper">
+                <a href="#">
+                    <img class="brand-logo" src="../img/logo.png" />
+                </a>
+            </div>
+
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </a>
-         </div>
 
-         <a href="#" class="toggle-button">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-         </a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="#" data-content="Main">Main</a></li>
+                    <li>
+                        <a href="#" data-content="I'm feeling lucky">I'm feeling lucky</a>
+                    </li>
+                    <li><a href="#" data-content="Recipes">Recipes</a></li>
+                    <li><a href="#" data-content="Contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="login-logout">
+                <a href="#" data-content="Log in">Log in</a>
+                <div class="backslash">/</div>
+                <a href="#" data-content="Log out">Log out</a>
+            </div>
+        </nav>
 
-         <div class="nav-links">
-            <ul>
-               <li><a href="#" data-content="Main">Main</a></li>
-               <li>
-                  <a href="#" data-content="I'm feeling lucky">I'm feeling lucky</a>
-               </li>
-               <li><a href="#" data-content="Recipes">Recipes</a></li>
-               <li><a href="#" data-content="Contact">Contact</a></li>
-            </ul>
-         </div>
-         <div class="login-logout">
-            <a href="#" data-content="Log in">Log in</a>
-            <div class="backslash">/</div>
-            <a href="#" data-content="Log out">Log out</a>
-         </div>
-      </nav>
+        <!--            main             -->
 
-      <!--            main             -->
-
-      <main class="main container-fluke">
-         <div class="div-loader"></div>
-         <div class="bannerFluke">
-            <div id="carouselFade" class="carousel slide carousel-fade" data-ride="carousel">
-               <!-- Wrapper for slides TODO rozne teksty w zaleeznosci od fluke czy nie-->
-               <div class="carousel-inner" role="listbox">
-                  <div class="item active">
-                     <div class="carousel-caption">
-                        <q class="bannerQuote">
+        <main class="main container-fluke">
+            <div class="div-loader"></div>
+            <div class="bannerFluke">
+                <div id="carouselFade" class="carousel slide carousel-fade" data-ride="carousel">
+                    <!-- Wrapper for slides TODO rozne teksty w zaleeznosci od fluke czy nie-->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <div class="carousel-caption">
+                                <q class="bannerQuote">
                            If more of us valued food and cheer and song above hoarded gold, it would be a merrier world.
                         </q>
-                        <span class="bannerSpan"> ~~ J.R.R. Tolkien</span>
-                     </div>
-                  </div>
-                  <div class="item">
-                     <div class="carousel-caption ">
-                        <q class="bannerQuote">
+                                <span class="bannerSpan"> ~~ J.R.R. Tolkien</span>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="carousel-caption ">
+                                <q class="bannerQuote">
                            One cannot think well, love well, sleep well, if one has not dined well.
                         </q>
-                        <span class="bannerSpan"> ~~ Virginia Woolf, A Room of One's Own</span>
-                     </div>
-                  </div>
-                  <div class="item">
-                     <div class="carousel-caption">
-                        <q class="bannerQuote">
+                                <span class="bannerSpan"> ~~ Virginia Woolf, A Room of One's Own</span>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="carousel-caption">
+                                <q class="bannerQuote">
                            Ask not what you can do for your country. Ask what’s for lunch.
                         </q>
-                        <span class="bannerSpan"> ~~ Orson Welles</span>
-                     </div>
-                  </div>
-               </div>
+                                <span class="bannerSpan"> ~~ Orson Welles</span>
+                            </div>
+                        </div>
+                    </div>
 
-               <!-- Controls -->
-               <a class="left carousel-control" href="#carouselFade" role="button" data-slide="prev">
-                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true">
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carouselFade" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true">
                </a>
                <a class="right carousel-control" href="#carouselFade" role="button" data-slide="next">
                   <span class="glyphicon glyphicon-chevron-right" aria-hidden="true">
@@ -122,6 +122,8 @@
                <button class="button" id="button-draw-recipe" style="visibility: hidden;">
                   I'm feeling lucky</button>
             </div>
+            <input type="radio" id="radio">
+            <label for="radio"></label>
 
             <!-- h2 tytuł przepisu -->
             <!-- img -->
@@ -168,6 +170,9 @@
    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js" type="module"></script>
+   <script type="text/javaScript" src="../scripts/fluke.js"></script>
 </body>
 
 </html>

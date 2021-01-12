@@ -156,10 +156,10 @@ body,
 }
 
 .list-ingredients-columns {
-    margin-left: 5vw;
-    margin-right: 7vw;
+    padding-left: 5vw;
+    padding-right: 7vw;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 #list-ingredients {
