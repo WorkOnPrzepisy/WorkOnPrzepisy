@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eat Me - Search recipes</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/search-view.css">
 </head>
 <body>
@@ -47,7 +49,10 @@
                         <h2 class="results-info m10"></h2>
                         <div class="row results-content"></div>
                     </div>
-                    <div class="form-row row sixth-row-buttons">
+                    <div class="form-row row pagination-buttons">
+                        
+                    </div>
+                    <div class="form-row row seventh-row-buttons">
                         <button class="random-pick-btn m10" type="button">Pick for me</button>
                     </div>
                 </span>
@@ -56,6 +61,6 @@
         </main>
         <footer class="footer"></footer>
     </div>
-    <script src="../scripts/search.view.js"></script>
+    <script type="module" src="../scripts/search.view.js"></script>
 </body>
 </html>

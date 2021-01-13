@@ -1,3 +1,5 @@
+import paginate from './paginate.js';
+
 
 const apiKey = "9973533";
 const baseUrl = `https://www.themealdb.com/api/json/v2/${apiKey}/`;
@@ -7,8 +9,9 @@ const getIngredientSmallImgUrl = (ingredientStr) => {
 };
 
 const ingredientsSelected = [];
-let finishUrl = "";
 const resultsIds = [];
+const mealsCreated = [];
+let pages = {};
 
 const categoriesListUrl = baseUrl + `list.php?c=list`;
 const areasListUrl = baseUrl + `list.php?a=list`;
@@ -32,6 +35,7 @@ const searchBtn2 = document.querySelector(".search-btn-2");
 const resultsInfo = document.querySelector(".results-info");
 const results = document.querySelector(".results");
 const resultsContentDiv = document.querySelector(".results-content");
+const paginationButtonsDiv = document.querySelector(".pagination-buttons");
 
 const randomPickBtn = document.querySelector(".random-pick-btn");
 
@@ -72,7 +76,7 @@ const fillSelects = async () => {
     ingredientsList.sort();
 
     const fillSelect = (list, select) => {
-        for (item of list) {
+        for (const item of list) {
             const newItem = document.createElement("option");
             newItem.append(item);
             newItem.value = item;
@@ -121,7 +125,7 @@ const showIngredientSmall = (ingredientStr) => {
     newIngredientDiv.append(newIngredientImg);
     newIngredientDiv.append(newIngredientP);
     ingredientsSelectedDiv.append(newIngredientDiv);
-    for (option of ingredientsSelect.childNodes) {
+    for (const option of ingredientsSelect.childNodes) {
         if (option.value === ingredientStr) {
             option.disabled = true;
         }
@@ -176,7 +180,7 @@ const setEventListenerSearchByName = () => {
 
 setEventListenerSearchByName();
 
-setEventListenerSearchByNameBtn = async () => {
+const setEventListenerSearchByNameBtn = async () => {
     searchBtn1.addEventListener("click", async () => {
         searchInput.disabled = true;
         searchBtn1.disabled = true;
@@ -186,6 +190,7 @@ setEventListenerSearchByNameBtn = async () => {
         const meals = await fetch(urlRequest);
         const mealsJson = await meals.json();
         createMeals(mealsJson);
+        showMeals();
     });
 }
 
@@ -199,7 +204,7 @@ const createMeals = (mealsJson) => {
         if (mealsJson.meals.length > 1) {
             randomPickBtn.style.display = "block";    
         }
-        for (meal of mealsJson.meals) {
+        for (const meal of mealsJson.meals) {
             const mealDiv = document.createElement("div");
             mealDiv.className = "meal";
             const mealImg = document.createElement("img");
@@ -208,15 +213,16 @@ const createMeals = (mealsJson) => {
             mealDetails.innerText = "Details";
             mealDetails.type = "button"
             let strMeal = meal.strMeal;
-            if (strMeal.length > 20) {
-                strMeal = `${strMeal.substring(0, 20)}...`
+            if (strMeal.length > 22) {
+                strMeal = `${strMeal.substring(0, 22)}...`
             }
             mealP.append(strMeal);
             mealImg.src = `${meal.strMealThumb}/preview`;
             mealDiv.append(mealP);
             mealDiv.append(mealImg);
             mealDiv.append(mealDetails);
-            resultsContentDiv.append(mealDiv);
+            // resultsContentDiv.append(mealDiv);
+            mealsCreated.push(mealDiv);
             resultsIds.push(meal.idMeal);
         }
         if (resultsIds.length === 1) {
@@ -226,6 +232,57 @@ const createMeals = (mealsJson) => {
         }
     } else {
         resultsInfo.innerText = "No results";
+    }
+}
+
+const showMeals = () => {
+    resultsContentDiv.innerHTML = "";
+    paginationButtonsDiv.innerHTML = "";
+    console.log(pages)
+
+    if (Object.keys(pages).length === 0) {
+        pages = paginate(mealsCreated.length);
+    }
+
+    if (pages.currentPage > 1) {
+        const prevButton = document.createElement('button');
+        prevButton.innerText = '<';
+        prevButton.onclick = () => {
+            pages = paginate(mealsCreated.length, pages.currentPage-1);
+            showMeals();
+        };
+        paginationButtonsDiv.append(prevButton);
+    }
+
+    if (pages.pages.length > 1) {
+        for (const pageNr of pages.pages) {
+            const paginationButton = document.createElement('button');
+            paginationButton.innerText = pageNr;
+            paginationButton.onclick = () => {
+                pages = paginate(mealsCreated.length, pageNr);
+                showMeals();
+            };
+            if (pageNr === pages.currentPage) {
+                paginationButton.disabled = true;
+                paginationButton.classList.toggle("active");
+            }
+            paginationButtonsDiv.append(paginationButton);
+        }
+    }
+
+    if (pages.currentPage < pages.endPage) {
+        const nextButton = document.createElement('button');
+        nextButton.innerText = '>';
+        nextButton.onclick = () => {
+            pages = paginate(mealsCreated.length, pages.currentPage+1);
+            showMeals();
+        };
+        paginationButtonsDiv.append(nextButton);
+    }
+
+    const mealsToShow = mealsCreated.slice(pages.startIndex, pages.endIndex+1);
+    for (const meal of mealsToShow) {
+        resultsContentDiv.append(meal);
     }
 }
 
@@ -256,6 +313,7 @@ const setEventListenerSearchBtn2 = async () => {
         const meals = await fetch(urlRequest);
         const mealsJson = await meals.json();
         createMeals(mealsJson);
+        showMeals();
     });
 }
 
@@ -286,6 +344,7 @@ const setEventListenerClearFilters = () => {
         searchInput.disabled = false;
         ingredientsSelected.length = 0;
         const emptyInfo = document.createElement("p");
+        emptyInfo.className = "ingredients-empty-info";
         emptyInfo.append("No ingredients selected");
         ingredientsSelectedDiv.innerHTML = "";
         ingredientsSelectedDiv.append(emptyInfo);
@@ -297,11 +356,13 @@ const setEventListenerClearFilters = () => {
         resultsContentDiv.innerHTML = "";
         results.style.display = "none";
         searchInput.value = "";
-        for (option of Array.prototype.slice.call(ingredientsSelect.childNodes).slice(2)) {
+        for (const option of Array.prototype.slice.call(ingredientsSelect.childNodes).slice(2)) {
             option.disabled = false;
         }
         resultsInfo.innerText = "";
         randomPickBtn.style.display = "none";
+        mealsCreated.length = 0;
+        pages = {};
     });
 }
 
