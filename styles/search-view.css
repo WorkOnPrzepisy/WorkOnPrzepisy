@@ -71,9 +71,9 @@
     outline: none;
     background-color: var(--buttons-color);
     border: none;
-    -webkit-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.63);
-    -moz-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.63);
-    box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.63);
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.63);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.63);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.63);
     transition: all 0.3s;
     cursor: pointer;
     color: var(--dark-texts-color);
@@ -89,8 +89,25 @@
     cursor: default;
 }
 
+.search-form button:focus {
+    -webkit-box-shadow: 0px 2px 3px 1px rgba(0,0,0,0.63);
+    -moz-box-shadow: 0px 2px 3px 1px rgba(0,0,0,0.63);
+    box-shadow: 0px 2px 3px 1px rgba(0,0,0,0.63);
+}
+
 .filters {
+    display: block;
     width: 100%;
+    opacity: 1;
+    max-height: 1232px;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out 0.25s;
+}
+
+.hidden {
+    transition: max-height 0.5s ease-in-out 0.25s, opacity 0.5s ease-in-out;
+    max-height: 0;
+    opacity: 0;
 }
 
 .m10 {
@@ -107,14 +124,16 @@
 }
 
 .search-input {
+    position: relative;
     flex-grow: 2;
     height: 45px;
     border-radius: 20px;
     outline: none;
     border: 1px solid #CCC;
     padding: 10px;
+    padding-left: 20px;
     color: var(--dark-texts-color);
-    text-align: center;
+    /* text-align: center; */
     font-family: inherit;
     font-size: inherit;
 }
@@ -137,7 +156,7 @@
     justify-content: space-evenly;
 }
 
-.search-selects select {
+.search-selects input {
     width: 20%;
     min-width: 100px;
     height: 45px;
@@ -146,16 +165,16 @@
     border: 1px solid #CCC;
     font-size: 12px;
     padding: 5px;
+    padding-left: 10px;
     color: var(--dark-texts-color);
 
     position: relative;
-    /* appearance: none; */
     width: 100%;
     font-family: inherit;
     font-size: inherit;
     cursor: inherit;
     line-height: inherit;
-    cursor: pointer;
+    /* text-align: center; */
 }
 
 .ingredients-empty-info {
@@ -164,14 +183,13 @@
 
 .ingredients-selected {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .ingredients-selected .ingredient-selected {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* border: 3px solid var(--main-color); */
     padding: 30px;
     border-radius: 30px;
 }
@@ -203,7 +221,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     
 }
 
@@ -219,6 +237,9 @@
     background-color: var(--buttons-color);
     border-radius: 10px;
     padding: 10px;
+    -webkit-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.63);
+    -moz-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.63);
+    box-shadow: 4px 4px 4px 1px rgba(0,0,0,0.6);
 }
 
 .results-content .meal p {
@@ -270,6 +291,12 @@
     background-color: var(--main-color);
 }
 
+.search-form button:active {
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.63);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.63);
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.63);
+}
+
 @media (max-width: 800px) {
     .first-row-inputs {
         flex-direction: column;
@@ -288,7 +315,7 @@
         justify-content: center;
     }
 
-    .search-selects select {
+    .search-selects input {
         width: 80%;
     } 
 
@@ -304,8 +331,8 @@
         height: 35px;
         width: 20%;
     }
-
-
 }
+
+
 
 

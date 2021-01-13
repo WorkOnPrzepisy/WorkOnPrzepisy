@@ -1,6 +1,5 @@
 import paginate from './paginate.js';
 
-
 const apiKey = "9973533";
 const baseUrl = `https://www.themealdb.com/api/json/v2/${apiKey}/`;
 
@@ -12,6 +11,10 @@ const ingredientsSelected = [];
 const resultsIds = [];
 const mealsCreated = [];
 let pages = {};
+
+let ingredientsList;
+let categoriesList;
+let areasList;
 
 const categoriesListUrl = baseUrl + `list.php?c=list`;
 const areasListUrl = baseUrl + `list.php?a=list`;
@@ -26,6 +29,10 @@ const filters = document.querySelector(".filters");
 const ingredientsSelect = document.querySelector("#meal-ingredients");
 const categorySelect = document.querySelector("#meal-category");
 const areaSelect = document.querySelector("#meal-area");
+
+const ingredientsDatalist = document.querySelector("#ingredients");
+const categoriesDatalist = document.querySelector("#categories");
+const areasDatalist = document.querySelector("#areas");
 
 const ingredientsSelectedDiv = document.querySelector(".ingredients-selected");
 
@@ -69,24 +76,23 @@ const getList = async (ListUrl, strName) => {
 }
 
 const fillSelects = async () => {
-    const ingredientsList = await getList(ingredientsListUrl, "strIngredient");
-    const categoriesList = await getList(categoriesListUrl, "strCategory");
-    const areasList = await getList(areasListUrl, "strArea");
+    ingredientsList = await getList(ingredientsListUrl, "strIngredient");
+    categoriesList = await getList(categoriesListUrl, "strCategory");
+    areasList = await getList(areasListUrl, "strArea");
 
     ingredientsList.sort();
 
     const fillSelect = (list, select) => {
         for (const item of list) {
             const newItem = document.createElement("option");
-            newItem.append(item);
             newItem.value = item;
             select.append(newItem);
         }
     };
 
-    fillSelect(ingredientsList, ingredientsSelect);
-    fillSelect(categoriesList, categorySelect);
-    fillSelect(areasList, areaSelect);
+    fillSelect(ingredientsList, ingredientsDatalist);
+    fillSelect(categoriesList, categoriesDatalist);
+    fillSelect(areasList, areasDatalist);
 }
 
 (async () => {
@@ -96,22 +102,33 @@ const fillSelects = async () => {
 
 const setEventListenerIngredients = async () => {
     ingredientsSelect.addEventListener("change", (changeEvent) => {
-        whichSelectActive = "ingredients";
-        if (ingredientsSelected.length === 0) {
-            ingredientsSelectedDiv.innerHTML = "";
-            clearFiltersBtn.disabled = false;
-            searchInput.disabled = true;
-            categorySelect.disabled = true;
-            areaSelect.disabled = true;
-            searchBtn2.disabled = false;
+        let containIngredient = false;
+        for (const ingredient of ingredientsList) {
+            if (changeEvent.target.value === ingredient) {
+                containIngredient = true;
+            }
         }
-        if (ingredientsSelected.length === 2) {
-            ingredientsSelect.disabled = true;
+        if (containIngredient) {
+            whichSelectActive = "ingredients";
+            if (ingredientsSelected.length === 0) {
+                ingredientsSelectedDiv.innerHTML = "";
+                clearFiltersBtn.disabled = false;
+                searchInput.disabled = true;
+                categorySelect.disabled = true;
+                areaSelect.disabled = true;
+                searchBtn2.disabled = false;
+            }
+            if (ingredientsSelected.length === 2) {
+                ingredientsSelect.disabled = true;
+            }
+            const ingredientStr = changeEvent.target.value;
+            ingredientsSelected.push(ingredientStr);
+            showIngredientSmall(ingredientStr);
+            ingredientsSelect.value = "";
+        } else {
+            changeEvent.target.value = "";
         }
-        const ingredientStr = changeEvent.target.value;
-        ingredientsSelected.push(ingredientStr);
-        showIngredientSmall(ingredientStr);
-        ingredientsSelect.childNodes[1].selected = true;
+
     });
 }
 
@@ -125,7 +142,7 @@ const showIngredientSmall = (ingredientStr) => {
     newIngredientDiv.append(newIngredientImg);
     newIngredientDiv.append(newIngredientP);
     ingredientsSelectedDiv.append(newIngredientDiv);
-    for (const option of ingredientsSelect.childNodes) {
+    for (const option of ingredientsDatalist.childNodes) {
         if (option.value === ingredientStr) {
             option.disabled = true;
         }
@@ -137,26 +154,46 @@ const showIngredientSmall = (ingredientStr) => {
 })();
 
 const setEventListenerCategory = () => {
-    categorySelect.addEventListener("change", () => {
-        ingredientsSelect.disabled = true;
-        areaSelect.disabled = true;
-        searchInput.disabled = true;
-        searchBtn2.disabled = false;
-        clearFiltersBtn.disabled = false;
-        whichSelectActive = "category";
+    categorySelect.addEventListener("change", (changeEvent) => {
+        let containCategory = false;
+        for (const category of categoriesList) {
+            if (changeEvent.target.value === category) {
+                containCategory = true;
+            }
+        }
+        if (containCategory) {
+            whichSelectActive = "category";
+            ingredientsSelect.disabled = true;
+            areaSelect.disabled = true;
+            searchInput.disabled = true;
+            searchBtn2.disabled = false;
+            clearFiltersBtn.disabled = false;
+        } else {
+            changeEvent.target.value = "";
+        }
     });
 }
 
 setEventListenerCategory();
 
 const setEventListenerArea = () => {
-    areaSelect.addEventListener("change", () => {
-        ingredientsSelect.disabled = true;
-        categorySelect.disabled = true;
-        searchInput.disabled = true;
-        searchBtn2.disabled = false;
-        clearFiltersBtn.disabled = false;
-        whichSelectActive = "area";
+    areaSelect.addEventListener("change", (changeEvent) => {
+        let containArea = false;
+        for (const area of areasList) {
+            if (changeEvent.target.value === area) {
+                containArea = true;
+            }
+        }
+        if (containArea) {
+            ingredientsSelect.disabled = true;
+            categorySelect.disabled = true;
+            searchInput.disabled = true;
+            searchBtn2.disabled = false;
+            clearFiltersBtn.disabled = false;
+            whichSelectActive = "area";
+        } else {
+            changeEvent.target.value = "";
+        }
     });
 }
 
@@ -207,6 +244,7 @@ const createMeals = (mealsJson) => {
         for (const meal of mealsJson.meals) {
             const mealDiv = document.createElement("div");
             mealDiv.className = "meal";
+            mealDiv.setAttribute("data-tilt", true);
             const mealImg = document.createElement("img");
             const mealP = document.createElement("p");
             const mealDetails = document.createElement("button");
@@ -221,7 +259,6 @@ const createMeals = (mealsJson) => {
             mealDiv.append(mealP);
             mealDiv.append(mealImg);
             mealDiv.append(mealDetails);
-            // resultsContentDiv.append(mealDiv);
             mealsCreated.push(mealDiv);
             resultsIds.push(meal.idMeal);
         }
@@ -238,21 +275,24 @@ const createMeals = (mealsJson) => {
 const showMeals = () => {
     resultsContentDiv.innerHTML = "";
     paginationButtonsDiv.innerHTML = "";
-    console.log(pages)
 
     if (Object.keys(pages).length === 0) {
         pages = paginate(mealsCreated.length);
     }
 
-    if (pages.currentPage > 1) {
-        const prevButton = document.createElement('button');
-        prevButton.innerText = '<';
-        prevButton.onclick = () => {
-            pages = paginate(mealsCreated.length, pages.currentPage-1);
-            showMeals();
-        };
-        paginationButtonsDiv.append(prevButton);
+    const prevButton = document.createElement('button');
+    prevButton.innerText = '<';
+    prevButton.onclick = () => {
+        pages = paginate(mealsCreated.length, pages.currentPage-1);
+        showMeals();
+    };
+
+    if (pages.currentPage === 1) {
+        prevButton.disabled = true;
     }
+
+    paginationButtonsDiv.append(prevButton);
+
 
     if (pages.pages.length > 1) {
         for (const pageNr of pages.pages) {
@@ -270,15 +310,20 @@ const showMeals = () => {
         }
     }
 
-    if (pages.currentPage < pages.endPage) {
-        const nextButton = document.createElement('button');
-        nextButton.innerText = '>';
-        nextButton.onclick = () => {
-            pages = paginate(mealsCreated.length, pages.currentPage+1);
-            showMeals();
-        };
-        paginationButtonsDiv.append(nextButton);
+
+    const nextButton = document.createElement('button');
+    nextButton.innerText = '>';
+    nextButton.onclick = () => {
+        pages = paginate(mealsCreated.length, pages.currentPage+1);
+        showMeals();
+    };
+
+    if (pages.currentPage === pages.endPage) {
+        nextButton.disabled = true;
     }
+
+    paginationButtonsDiv.append(nextButton);
+
 
     const mealsToShow = mealsCreated.slice(pages.startIndex, pages.endIndex+1);
     for (const meal of mealsToShow) {
@@ -326,10 +371,10 @@ const setEventListenerHideFilters = () => {
     hideFiltersBtn.addEventListener("click", () => {
         if (hideFiltersBtn.innerText === "Hide filters") {
             hideFiltersBtn.innerText = "Show filters";
-            filters.style.display = "none";
+            filters.classList.toggle("hidden");
         } else {
             hideFiltersBtn.innerText = "Hide filters";
-            filters.style.display = "inline";
+            filters.classList.toggle("hidden");
         }
     });
 }
@@ -339,8 +384,11 @@ setEventListenerHideFilters();
 const setEventListenerClearFilters = () => {
     clearFiltersBtn.addEventListener("click", () => {
         ingredientsSelect.disabled = false;
+        ingredientsSelect.value = "";
         categorySelect.disabled = false;
+        categorySelect.value = "";
         areaSelect.disabled = false;
+        areaSelect.value = "";
         searchInput.disabled = false;
         ingredientsSelected.length = 0;
         const emptyInfo = document.createElement("p");
@@ -348,21 +396,20 @@ const setEventListenerClearFilters = () => {
         emptyInfo.append("No ingredients selected");
         ingredientsSelectedDiv.innerHTML = "";
         ingredientsSelectedDiv.append(emptyInfo);
-        categorySelect.childNodes[1].selected = true;
-        areaSelect.childNodes[1].selected = true;
         searchBtn2.disabled = true;
         clearFiltersBtn.disabled = true;
         resultsIds.length = 0;
         resultsContentDiv.innerHTML = "";
         results.style.display = "none";
         searchInput.value = "";
-        for (const option of Array.prototype.slice.call(ingredientsSelect.childNodes).slice(2)) {
+        for (const option of Array.prototype.slice.call(ingredientsDatalist.childNodes)){
             option.disabled = false;
         }
         resultsInfo.innerText = "";
         randomPickBtn.style.display = "none";
         mealsCreated.length = 0;
         pages = {};
+        paginationButtonsDiv.innerHTML = "";
     });
 }
 
