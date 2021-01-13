@@ -250,6 +250,14 @@ body,
         display: flex;
         align-items: center;
     }
+    .carousel-caption .bannerQuote {
+        font-size: 25px;
+        color: var(--light-texts-color);
+    }
+    .carousel-caption .bannerSpan {
+        font-size: 13px;
+        color: var(--light-texts-color);
+    }
 }
 
 @media all and (max-width: 970px) {
@@ -280,14 +288,6 @@ body,
     }
     #button-generate-list {
         margin-top: 10px;
-    }
-    .carousel-caption .bannerQuote {
-        font-size: 25px;
-        color: var(--light-texts-color);
-    }
-    .carousel-caption .bannerSpan {
-        font-size: 13px;
-        color: var(--light-texts-color);
     }
     .content-description,
     .content-list-ingredients {
