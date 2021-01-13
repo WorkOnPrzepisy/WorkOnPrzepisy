@@ -3,7 +3,7 @@ $("#carouselFade").carousel();
 
 const isFluke = function() {
     let pageIsFluke;
-    hrefInPage = window.location.href;
+    const hrefInPage = window.location.href;
     pageIsFluke = hrefInPage.slice(hrefInPage.indexOf("=") + 1, hrefInPage.indexOf("&"));
     return Boolean(pageIsFluke);
 };
@@ -11,7 +11,7 @@ const pageIsFluke = isFluke();
 
 const downloadApi = async(api) => {
     apiDownoand = await (await fetch(api)).json();
-    //console.log(apiDownoand.meals[0]);
+    console.log(apiDownoand.meals[0]);
     return apiDownoand.meals[0];
 };
 
@@ -28,7 +28,7 @@ const downloadSuitableApi = (pageIsFluke) => {
     } else {
         const title = document.querySelector("title");
         title.innerText = "Recipe";
-        hrefInPage = window.location.href;
+        const hrefInPage = window.location.href;
         const idMeals = hrefInPage.slice(hrefInPage.indexOf("&") + 1);
         console.log(idMeals);
         let apiDownoandSuitable = downloadApi(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeals}`);
@@ -67,7 +67,7 @@ const addElementsFromApi = () => {
 
     addInHTMl
         .then((resp) => {
-            console.log(resp);
+            //console.log(resp);
             const hTitleDish = document.querySelector("#title-dish");
             const imgDish = document.querySelector("#img-dish");
             const listIngredients = document.querySelector("#list-ingredients");
