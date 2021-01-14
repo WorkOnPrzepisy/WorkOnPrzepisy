@@ -187,11 +187,17 @@
 }
 
 .ingredients-selected .ingredient-selected {
+    transition: all 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px;
     border-radius: 30px;
+    cursor: pointer;
+}
+
+.ingredients-selected .ingredient-selected:hover {
+    opacity: 0.8;
 }
 
 .ingredients-selected .ingredient-selected img {
