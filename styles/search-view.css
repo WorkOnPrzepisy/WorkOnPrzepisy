@@ -133,7 +133,6 @@
     padding: 10px;
     padding-left: 20px;
     color: var(--dark-texts-color);
-    /* text-align: center; */
     font-family: inherit;
     font-size: inherit;
 }
@@ -174,7 +173,6 @@
     font-size: inherit;
     cursor: inherit;
     line-height: inherit;
-    /* text-align: center; */
 }
 
 .ingredients-empty-info {
@@ -184,9 +182,11 @@
 .ingredients-selected {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .ingredients-selected .ingredient-selected {
+    position: relative;
     transition: all 0.3s;
     display: flex;
     flex-direction: column;
@@ -196,11 +196,37 @@
     cursor: pointer;
 }
 
-.ingredients-selected .ingredient-selected:hover {
-    opacity: 0.8;
+.ingredients-selected .ingredient-selected:hover img {
+    opacity: 0.3;
+}
+
+.ingredients-selected .ingredient-selected::before {
+    opacity: 0;
+    display: block;
+    position: absolute;
+    color: var(--main-color);
+    content: "X";
+    font-weight: bold;
+    font-size: 55px;
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 1000;
+    transform: translateY(12px);
+    transition: all 0.5s;
+}
+
+.ingredients-selected .ingredient-selected:hover::before {
+    opacity: 1;
 }
 
 .ingredients-selected .ingredient-selected img {
+    position: relative;
+    transition: all 0.5s;
     margin-bottom: 10px;
 }
 
