@@ -3,6 +3,7 @@ import meals from './data/meals.js';
 import ingredientsList from './data/ingredients.js';
 import areasList from './data/areas.js';
 import categoriesList from './data/categories.js';
+import categories from './data/categories.js';
 
 const getIngredientSmallImgUrl = (ingredientStr) => {
     return `https://www.themealdb.com/images/ingredients/${ingredientStr}-Small.png`
@@ -32,7 +33,12 @@ const clearFiltersBtn = document.querySelector(".clear-filters-btn");
 const resultsInfo = document.querySelector(".results-info");
 const results = document.querySelector(".results");
 const resultsContentDiv = document.querySelector(".results-content");
+
 const paginationButtonsDiv = document.querySelector(".pagination-buttons");
+const paginationPreviousBtn = document.querySelector(".previous-btn");
+const paginationNextBtn = document.querySelector(".next-btn");
+const pageInput = document.querySelector(".page-input");
+const pagesNumberDiv = document.querySelector(".pages-number");
 
 const randomPickBtn = document.querySelector(".random-pick-btn");
 
@@ -48,6 +54,8 @@ ingredientsList.sort();
 fillSelect(ingredientsList, ingredientsDatalist);
 fillSelect(categoriesList, categoriesDatalist);
 fillSelect(areasList, areasDatalist);
+
+
 
 const createMeals = (mealsToCreate) => {
     if (mealsToCreate.length > 0) {
@@ -86,60 +94,45 @@ const createMeals = (mealsToCreate) => {
     } else {
         resultsInfo.innerText = "No results";
     }
-}
-
-const showMeals = () => {
-    resultsContentDiv.innerHTML = "";
-    paginationButtonsDiv.innerHTML = "";
 
     if (Object.keys(pages).length === 0) {
         pages = paginate(mealsCreated.length);
     }
 
-    if (pages.totalPages !== 1 && mealsCreated.length > 0) {
-        const prevButton = document.createElement('button');
-        prevButton.innerText = '<';
-        prevButton.onclick = () => {
-            pages = paginate(mealsCreated.length, pages.currentPage-1);
-            showMeals();
-        };
-    
-        if (pages.currentPage === 1) {
-            prevButton.disabled = true;
-        }
-    
-        paginationButtonsDiv.append(prevButton);
+    if (pages.totalPages < 2) {
+        paginationButtonsDiv.style.display = "none";
+    } else {
+        paginationButtonsDiv.style.display = "flex";
     }
 
-    if (pages.pages.length > 1) {
-        for (const pageNr of pages.pages) {
-            const paginationButton = document.createElement('button');
-            paginationButton.innerText = pageNr;
-            paginationButton.onclick = () => {
-                pages = paginate(mealsCreated.length, pageNr);
-                showMeals();
-            };
-            if (pageNr === pages.currentPage) {
-                paginationButton.disabled = true;
-                paginationButton.classList.toggle("active");
-            }
-            paginationButtonsDiv.append(paginationButton);
-        }
+    paginationPreviousBtn.onclick = () => {
+        pages = paginate(mealsCreated.length, pages.currentPage - 1);
+        showMeals();
+        pageInput.value = pages.currentPage;
+    };
+
+    paginationNextBtn.onclick = () => {
+        pages = paginate(mealsCreated.length, pages.currentPage + 1);
+        showMeals();
+        pageInput.value = pages.currentPage;
+    };
+
+    pagesNumberDiv.innerText = `/ ${pages.totalPages}`;
+}
+
+const showMeals = () => {
+    resultsContentDiv.innerHTML = "";
+
+    if (pages.currentPage === 1) {
+        paginationPreviousBtn.disabled = true;
+    } else {
+        paginationPreviousBtn.disabled = false;
     }
 
-    if (pages.totalPages !== 1 && mealsCreated.length > 0) {
-        const nextButton = document.createElement('button');
-        nextButton.innerText = '>';
-        nextButton.onclick = () => {
-            pages = paginate(mealsCreated.length, pages.currentPage+1);
-            showMeals();
-        };
-    
-        if (pages.currentPage === pages.endPage) {
-            nextButton.disabled = true;
-        }
-    
-        paginationButtonsDiv.append(nextButton);
+    if (pages.currentPage === pages.endPage) {
+        paginationNextBtn.disabled = true;
+    } else {
+        paginationNextBtn.disabled = false;
     }
 
     const mealsToShow = mealsCreated.slice(pages.startIndex, pages.endIndex+1);
@@ -155,8 +148,6 @@ const changeResults = () => {
     mealsCreated.length = 0;
     let mealsToCreate = [];
     resultsIds.length = 0;
-    paginationButtonsDiv.innerHTML = "";
-
     mealsToCreate = mealsFilter();
     createMeals(mealsToCreate);
     showMeals();
@@ -165,6 +156,25 @@ const changeResults = () => {
 results.style.display = "inline";
 createMeals(meals);
 showMeals();
+
+pageInput.oninput = () => {
+    if (pageInput.value !== "") {
+        if (parseInt(pageInput.value) > pages.totalPages) {
+            pageInput.value = pages.totalPages;
+        }
+        if (parseInt(pageInput.value) < 1) {
+            pageInput.value = 1;
+        }
+        pages = paginate(mealsCreated.length, parseInt(pageInput.value));
+        showMeals();
+    }
+};
+
+pageInput.onblur = () => {
+    if (parseInt(pageInput.value) !== pages.currentPage) {
+        pageInput.value = pages.currentPage;
+    }
+};
 
 const mealsFilter = () => {
     const mealsToCreate = meals.filter((meal) => {
@@ -194,6 +204,22 @@ const checkIfDisableClearBtn = () => {
     }
 }
 
+const disableIfNoValue = () => {
+    for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
+        if (mealsCreated.length === 0 && input.value === "") {
+            input.disabled = true;
+        }
+    }
+};
+
+const enableInputs = () => {
+    if (mealsCreated.length > 0) {
+        for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
+            input.disabled = false;
+        }
+    }
+}
+
 ingredientsSelect.addEventListener("change", (changeEvent) => {
     let containIngredient = false;
     for (const ingredient of ingredientsList) {
@@ -217,6 +243,7 @@ ingredientsSelect.addEventListener("change", (changeEvent) => {
         changeEvent.target.value = "";
     }
     changeResults();
+    disableIfNoValue();
 });
 
 const showIngredientSmall = (ingredientStr) => {
@@ -247,6 +274,7 @@ const showIngredientSmall = (ingredientStr) => {
             ingredientsSelectedDiv.innerHTML = "";
             ingredientsSelectedDiv.append(emptyInfo);
         }
+        enableInputs();
 
     };
     ingredientsSelectedDiv.append(newIngredientDiv);
@@ -258,11 +286,50 @@ const showIngredientSmall = (ingredientStr) => {
     }
 }
 
+searchInput.addEventListener("blur", () => {
+    if (searchInput.value !== "") {
+        searchInput.style.fontWeight = "bold";
+    }
+    searchInput.removeAttribute("maxlength");
+    disableIfNoValue();
+});
+categorySelect.addEventListener("blur", () => {
+    if (categorySelect.value !== "") {
+        categorySelect.style.fontWeight = "bold";
+    }
+    disableIfNoValue();
+
+
+});
+areaSelect.addEventListener("blur", () => {
+    if (areaSelect.value !== "") {
+        areaSelect.style.fontWeight = "bold";
+    }
+    disableIfNoValue();
+
+});
+
+
+searchInput.addEventListener("focus", () => {
+    searchInput.style.fontWeight = "normal";
+    if (mealsCreated.length === 0) {
+        searchInput.maxLength = searchInput.value.length;
+    }
+});
+categorySelect.addEventListener("focus", () => {
+    categorySelect.style.fontWeight = "normal";
+});
+areaSelect.addEventListener("focus", () => {
+    areaSelect.style.fontWeight = "normal";
+});
+
 window.addEventListener("click", (clickEvent) => {
     if (clickEvent.target === categorySelect || clickEvent.target === areaSelect) {
         clickEvent.target.value = "";
         changeResults();
         checkIfDisableClearBtn();
+        enableInputs();
+
     }
 });
 
@@ -289,21 +356,29 @@ window.addEventListener("change", (changeEvent) => {
         }
         changeResults();
         checkIfDisableClearBtn();
+        disableIfNoValue();
     }
 });
 
-searchInput.addEventListener("input", (inputEvent) => {
-        pages = {};
-        clearFiltersBtn.disabled = false;
-        results.style.display = "inline";
-        resultsIds.length = 0;
-        mealsCreated.length = 0;
-        paginationButtonsDiv.innerHTML = "";
-        const mealsToCreate = mealsFilter();
-        createMeals(mealsToCreate);
-        showMeals();
-        checkIfDisableClearBtn();
-    });
+searchInput.addEventListener("input", () => {
+    pages = {};
+    clearFiltersBtn.disabled = false;
+    results.style.display = "inline";
+    resultsIds.length = 0;
+    mealsCreated.length = 0;
+    const mealsToCreate = mealsFilter();
+    createMeals(mealsToCreate);
+    if (mealsCreated.length === 0) {
+        searchInput.maxLength = searchInput.value.length;
+    } else {
+        searchInput.removeAttribute("maxlength");
+    }
+    showMeals();
+    checkIfDisableClearBtn();
+    disableIfNoValue();
+    enableInputs();
+
+});
 
 hideFiltersBtn.addEventListener("click", () => {
     if (hideFiltersBtn.innerText === "Hide filters") {
@@ -332,13 +407,17 @@ clearFiltersBtn.addEventListener("click", () => {
     clearFiltersBtn.disabled = true;
     resultsIds.length = 0;
     searchInput.value = "";
+
+    categorySelect.style.fontWeight = "normal";
+    areaSelect.style.fontWeight = "normal";
+    searchInput.style.fontWeight = "normal";
+
     for (const option of Array.prototype.slice.call(ingredientsDatalist.childNodes)){
         option.disabled = false;
     }
     resultsInfo.innerText = "";
     mealsCreated.length = 0;
     pages = {};
-    paginationButtonsDiv.innerHTML = "";
     
     createMeals(meals);
     showMeals();
