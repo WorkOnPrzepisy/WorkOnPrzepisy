@@ -3,11 +3,13 @@ import meals from './data/meals.js';
 import ingredientsList from './data/ingredients.js';
 import areasList from './data/areas.js';
 import categoriesList from './data/categories.js';
-import categories from './data/categories.js';
 
-const getIngredientSmallImgUrl = (ingredientStr) => {
-    return `https://www.themealdb.com/images/ingredients/${ingredientStr}-Small.png`
-};
+const IDS_WITHOUT_PREVIEW = [
+    "52930",
+    "52873",
+    "52900",
+    "52932"
+];
 
 const ingredientsSelected = [];
 const resultsIds = [];
@@ -16,6 +18,7 @@ let pages = {};
 
 const searchInput = document.querySelector(".search-input");
 const hideFiltersBtn = document.querySelector(".hide-filters-btn");
+const clearFiltersBtn = document.querySelector(".clear-filters-btn");
 
 const filters = document.querySelector(".filters");
 const ingredientsSelect = document.querySelector("#meal-ingredients");
@@ -28,10 +31,7 @@ const areasDatalist = document.querySelector("#areas");
 
 const ingredientsSelectedDiv = document.querySelector(".ingredients-selected");
 
-const clearFiltersBtn = document.querySelector(".clear-filters-btn");
-
 const resultsInfo = document.querySelector(".results-info");
-const results = document.querySelector(".results");
 const resultsContentDiv = document.querySelector(".results-content");
 
 const paginationButtonsDiv = document.querySelector(".pagination-buttons");
@@ -55,180 +55,178 @@ fillSelect(ingredientsList, ingredientsDatalist);
 fillSelect(categoriesList, categoriesDatalist);
 fillSelect(areasList, areasDatalist);
 
+const cutStringIfTooLong = (text, maxLength) => {
+    if (text.length > maxLength) {
+        return `${text.substring(0, maxLength)}...`;
+    }
+    return text;
+};
 
+const addResultsInfo = (numberOfMealsToCreate) => {
+    if (numberOfMealsToCreate === 0) {
+        resultsInfo.innerText = "No results";
+    } else if (numberOfMealsToCreate === 1) {
+        resultsInfo.innerText = "1 Result:";
+    } else {
+        resultsInfo.innerText = `${numberOfMealsToCreate} Results:`;
+    }
+};
 
-const createMeals = (mealsToCreate) => {
-    if (mealsToCreate.length > 0) {
-        if (mealsToCreate.length > 1) {
-            randomPickBtn.style.display = "block";    
-        }
-        for (const meal of mealsToCreate) {
+const updatePagination = () => {
+    pages = paginate(mealsCreated.length);
+    const {totalPages} = pages;
+
+    if (totalPages < 2) {
+        paginationButtonsDiv.style.display = "none";
+    } else {
+        paginationButtonsDiv.style.display = "flex";
+
+        paginationPreviousBtn.onclick = () => {
+            pages = paginate(mealsCreated.length, pages.currentPage - 1);
+            showMeals();
+            pageInput.value = pages.currentPage;
+        };
+    
+        paginationNextBtn.onclick = () => {
+            pages = paginate(mealsCreated.length, pages.currentPage + 1);
+            showMeals();
+            pageInput.value = pages.currentPage;
+        };
+        
+        pagesNumberDiv.innerText = `/ ${totalPages}`;
+        pageInput.value = 1;
+    }
+};
+
+const createMeals = (defaultMeals = false) => {
+    mealsCreated.length = 0;
+    resultsIds.length = 0;
+
+    let mealsToCreate;
+    if (defaultMeals) {
+        mealsToCreate = meals;
+    } else {
+        mealsToCreate = mealsFilter();
+    }
+
+    const mealsNumber = mealsToCreate.length;
+    if (mealsNumber < 2) {
+        randomPickBtn.style.display = "none";
+    } else {
+        randomPickBtn.style.display = "block";
+    }
+
+    if (mealsNumber > 0) {
+        for (let {strMeal, strMealThumb, idMeal} of mealsToCreate) {
             const mealDiv = document.createElement("div");
-            mealDiv.className = "meal";
             const mealImg = document.createElement("img");
             const mealP = document.createElement("p");
             const mealDetails = document.createElement("button");
+
+            mealDiv.className = "meal";
             mealDetails.innerText = "Details";
-            mealDetails.type = "button"
-            let strMeal = meal.strMeal;
-            if (strMeal.length > 22) {
-                strMeal = `${strMeal.substring(0, 22)}...`
-            }
+            mealDetails.type = "button";
+
+            strMeal = cutStringIfTooLong(strMeal, 22);
             mealP.append(strMeal);
-            const imgUrl = `${meal.strMealThumb}/preview`;
-            mealImg.src = imgUrl;
-            if (meal.idMeal === "52930" || meal.idMeal === "52873" || meal.idMeal === "52900" || meal.idMeal === "52932") {
-                mealImg.src = meal.strMealThumb
+
+            if (IDS_WITHOUT_PREVIEW.includes(idMeal)) {
+                mealImg.src = strMealThumb;
+            } else {
+                mealImg.src = `${strMealThumb}/preview`;
             }
+
             mealDiv.append(mealP);
             mealDiv.append(mealImg);
             mealDiv.append(mealDetails);
             mealsCreated.push(mealDiv);
-            resultsIds.push(meal.idMeal);
+            resultsIds.push(idMeal);
         }
-        if (resultsIds.length === 1) {
-            resultsInfo.innerText = `${resultsIds.length} Result:`;
-        } else {
-            resultsInfo.innerText = `${resultsIds.length} Results:`;
-        }
-    } else {
-        resultsInfo.innerText = "No results";
     }
-
-    if (Object.keys(pages).length === 0) {
-        pages = paginate(mealsCreated.length);
-    }
-
-    if (pages.totalPages < 2) {
-        paginationButtonsDiv.style.display = "none";
-    } else {
-        paginationButtonsDiv.style.display = "flex";
-    }
-
-    paginationPreviousBtn.onclick = () => {
-        pages = paginate(mealsCreated.length, pages.currentPage - 1);
-        showMeals();
-        pageInput.value = pages.currentPage;
-    };
-
-    paginationNextBtn.onclick = () => {
-        pages = paginate(mealsCreated.length, pages.currentPage + 1);
-        showMeals();
-        pageInput.value = pages.currentPage;
-    };
-
-    pagesNumberDiv.innerText = `/ ${pages.totalPages}`;
-    pageInput.value = 1;
+    
+    addResultsInfo(mealsNumber);
+    updatePagination();
 }
 
 const showMeals = () => {
+    const {currentPage, endPage, startIndex, endIndex} = pages;
     resultsContentDiv.innerHTML = "";
 
-    if (pages.currentPage === 1) {
+    if (currentPage === 1) {
         paginationPreviousBtn.disabled = true;
     } else {
         paginationPreviousBtn.disabled = false;
     }
 
-    if (pages.currentPage === pages.endPage) {
+    if (currentPage === endPage) {
         paginationNextBtn.disabled = true;
     } else {
         paginationNextBtn.disabled = false;
     }
 
-    const mealsToShow = mealsCreated.slice(pages.startIndex, pages.endIndex+1);
+    const mealsToShow = mealsCreated.slice(startIndex, endIndex + 1);
     for (const meal of mealsToShow) {
         resultsContentDiv.append(meal);
     }
 }
 
-const changeResults = () => {
-    randomPickBtn.style.display = "none";
-    pages = {};
-    results.style.display = "inline";
-    mealsCreated.length = 0;
-    let mealsToCreate = [];
-    resultsIds.length = 0;
-    mealsToCreate = mealsFilter();
-    createMeals(mealsToCreate);
-    showMeals();
-}
-
-results.style.display = "inline";
-createMeals(meals);
+createMeals(true);
 showMeals();
 
-pageInput.oninput = () => {
-    if (pageInput.value !== "") {
-        if (parseInt(pageInput.value) > pages.totalPages) {
-            pageInput.value = pages.totalPages;
-        }
-        if (parseInt(pageInput.value) < 1) {
-            pageInput.value = 1;
-        }
-        pages = paginate(mealsCreated.length, parseInt(pageInput.value));
-        showMeals();
-    }
-};
-
-pageInput.onblur = () => {
-    if (parseInt(pageInput.value) !== pages.currentPage) {
-        pageInput.value = pages.currentPage;
-    }
-};
-
 const mealsFilter = () => {
-    const mealsToCreate = meals.filter((meal) => {
+    return meals.filter(({ingredients, strMeal, strCategory, strArea}) => {
         let value = true;
-        const ingredientsNames = meal.ingredients.map((ingredient) => {
-            return ingredient.name
+        const ingredientsNames = ingredients.map(({name}) => {
+            return name;
         });
+
         for (const ingredient of ingredientsSelected) {
             if (!ingredientsNames.includes(ingredient)) {
                 value = false;
-                break
+                break;
             }
         }
+
         return (
-            (meal.strMeal.toLowerCase().includes(searchInput.value.toLocaleLowerCase()) || searchInput.value === "") &&
+            (strMeal.toLowerCase().includes(searchInput.value.toLocaleLowerCase()) || searchInput.value === "") &&
             (value || ingredientsSelected.length === 0) &&
-            (meal.strCategory === categorySelect.value || categorySelect.value === "") &&
-            (meal.strArea === areaSelect.value || areaSelect.value === "")
+            (strCategory === categorySelect.value || categorySelect.value === "") &&
+            (strArea === areaSelect.value || areaSelect.value === "")
         )
     });
-    return mealsToCreate;
 }
 
 const checkIfDisableClearBtn = () => {
     if (searchInput.value === "" && ingredientsSelected.length === 0 && categorySelect.value === "" && areaSelect.value === "") {
         clearFiltersBtn.disabled = true;
+    } else {
+        clearFiltersBtn.disabled = false;
     }
 }
 
-const disableIfNoValue = () => {
-    for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
-        if (mealsCreated.length === 0 && input.value === "") {
-            input.disabled = true;
+const checkIfDisableInputs = () => {
+    if (mealsCreated.length < 2) {
+        for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
+            if (input.value === "") {
+                input.disabled = true;
+            }
         }
     }
 };
 
-const enableInputs = () => {
-    if (mealsCreated.length > 0) {
+const checkIfEnableInputs = () => {
+    if (mealsCreated.length > 1) {
         for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
             input.disabled = false;
         }
     }
 }
 
-ingredientsSelect.addEventListener("change", (changeEvent) => {
-    let containIngredient = false;
-    for (const ingredient of ingredientsList) {
-        if (changeEvent.target.value === ingredient) {
-            containIngredient = true;
-        }
-    }
-    if (containIngredient) {
+ingredientsSelect.onchange = () => {
+    const ingredientSelectValue = ingredientsSelect.value;
+    ingredientsSelect.value = "";
+
+    if (ingredientsList.includes(ingredientSelectValue)) {
         if (ingredientsSelected.length === 0) {
             ingredientsSelectedDiv.innerHTML = "";
             clearFiltersBtn.disabled = false;
@@ -236,16 +234,17 @@ ingredientsSelect.addEventListener("change", (changeEvent) => {
         if (ingredientsSelected.length === 2) {
             ingredientsSelect.disabled = true;
         }
-        const ingredientStr = changeEvent.target.value;
-        ingredientsSelected.push(ingredientStr);
-        showIngredientSmall(ingredientStr);
-        ingredientsSelect.value = "";
-    } else {
-        changeEvent.target.value = "";
+        ingredientsSelected.push(ingredientSelectValue);
+        showIngredientSmall(ingredientSelectValue);
+        createMeals();
+        showMeals();
+        checkIfDisableInputs();
     }
-    changeResults();
-    disableIfNoValue();
-});
+};
+
+const getIngredientSmallImgUrl = (ingredientStr) => {
+    return `https://www.themealdb.com/images/ingredients/${ingredientStr}-Small.png`
+};
 
 const showIngredientSmall = (ingredientStr) => {
     const newIngredientDiv = document.createElement("div");
@@ -257,17 +256,17 @@ const showIngredientSmall = (ingredientStr) => {
     newIngredientDiv.append(newIngredientImg);
     newIngredientDiv.append(newIngredientP);
     newIngredientDiv.onclick = () => {
-        ingredientsSelected.splice(ingredientsSelected.indexOf(newIngredientP.innerHTML), 1);
-        ingredientsSelect.disabled = false;
+        ingredientsSelected.splice(ingredientsSelected.indexOf(ingredientStr), 1);
+        if (mealsCreated.length > 1) {
+            ingredientsSelect.disabled = false;
+        }
         for (const option of ingredientsDatalist.childNodes) {
-            if (option.value === newIngredientP.innerHTML) {
+            if (option.value === ingredientStr) {
                 option.disabled = false;
                 break;
             }
         }
         newIngredientDiv.remove();
-        changeResults();
-        checkIfDisableClearBtn();
         if (ingredientsSelected.length === 0) {
             const emptyInfo = document.createElement("p");
             emptyInfo.className = "ingredients-empty-info";
@@ -275,8 +274,10 @@ const showIngredientSmall = (ingredientStr) => {
             ingredientsSelectedDiv.innerHTML = "";
             ingredientsSelectedDiv.append(emptyInfo);
         }
-        enableInputs();
-
+        createMeals();
+        showMeals();
+        checkIfDisableClearBtn();
+        checkIfEnableInputs();
     };
     ingredientsSelectedDiv.append(newIngredientDiv);
     for (const option of ingredientsDatalist.childNodes) {
@@ -287,139 +288,139 @@ const showIngredientSmall = (ingredientStr) => {
     }
 }
 
-searchInput.addEventListener("blur", () => {
-    if (searchInput.value !== "") {
-        searchInput.style.fontWeight = "bold";
-    }
-    searchInput.removeAttribute("maxlength");
-    disableIfNoValue();
-});
-categorySelect.addEventListener("blur", () => {
-    if (categorySelect.value !== "") {
-        categorySelect.style.fontWeight = "bold";
-    }
-    disableIfNoValue();
-
-
-});
-areaSelect.addEventListener("blur", () => {
-    if (areaSelect.value !== "") {
-        areaSelect.style.fontWeight = "bold";
-    }
-    disableIfNoValue();
-
-});
-
-
-searchInput.addEventListener("focus", () => {
-    searchInput.style.fontWeight = "normal";
-    if (mealsCreated.length === 0) {
-        searchInput.maxLength = searchInput.value.length;
-    }
-});
-categorySelect.addEventListener("focus", () => {
-    categorySelect.style.fontWeight = "normal";
-});
-areaSelect.addEventListener("focus", () => {
-    areaSelect.style.fontWeight = "normal";
-});
-
-window.addEventListener("click", (clickEvent) => {
-    if (clickEvent.target === categorySelect || clickEvent.target === areaSelect) {
-        clickEvent.target.value = "";
-        changeResults();
-        checkIfDisableClearBtn();
-        enableInputs();
-    }
-});
-
-window.addEventListener("change", (changeEvent) => {
-    if (changeEvent.target === categorySelect || changeEvent.target === areaSelect) {
-        let list;
-        if (changeEvent.target === categorySelect) {
-            list = categoriesList;
-        } else {
-            list = areasList;
-        }
-        
-        let containItem = false;
-        for (const item of list) {
-            if (changeEvent.target.value === item) {
-                containItem = true;
-                break;
-            }
-        }
-        if (containItem) {
-            clearFiltersBtn.disabled = false;
-        } else {
-            changeEvent.target.value = "";
-        }
-        changeResults();
-        checkIfDisableClearBtn();
-        disableIfNoValue();
-    }
-});
-
-searchInput.addEventListener("input", () => {
-    pages = {};
-    clearFiltersBtn.disabled = false;
-    results.style.display = "inline";
-    resultsIds.length = 0;
-    mealsCreated.length = 0;
-    const mealsToCreate = mealsFilter();
-    createMeals(mealsToCreate);
-    if (mealsCreated.length === 0) {
+searchInput.oninput = () => {
+    createMeals();
+    if (mealsCreated.length < 2) {
         searchInput.maxLength = searchInput.value.length;
     } else {
         searchInput.removeAttribute("maxlength");
     }
     showMeals();
     checkIfDisableClearBtn();
-    disableIfNoValue();
-    enableInputs();
+    checkIfDisableInputs();
+    checkIfEnableInputs();
+};
 
-});
+searchInput.onfocus = () => {
+    searchInput.placeholder = "";
+    searchInput.style.fontWeight = "normal";
+    if (mealsCreated.length === 0) {
+        searchInput.maxLength = searchInput.value.length;
+    }
+};
 
-hideFiltersBtn.addEventListener("click", () => {
+searchInput.onblur = () => {
+    searchInput.placeholder = "Filter by name";
+    if (searchInput.value !== "") {
+        searchInput.style.fontWeight = "bold";
+    }
+    searchInput.removeAttribute("maxlength");
+};
+
+const selectClickHandle = (select) => {
+    select.value = "";
+    select.style.fontWeight = "normal";
+    createMeals();
+    showMeals();
+    checkIfDisableClearBtn();
+    checkIfEnableInputs();
+    checkIfDisableInputs();
+};
+
+categorySelect.onclick = () => {
+    selectClickHandle(categorySelect);
+};
+
+areaSelect.onclick = () => {
+    selectClickHandle(areaSelect);
+};
+
+const changeSelectHandler = (select, list) => {
+    const selectValue = select.value;
+    if (selectValue !== "") {
+        select.style.fontWeight = "bold";
+    }
+    if (list.includes(selectValue)) {
+        clearFiltersBtn.disabled = false;
+    } else {
+        select.value = "";
+    }
+    createMeals();
+    showMeals();
+    checkIfDisableClearBtn();
+    checkIfDisableInputs();
+}
+
+categorySelect.onchange = () => {
+    changeSelectHandler(categorySelect, categoriesList);
+};
+
+areaSelect.onchange = () => {
+    changeSelectHandler(areaSelect, areasList);
+};
+
+hideFiltersBtn.onclick = () => {
     if (hideFiltersBtn.innerText === "Hide filters") {
         hideFiltersBtn.innerText = "Show filters";
-        filters.classList.toggle("hidden");
     } else {
         hideFiltersBtn.innerText = "Hide filters";
-        filters.classList.toggle("hidden");
     }
-});
+    filters.classList.toggle("hidden");
+};
 
-clearFiltersBtn.addEventListener("click", () => {
-    ingredientsSelect.disabled = false;
-    ingredientsSelect.value = "";
-    categorySelect.disabled = false;
-    categorySelect.value = "";
-    areaSelect.disabled = false;
-    areaSelect.value = "";
-    searchInput.disabled = false;
-    ingredientsSelected.length = 0;
-    const emptyInfo = document.createElement("p");
-    emptyInfo.className = "ingredients-empty-info";
-    emptyInfo.append("No ingredients selected");
-    ingredientsSelectedDiv.innerHTML = "";
-    ingredientsSelectedDiv.append(emptyInfo);
+clearFiltersBtn.onclick = () => {
     clearFiltersBtn.disabled = true;
+    ingredientsSelected.length = 0;
     resultsIds.length = 0;
-    searchInput.value = "";
-
-    categorySelect.style.fontWeight = "normal";
-    areaSelect.style.fontWeight = "normal";
-    searchInput.style.fontWeight = "normal";
-
-    for (const option of Array.prototype.slice.call(ingredientsDatalist.childNodes)){
-        option.disabled = false;
-    }
     resultsInfo.innerText = "";
     mealsCreated.length = 0;
-    pages = {};
-    
-    createMeals(meals);
+
+    for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
+        input.disabled = false;
+        input.value = "";
+        input.style.fontWeight = "normal";
+    }
+
+    const emptyInfo = document.createElement("p");
+    emptyInfo.className = "ingredients-empty-info";
+    emptyInfo.innerText = "No ingredients selected";
+    ingredientsSelectedDiv.innerHTML = "";
+    ingredientsSelectedDiv.append(emptyInfo);
+
+    for (const option of ingredientsDatalist.childNodes){
+        if (option.disabled === true) {
+            option.disabled = false;
+        }
+    }
+
+    createMeals(true);
     showMeals();
-});
+};
+
+pageInput.oninput = () => {
+    const pageInputValue = pageInput.value;
+    const totalPages = pages.totalPages;
+
+    if (pageInputValue !== "") {
+        if (parseInt(pageInputValue) > totalPages) {
+            pageInput.value = totalPages;
+        }
+        if (parseInt(pageInputValue) < 1) {
+            pageInput.value = 1;
+        }
+        pages = paginate(mealsCreated.length, parseInt(pageInput.value));
+        showMeals();
+    }
+};
+
+pageInput.onblur = () => {
+    const currentPage = pages.currentPage;
+    if (parseInt(pageInput.value) !== currentPage) {
+        pageInput.value = currentPage;
+    }
+};
+
+pageInput.onclick = () => {
+    pageInput.value = "";
+}
 

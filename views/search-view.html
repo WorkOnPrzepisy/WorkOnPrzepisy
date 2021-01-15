@@ -17,8 +17,7 @@
 
             <form action="" class="search-form">
                 <div class="form-row row first-row-inputs">
-                    <input type="search" name="search-input" id="search-input" placeholder="Search by name" onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Search by name'" class="search-input m10">
+                    <input type="search" name="search-input" id="search-input" placeholder="Filter by name" class="search-input m10">
                     <div class="search-buttons">
                         <button class="hide-filters-btn m10" type="button">Hide filters</button>
                         <button class="clear-filters-btn m10" type="button" disabled>Clear</button>
@@ -45,20 +44,18 @@
                         <p class="ingredients-empty-info m10">No ingradients selected</p>
                     </div>
                 </div>
-                <div class="results">                
-                    <div class="form-row results-wrapper">
-                        <h2 class="results-info m10"></h2>
-                        <div class="row results-content"></div>
-                    </div>
-                    <div class="form-row row pagination-buttons">
-                        <button type="button" class="previous-btn"><i class="fas fa-angle-left"></i></button>
-                        <input type="number" class="page-input" value="1" min="1"/>
-                        <div class="pages-number"></div>
-                        <button type="button" class="next-btn"><i class="fas fa-angle-right"></i></button>
-                    </div>
-                    <div class="form-row row sixth-row-buttons">
-                        <button class="random-pick-btn m10" type="button">Pick for me</button>
-                    </div>
+                <div class="form-row results-wrapper">
+                    <h2 class="results-info m10"></h2>
+                    <div class="row results-content"></div>
+                </div>
+                <div class="form-row row pagination-buttons">
+                    <button type="button" class="previous-btn"><i class="fas fa-angle-left"></i></button>
+                    <input type="number" class="page-input" value="1" min="1"/>
+                    <div class="pages-number"></div>
+                    <button type="button" class="next-btn"><i class="fas fa-angle-right"></i></button>
+                </div>
+                <div class="form-row row sixth-row-buttons">
+                    <button class="random-pick-btn m10" type="button">Pick for me</button>
                 </div>
             </form>
 

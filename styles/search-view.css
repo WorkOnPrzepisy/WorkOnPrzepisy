@@ -257,10 +257,6 @@
     display: none;
 }
 
-.results {
-    display: none;
-}
-
 .results-content {
     display: flex;
     flex-direction: row;
