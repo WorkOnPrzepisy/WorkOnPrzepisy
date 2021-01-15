@@ -339,13 +339,15 @@ searchInput.onblur = () => {
 };
 
 const selectClickHandle = (select) => {
-    select.value = "";
-    select.style.fontWeight = "normal";
-    createMeals();
-    showMeals();
-    checkIfDisableClearBtn();
-    checkIfEnableInputs();
-    checkIfDisableInputs();
+    if (select.value !== "") {
+        select.value = "";
+        select.style.fontWeight = "normal";
+        createMeals();
+        showMeals();
+        checkIfDisableClearBtn();
+        checkIfEnableInputs();
+        checkIfDisableInputs();
+    }
 };
 
 categorySelect.onclick = () => {
