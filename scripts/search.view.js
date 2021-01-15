@@ -118,6 +118,7 @@ const createMeals = (mealsToCreate) => {
     };
 
     pagesNumberDiv.innerText = `/ ${pages.totalPages}`;
+    pageInput.value = 1;
 }
 
 const showMeals = () => {
@@ -329,7 +330,6 @@ window.addEventListener("click", (clickEvent) => {
         changeResults();
         checkIfDisableClearBtn();
         enableInputs();
-
     }
 });
 
