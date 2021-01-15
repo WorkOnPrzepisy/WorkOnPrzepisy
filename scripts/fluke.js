@@ -1,3 +1,5 @@
+//const jsPdf = window.jspdf;
+const { jsPDF } = require('jspdf');
 const apiRandomMeal = "https://www.themealdb.com/api/json/v1/1/random.php";
 $("#carouselFade").carousel();
 
@@ -129,8 +131,29 @@ buttonFluke.addEventListener("click", () => {
     removalAddedElementsToHtml(apiDownoand);
 });
 
+const generateShoppingListPdf = () => {
+    //const doc = jsPdf.jsPDF();
+    const doc = new jsPDF();
+    const liElements = document.querySelectorAll('.li-ingredient');
+    const hTitleDish = document.querySelector("#title-dish");
+    doc.setFont("Lobster");
+    doc.text(90, 20, "Shopping list");
+    doc.line(20, 30, 190, 30)
+    doc.text(20, 45, `${hTitleDish.innerText}`);
+    doc.setFont("Segoe UI");
+    doc.setFontSize(13);
+    let i = 55;
+    for (el of liElements) {
+        console.log(el.innerText);
+        doc.text(30, i, `[   ]  ${el.innerText}`);
+        i += 10;
+
+    }
+    doc.save("shoppingList.pdf");
+}
+
 const buttonGeneratePDF = document.querySelector("#button-generate-list");
 
 buttonGeneratePDF.addEventListener('click', () => {
-    const doc = new jsPDF(); // Not work
+    generateShoppingListPdf();
 })
