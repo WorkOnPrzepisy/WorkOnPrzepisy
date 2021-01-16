@@ -15,6 +15,7 @@ const ingredientsSelected = [];
 const resultsIds = [];
 const mealsCreated = [];
 let pages = {};
+let timer;
 
 const searchInput = document.querySelector(".search-input");
 const hideFiltersBtn = document.querySelector(".hide-filters-btn");
@@ -31,6 +32,7 @@ const areasDatalist = document.querySelector("#areas");
 
 const ingredientsSelectedDiv = document.querySelector(".ingredients-selected");
 
+const results = document.querySelector(".results");
 const resultsInfo = document.querySelector(".results-info");
 const resultsContentDiv = document.querySelector(".results-content");
 
@@ -66,9 +68,9 @@ const addResultsInfo = (numberOfMealsToCreate) => {
     if (numberOfMealsToCreate === 0) {
         resultsInfo.innerText = "No results";
     } else if (numberOfMealsToCreate === 1) {
-        resultsInfo.innerText = "1 Result:";
+        resultsInfo.innerText = "1 meal:";
     } else {
-        resultsInfo.innerText = `${numberOfMealsToCreate} Results:`;
+        resultsInfo.innerText = `${numberOfMealsToCreate} meals:`;
     }
 };
 
@@ -82,33 +84,33 @@ const updatePagination = () => {
         paginationButtonsDiv.style.display = "flex";
 
         paginationPreviousBtn.onclick = () => {
+            makeInvisible(resultsContentDiv);
+
             pages = paginate(mealsCreated.length, pages.currentPage - 1);
-
-            if (pages.currentPage + 1 === pages.totalPages) {
-                showMealsWithScroll();
-            } else {
-                showMeals();
-            }
-
             pageInput.value = pages.currentPage;
+
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                showMealsWithScroll();
+            }, 500);
         };
     
         paginationNextBtn.onclick = () => {
+            makeInvisible(resultsContentDiv);
+
             pages = paginate(mealsCreated.length, pages.currentPage + 1);
-
-            if (pages.currentPage === pages.totalPages) {
-                showMealsWithScroll();
-            }
-
-            showMeals();
             pageInput.value = pages.currentPage;
+
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                showMealsWithScroll();
+            }, 500);
         };
         
         pagesNumberDiv.innerText = `/ ${totalPages}`;
         pageInput.value = 1;
     }
 };
-
 
 const createMeals = (defaultMeals = false) => {
     mealsCreated.length = 0;
@@ -161,8 +163,11 @@ const createMeals = (defaultMeals = false) => {
 }
 
 const showMeals = () => {
+    if (results.classList.contains("invisible")) {
+        results.classList.toggle("invisible");
+    }
+
     const {currentPage, endPage, startIndex, endIndex} = pages;
-    resultsContentDiv.innerHTML = "";
 
     if (currentPage === 1) {
         paginationPreviousBtn.disabled = true;
@@ -177,12 +182,17 @@ const showMeals = () => {
     }
 
     const mealsToShow = mealsCreated.slice(startIndex, endIndex + 1);
+
+    resultsContentDiv.innerHTML = "";
     for (const meal of mealsToShow) {
         resultsContentDiv.append(meal);
     }
+
 }
 
 const showMealsWithScroll = () => {
+    resultsContentDiv.classList.toggle("invisible");
+
     // set distance from bottom border of the window same as before
     const windowScrollYBefore = window.scrollY;
     const documentBodyOffsetHeightBefore = document.body.offsetHeight;
@@ -249,17 +259,24 @@ ingredientsSelect.onchange = () => {
 
     if (ingredientsList.includes(ingredientSelectValue)) {
         if (ingredientsSelected.length === 0) {
-            ingredientsSelectedDiv.innerHTML = "";
             clearFiltersBtn.disabled = false;
+            ingredientsSelectedDiv.classList.toggle("invisible");
         }
         if (ingredientsSelected.length === 2) {
             ingredientsSelect.disabled = true;
         }
         ingredientsSelected.push(ingredientSelectValue);
         showIngredientSmall(ingredientSelectValue);
-        createMeals();
-        showMeals();
-        checkIfDisableInputs();
+
+        makeInvisible(results);
+
+
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            createMeals();
+            showMeals();
+            checkIfDisableInputs();
+        }, 500);
     }
 };
 
@@ -278,6 +295,9 @@ const showIngredientSmall = (ingredientStr) => {
     newIngredientDiv.append(newIngredientP);
     newIngredientDiv.onclick = () => {
         ingredientsSelected.splice(ingredientsSelected.indexOf(ingredientStr), 1);
+        if (ingredientsSelected.length === 0) {
+            ingredientsSelectedDiv.classList.toggle("invisible");
+        }
         if (mealsCreated.length > 1) {
             ingredientsSelect.disabled = false;
         }
@@ -287,18 +307,20 @@ const showIngredientSmall = (ingredientStr) => {
                 break;
             }
         }
-        newIngredientDiv.remove();
-        if (ingredientsSelected.length === 0) {
-            const emptyInfo = document.createElement("p");
-            emptyInfo.className = "ingredients-empty-info";
-            emptyInfo.append("No ingredients selected");
-            ingredientsSelectedDiv.innerHTML = "";
-            ingredientsSelectedDiv.append(emptyInfo);
-        }
-        createMeals();
-        showMeals();
-        checkIfDisableClearBtn();
-        checkIfEnableInputs();
+        setTimeout(() => {
+            newIngredientDiv.remove();
+        }, 500);
+
+        makeInvisible(results);
+
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            createMeals();
+            showMeals();
+            checkIfDisableClearBtn();
+            checkIfEnableInputs();
+        }, 500);
+
     };
     ingredientsSelectedDiv.append(newIngredientDiv);
     for (const option of ingredientsDatalist.childNodes) {
@@ -309,17 +331,28 @@ const showIngredientSmall = (ingredientStr) => {
     }
 }
 
-searchInput.oninput = () => {
-    createMeals();
-    if (mealsCreated.length < 2) {
-        searchInput.maxLength = searchInput.value.length;
-    } else {
-        searchInput.removeAttribute("maxlength");
+const makeInvisible = (element) => {
+    if (!element.classList.contains("invisible")) {
+        element.classList.toggle("invisible");
     }
-    showMeals();
-    checkIfDisableClearBtn();
-    checkIfDisableInputs();
-    checkIfEnableInputs();
+}
+
+searchInput.oninput = () => {
+    makeInvisible(results);
+
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        createMeals();
+        if (mealsCreated.length < 2) {
+            searchInput.maxLength = searchInput.value.length;
+        } else {
+            searchInput.removeAttribute("maxlength");
+        }
+        showMeals();
+        checkIfDisableClearBtn();
+        checkIfDisableInputs();
+        checkIfEnableInputs();
+    }, 500);
 };
 
 searchInput.onfocus = () => {
@@ -342,11 +375,17 @@ const selectClickHandle = (select) => {
     if (select.value !== "") {
         select.value = "";
         select.style.fontWeight = "normal";
-        createMeals();
-        showMeals();
-        checkIfDisableClearBtn();
-        checkIfEnableInputs();
-        checkIfDisableInputs();
+
+        makeInvisible(results);
+
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            createMeals();
+            showMeals();
+            checkIfDisableClearBtn();
+            checkIfEnableInputs();
+            checkIfDisableInputs();
+        }, 500);
     }
 };
 
@@ -359,6 +398,9 @@ areaSelect.onclick = () => {
 };
 
 const changeSelectHandler = (select, list) => {
+
+    makeInvisible(results);
+
     const selectValue = select.value;
     if (selectValue !== "") {
         select.style.fontWeight = "bold";
@@ -368,10 +410,14 @@ const changeSelectHandler = (select, list) => {
     } else {
         select.value = "";
     }
-    createMeals();
-    showMeals();
-    checkIfDisableClearBtn();
-    checkIfDisableInputs();
+
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        createMeals();
+        showMeals();
+        checkIfDisableClearBtn();
+        checkIfDisableInputs();
+    }, 500);
 }
 
 categorySelect.onchange = () => {
@@ -394,9 +440,10 @@ hideFiltersBtn.onclick = () => {
 clearFiltersBtn.onclick = () => {
     clearFiltersBtn.disabled = true;
     ingredientsSelected.length = 0;
-    resultsIds.length = 0;
-    resultsInfo.innerText = "";
-    mealsCreated.length = 0;
+    
+    setTimeout(() => {
+        ingredientsSelectedDiv.innerHTML = "";
+    }, 500);
 
     for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
         input.disabled = false;
@@ -404,20 +451,19 @@ clearFiltersBtn.onclick = () => {
         input.style.fontWeight = "normal";
     }
 
-    const emptyInfo = document.createElement("p");
-    emptyInfo.className = "ingredients-empty-info";
-    emptyInfo.innerText = "No ingredients selected";
-    ingredientsSelectedDiv.innerHTML = "";
-    ingredientsSelectedDiv.append(emptyInfo);
-
     for (const option of ingredientsDatalist.childNodes){
         if (option.disabled === true) {
             option.disabled = false;
         }
     }
 
-    createMeals(true);
-    showMeals();
+    makeInvisible(ingredientsSelectedDiv);
+    makeInvisible(results);
+
+    setTimeout(() => {
+        createMeals(true);
+        showMeals();
+    }, 500);
 };
 
 pageInput.oninput = () => {
@@ -425,24 +471,20 @@ pageInput.oninput = () => {
     const totalPages = pages.totalPages;
 
     if (pageInputValue !== "") {
+        makeInvisible(resultsContentDiv);
+
         if (parseInt(pageInputValue) > totalPages) {
             pageInput.value = totalPages;
         }
         if (parseInt(pageInputValue) < 1) {
             pageInput.value = 1;
         }
-        const lastPage = pages.currentPage;
         pages = paginate(mealsCreated.length, parseInt(pageInput.value));
-        if (lastPage === pages.totalPages) {
-            showMealsWithScroll();
-        } else {
-            if (pages.currentPage === pages.totalPages) {
-                showMealsWithScroll();
-            } else {
-                showMeals();
-            }
-        }
 
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            showMealsWithScroll();
+        }, 500);
     }
 };
 
@@ -457,3 +499,7 @@ pageInput.onclick = () => {
     pageInput.value = "";
 }
 
+setTimeout(() => {
+    resultsContentDiv.classList.toggle("start");
+    paginationButtonsDiv.classList.toggle("stopped");
+}, 3000);

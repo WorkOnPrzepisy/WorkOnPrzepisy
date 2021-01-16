@@ -40,23 +40,26 @@
                         <datalist id="areas">
                         </datalist>
                     </div>
-                    <div class="form-row row ingredients-selected">
-                        <p class="ingredients-empty-info m10">No ingradients selected</p>
+                    <div class="form-row row ingredients-selected invisible">
+
                     </div>
                 </div>
-                <div class="form-row results-wrapper">
-                    <h2 class="results-info m10"></h2>
-                    <div class="row results-content"></div>
+                <div class="results">
+                    <div class="form-row results-wrapper">
+                        <h2 class="results-info m10"></h2>
+                        <div class="row results-content start"></div>
+                    </div>
+                    <div class="form-row row pagination-buttons">
+                        <button type="button" class="previous-btn"><i class="fas fa-angle-left"></i></button>
+                        <input type="number" class="page-input" value="1" min="1"/>
+                        <div class="pages-number"></div>
+                        <button type="button" class="next-btn"><i class="fas fa-angle-right"></i></button>
+                    </div>
+                    <div class="form-row row sixth-row-buttons">
+                        <button class="random-pick-btn m10" type="button">Pick for me</button>
+                    </div>
                 </div>
-                <div class="form-row row pagination-buttons">
-                    <button type="button" class="previous-btn"><i class="fas fa-angle-left"></i></button>
-                    <input type="number" class="page-input" value="1" min="1"/>
-                    <div class="pages-number"></div>
-                    <button type="button" class="next-btn"><i class="fas fa-angle-right"></i></button>
-                </div>
-                <div class="form-row row sixth-row-buttons">
-                    <button class="random-pick-btn m10" type="button">Pick for me</button>
-                </div>
+
             </form>
 
         </main>
