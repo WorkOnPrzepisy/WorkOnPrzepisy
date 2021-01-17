@@ -11,7 +11,7 @@ const IDS_WITHOUT_PREVIEW = [
     "52932"
 ];
 
-const ingredientsSelected = [];
+let ingredientsSelected = [];
 const resultsIds = [];
 const mealsCreated = [];
 let pages = {};
@@ -47,12 +47,18 @@ const randomPickBtn = document.querySelector(".random-pick-btn");
 const fillSelect = (list, select) => {
     for (const item of list) {
         const newItem = document.createElement("option");
-        newItem.value = item;
+
+        const words = item.split(" ");
+        const wordsCapitalized = [];
+        for (const word of words) {
+            wordsCapitalized.push(word[0].toUpperCase() + word.slice(1));
+        }
+
+        newItem.value = wordsCapitalized.join(" ");
         select.append(newItem);
     }
 };
 
-ingredientsList.sort();
 fillSelect(ingredientsList, ingredientsDatalist);
 fillSelect(categoriesList, categoriesDatalist);
 fillSelect(areasList, areasDatalist);
@@ -208,7 +214,7 @@ const mealsFilter = () => {
     return meals.filter(({ingredients, strMeal, strCategory, strArea}) => {
         let value = true;
         const ingredientsNames = ingredients.map(({name}) => {
-            return name;
+            return name
         });
 
         for (const ingredient of ingredientsSelected) {
@@ -219,7 +225,8 @@ const mealsFilter = () => {
         }
 
         return (
-            (strMeal.toLowerCase().includes(searchInput.value.toLocaleLowerCase()) || searchInput.value === "") &&
+
+            (strMeal.toLowerCase().includes(searchInput.value.toLowerCase()) || searchInput.value === "") &&
             (value || ingredientsSelected.length === 0) &&
             (strCategory === categorySelect.value || categorySelect.value === "") &&
             (strArea === areaSelect.value || areaSelect.value === "")
@@ -254,22 +261,21 @@ const checkIfEnableInputs = () => {
 }
 
 ingredientsSelect.onchange = () => {
-    const ingredientSelectValue = ingredientsSelect.value;
+    const ingredientSelectValue = ingredientsSelect.value.toLowerCase();
     ingredientsSelect.value = "";
 
     if (ingredientsList.includes(ingredientSelectValue)) {
-        if (ingredientsSelected.length === 0) {
-            clearFiltersBtn.disabled = false;
-            ingredientsSelectedDiv.classList.toggle("invisible");
-        }
-        if (ingredientsSelected.length === 2) {
-            ingredientsSelect.disabled = true;
-        }
+            if (ingredientsSelected.length === 0) {
+                clearFiltersBtn.disabled = false;
+                ingredientsSelectedDiv.classList.toggle("invisible");
+            }
+            if (ingredientsSelected.length === 2) {
+                ingredientsSelect.disabled = true;
+            }
         ingredientsSelected.push(ingredientSelectValue);
         showIngredientSmall(ingredientSelectValue);
 
         makeInvisible(results);
-
 
         clearTimeout(timer);
         timer = setTimeout(() => {
@@ -294,7 +300,7 @@ const showIngredientSmall = (ingredientStr) => {
     newIngredientDiv.append(newIngredientImg);
     newIngredientDiv.append(newIngredientP);
     newIngredientDiv.onclick = () => {
-        ingredientsSelected.splice(ingredientsSelected.indexOf(ingredientStr), 1);
+        ingredientsSelected = ingredientsSelected.filter((ingredient) => ingredient !== ingredientStr);
         if (ingredientsSelected.length === 0) {
             ingredientsSelectedDiv.classList.toggle("invisible");
         }
@@ -302,10 +308,13 @@ const showIngredientSmall = (ingredientStr) => {
             ingredientsSelect.disabled = false;
         }
         for (const option of ingredientsDatalist.childNodes) {
-            if (option.value === ingredientStr) {
-                option.disabled = false;
-                break;
+            if (option.value) {
+                if (option.value.toLowerCase() === ingredientStr) {
+                    option.disabled = false;
+                    break;
+                }
             }
+ 
         }
         setTimeout(() => {
             newIngredientDiv.remove();
@@ -324,9 +333,11 @@ const showIngredientSmall = (ingredientStr) => {
     };
     ingredientsSelectedDiv.append(newIngredientDiv);
     for (const option of ingredientsDatalist.childNodes) {
-        if (option.value === ingredientStr) {
-            option.disabled = true;
-            break;
+        if (option.value) {
+            if (option.value.toLowerCase() === ingredientStr) {
+                option.disabled = true;
+                break;
+            }
         }
     }
 }
@@ -401,7 +412,7 @@ const changeSelectHandler = (select, list) => {
 
     makeInvisible(results);
 
-    const selectValue = select.value;
+    const selectValue = select.value.toLowerCase();
     if (selectValue !== "") {
         select.style.fontWeight = "bold";
     }
