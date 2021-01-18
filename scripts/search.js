@@ -86,19 +86,19 @@ moreRecipeToAnotherPage.addEventListener('click', e => {
     if (e.target.tagName === "BUTTON" && e.target.classList.contains("button-more-recipe")) {
 
         //e.preventDefault();
-        console.log(0, e.target);
-        console.log(1, e.target.classList[0]);
+        //console.log(0, e.target);
+        //console.log(1, e.target.classList[0]);
         const buttonTarget = e.target;
-        console.log(1.2, buttonTarget);
+        //console.log(1.2, buttonTarget);
         const whichButton = buttonTarget.parentNode;
-        console.log(2, whichButton);
+        //console.log(2, whichButton);
         const hrefInA = whichButton.href;
         const idInMealsWith = `&${idInMeals}`;
-        console.log(3, hrefInA);
+        //console.log(3, hrefInA);
         const other = `${hrefInA}${idInMealsWith}`;
-        console.log(4, whichButton);
+        //console.log(4, whichButton);
         whichButton.href = other;
-        console.log(5, other);
-        console.log(6, idInMealsWith);
+        //console.log(5, other);
+        //console.log(6, idInMealsWith);
     }
 })
