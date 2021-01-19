@@ -169,10 +169,16 @@ td {
     background: rgba(255, 212, 113, .8);
 }
 
-.container-top-menu-title,
-.button-select-basket,
-.button-continue-adding-recipes {
+.button-select-basket {
+    margin: 15px 5px 15px 50px;
+}
+
+.container-top-menu-title {
     margin: 15px 50px 15px 50px;
+}
+
+.button-continue-adding-recipes {
+    margin: 15px 50px 15px 5px;
 }
 
 .h4-title-Recipe {
@@ -270,4 +276,22 @@ input[type=checkbox] {
     padding: 15px;
     display: flex;
     justify-content: flex-end;
+}
+
+.div-remove {
+    margin-right: 70px;
+    float: right;
+    height: 45px;
+    width: 45px;
+    background: url("../img/iconRemoveRecipe.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.div-remove:hover {
+    width: 50px;
+    border-radius: 10px;
+    background-color: rgba;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }

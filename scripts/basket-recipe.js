@@ -42,6 +42,7 @@ const addElementInTableHtml = (i, idMeal) => {
     inputCheckbox.setAttribute('type', 'checkbox');
     const spanCheckbox = document.createElement('span');
     spanCheckbox.classList.add('span-checkbox');
+    spanCheckbox.setAttribute('title', 'Select');
     labelCheckbox.appendChild(inputCheckbox);
     labelCheckbox.appendChild(spanCheckbox);
     divCheckbox.appendChild(labelCheckbox);
@@ -59,6 +60,7 @@ const addElementInTableHtml = (i, idMeal) => {
     tdcol3.classList.add(`col--3`, `col-remove`);
     const divRemove = document.createElement('div');
     divRemove.classList.add('div-remove');
+    divRemove.setAttribute('title', 'Remove this recipe');
 
 
     tdcol1.appendChild(divCheckbox);
