@@ -139,6 +139,10 @@
   margin-left: auto;
 }
 
+.container .nav .nav-links ul li.right-nav.for-logged {
+  display: none;
+}
+
 .container .nav .nav-links ul li.right-nav .login::after {
   content: "/";
   margin-left: 5px;
@@ -357,9 +361,10 @@
     background-color: #FFD471;
   }
   .container .nav .nav-links {
+    opacity: 0;
     margin-top: 10px;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
     overflow: hidden;
     width: 100%;
     height: auto;
