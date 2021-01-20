@@ -65,54 +65,40 @@ fillSelect(ingredientsList, ingredientsDatalist);
 fillSelect(categoriesList, categoriesDatalist);
 fillSelect(areasList, areasDatalist);
 
-const cutStringIfTooLong = (text, maxLength) => {
-    if (text.length > maxLength) {
-        return `${text.substring(0, maxLength)}...`;
-    }
-    return text;
-};
+const cutStringIfTooLong = (text, maxLength) => text.length > maxLength ? text.substring(0, maxLength) : text;
 
 const addResultsInfo = (numberOfMealsToCreate) => {
-    if (numberOfMealsToCreate === 0) {
-        resultsInfo.innerText = "No results";
-    } else if (numberOfMealsToCreate === 1) {
-        resultsInfo.innerText = "1 meal:";
-    } else {
-        resultsInfo.innerText = `${numberOfMealsToCreate} meals:`;
-    }
+    resultsInfo.innerText = numberOfMealsToCreate === 0 ? "No results" : numberOfMealsToCreate === 1 ? "1 meal:" : `${numberOfMealsToCreate} meals:`;
+};
+
+const changePageButtonHandler = (next=true) => {
+    const pageSwitch = next ? 1 : -1;
+    makeInvisible(resultsContentDiv);
+
+    pages = paginate(mealsCreated.length, pages.currentPage + pageSwitch);
+    pageInput.value = pages.currentPage;
+
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        showMealsWithScroll();
+    }, 500);
+
 };
 
 const updatePagination = () => {
     pages = paginate(mealsCreated.length);
     const {totalPages} = pages;
 
-    if (totalPages < 2) {
-        paginationButtonsDiv.style.display = "none";
-    } else {
+    if (totalPages < 2) paginationButtonsDiv.style.display = "none";
+    else {
         paginationButtonsDiv.style.display = "flex";
 
         paginationPreviousBtn.onclick = () => {
-            makeInvisible(resultsContentDiv);
-
-            pages = paginate(mealsCreated.length, pages.currentPage - 1);
-            pageInput.value = pages.currentPage;
-
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                showMealsWithScroll();
-            }, 500);
+            changePageButtonHandler(false);
         };
     
         paginationNextBtn.onclick = () => {
-            makeInvisible(resultsContentDiv);
-
-            pages = paginate(mealsCreated.length, pages.currentPage + 1);
-            pageInput.value = pages.currentPage;
-
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                showMealsWithScroll();
-            }, 500);
+            changePageButtonHandler(true);
         };
         
         pagesNumberDiv.innerText = `/ ${totalPages}`;
@@ -123,20 +109,11 @@ const updatePagination = () => {
 const createMeals = (defaultMeals = false) => {
     mealsCreated.length = 0;
     resultsIds.length = 0;
-
-    let mealsToCreate;
-    if (defaultMeals) {
-        mealsToCreate = meals;
-    } else {
-        mealsToCreate = mealsFilter();
-    }
+    
+    const mealsToCreate = defaultMeals ? meals : mealsFilter();
 
     const mealsNumber = mealsToCreate.length;
-    if (mealsNumber < 2) {
-        randomPickBtn.style.display = "none";
-    } else {
-        randomPickBtn.style.display = "block";
-    }
+    randomPickBtn.style.display = mealsNumber < 2 ? "none" : "block";
 
     if (mealsNumber > 0) {
         for (let {strMeal, strMealThumb, idMeal} of mealsToCreate) {
@@ -156,11 +133,7 @@ const createMeals = (defaultMeals = false) => {
             strMeal = cutStringIfTooLong(strMeal, 22);
             mealP.append(strMeal);
 
-            if (IDS_WITHOUT_PREVIEW.includes(idMeal)) {
-                mealImg.src = strMealThumb;
-            } else {
-                mealImg.src = `${strMealThumb}/preview`;
-            }
+            mealImg.src = IDS_WITHOUT_PREVIEW.includes(idMeal) ? strMealThumb : `${strMealThumb}/preview`; 
 
             mealDiv.append(mealP);
             mealDiv.append(mealImg);
@@ -175,31 +148,18 @@ const createMeals = (defaultMeals = false) => {
 }
 
 const showMeals = () => {
-    if (results.classList.contains("invisible")) {
-        results.classList.toggle("invisible");
-    }
+    if (results.classList.contains("invisible")) results.classList.toggle("invisible");
 
     const {currentPage, endPage, startIndex, endIndex} = pages;
 
-    if (currentPage === 1) {
-        paginationPreviousBtn.disabled = true;
-    } else {
-        paginationPreviousBtn.disabled = false;
-    }
-
-    if (currentPage === endPage) {
-        paginationNextBtn.disabled = true;
-    } else {
-        paginationNextBtn.disabled = false;
-    }
+    paginationPreviousBtn.disabled = currentPage === 1 ? true : false;
+    paginationNextBtn.disabled = currentPage === endPage ? true : false;
 
     const mealsToShow = mealsCreated.slice(startIndex, endIndex + 1);
 
     resultsContentDiv.innerHTML = "";
-    for (const meal of mealsToShow) {
-        resultsContentDiv.append(meal);
-    }
-
+    for (const meal of mealsToShow) resultsContentDiv.append(meal);
+    
 }
 
 const showMealsWithScroll = () => {
@@ -218,18 +178,13 @@ showMeals();
 
 const mealsFilter = () => {
     return meals.filter(({ingredients, strMeal, strCategory, strArea}) => {
-        let value = true;
 
         for (const ingredient of ingredientsSelected) {
-            if (!ingredients.includes(ingredient)) {
-                value = false;
-                break;
-            }
+            if (!ingredients.includes(ingredient)) return false;
         }
 
         return (
             (strMeal.toLowerCase().includes(searchInput.value.toLowerCase()) || searchInput.value === "") &&
-            (value || ingredientsSelected.length === 0) &&
             (strCategory === categorySelect.value || categorySelect.value === "") &&
             (strArea === areaSelect.value || areaSelect.value === "")
         )
@@ -237,28 +192,25 @@ const mealsFilter = () => {
 }
 
 const checkIfDisableClearBtn = () => {
-    if (searchInput.value === "" && ingredientsSelected.length === 0 && categorySelect.value === "" && areaSelect.value === "") {
-        clearFiltersBtn.disabled = true;
-    } else {
-        clearFiltersBtn.disabled = false;
-    }
+    clearFiltersBtn.disabled = 
+            searchInput.value === "" &&
+            ingredientsSelected.length === 0 && 
+            categorySelect.value === "" && 
+            areaSelect.value === "" 
+                ? true : false;
 }
 
 const checkIfDisableInputs = () => {
     if (mealsCreated.length < 2) {
         for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
-            if (input.value === "") {
-                input.disabled = true;
-            }
+            if (input.value === "") input.disabled = true;
         }
     }
 };
 
 const checkIfEnableInputs = () => {
     if (mealsCreated.length > 1) {
-        for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
-            input.disabled = false;
-        }
+        for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) input.disabled = false;
     }
 }
 
@@ -271,9 +223,8 @@ ingredientsSelect.onchange = () => {
                 clearFiltersBtn.disabled = false;
                 ingredientsSelectedDiv.classList.toggle("invisible");
             }
-            if (ingredientsSelected.length === 2) {
-                ingredientsSelect.disabled = true;
-            }
+            if (ingredientsSelected.length === 2) ingredientsSelect.disabled = true;
+
         ingredientsSelected.push(ingredientSelectValue);
         showIngredientSmall(ingredientSelectValue);
 
@@ -288,9 +239,7 @@ ingredientsSelect.onchange = () => {
     }
 };
 
-const getIngredientSmallImgUrl = (ingredientStr) => {
-    return `https://www.themealdb.com/images/ingredients/${ingredientStr}-Small.png`
-};
+const getIngredientSmallImgUrl = (ingredientStr) => `https://www.themealdb.com/images/ingredients/${ingredientStr}-Small.png`;
 
 const showIngredientSmall = (ingredientStr) => {
     const newIngredientDiv = document.createElement("div");
@@ -303,12 +252,8 @@ const showIngredientSmall = (ingredientStr) => {
     newIngredientDiv.append(newIngredientP);
     newIngredientDiv.onclick = () => {
         ingredientsSelected = ingredientsSelected.filter((ingredient) => ingredient !== ingredientStr);
-        if (ingredientsSelected.length === 0) {
-            ingredientsSelectedDiv.classList.toggle("invisible");
-        }
-        if (mealsCreated.length > 1) {
-            ingredientsSelect.disabled = false;
-        }
+        if (ingredientsSelected.length === 0) ingredientsSelectedDiv.classList.toggle("invisible");
+        if (mealsCreated.length > 1) ingredientsSelect.disabled = false;
         for (const option of ingredientsDatalist.childNodes) {
             if (option.value) {
                 if (option.value.toLowerCase() === ingredientStr) {
@@ -344,9 +289,7 @@ const showIngredientSmall = (ingredientStr) => {
 }
 
 const makeInvisible = (element) => {
-    if (!element.classList.contains("invisible")) {
-        element.classList.toggle("invisible");
-    }
+    if (!element.classList.contains("invisible")) element.classList.toggle("invisible");
 }
 
 searchInput.oninput = () => {
@@ -355,11 +298,8 @@ searchInput.oninput = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
         createMeals();
-        if (mealsCreated.length < 2) {
-            searchInput.maxLength = searchInput.value.length;
-        } else {
-            searchInput.removeAttribute("maxlength");
-        }
+        if (mealsCreated.length < 2) searchInput.maxLength = searchInput.value.length;
+        else searchInput.removeAttribute("maxlength");
         showMeals();
         checkIfDisableClearBtn();
         checkIfDisableInputs();
@@ -370,16 +310,12 @@ searchInput.oninput = () => {
 searchInput.onfocus = () => {
     searchInput.placeholder = "";
     searchInput.style.fontWeight = "normal";
-    if (mealsCreated.length === 0) {
-        searchInput.maxLength = searchInput.value.length;
-    }
+    if (mealsCreated.length === 0) searchInput.maxLength = searchInput.value.length;
 };
 
 searchInput.onblur = () => {
     searchInput.placeholder = "Filter by name";
-    if (searchInput.value !== "") {
-        searchInput.style.fontWeight = "bold";
-    }
+    if (searchInput.value !== "") searchInput.style.fontWeight = "bold";
     searchInput.removeAttribute("maxlength");
 };
 
@@ -410,18 +346,12 @@ areaSelect.onclick = () => {
 };
 
 const changeSelectHandler = (select, list) => {
-
     makeInvisible(results);
 
     const selectValue = select.value.toLowerCase();
-    if (selectValue !== "") {
-        select.style.fontWeight = "bold";
-    }
-    if (list.includes(selectValue)) {
-        clearFiltersBtn.disabled = false;
-    } else {
-        select.value = "";
-    }
+    if (selectValue !== "") select.style.fontWeight = "bold";
+    if (list.includes(selectValue)) clearFiltersBtn.disabled = false;
+    else select.value = "";
 
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -441,11 +371,7 @@ areaSelect.onchange = () => {
 };
 
 hideFiltersBtn.onclick = () => {
-    if (hideFiltersBtn.innerText === "Hide filters") {
-        hideFiltersBtn.innerText = "Show filters";
-    } else {
-        hideFiltersBtn.innerText = "Hide filters";
-    }
+    hideFiltersBtn.innerText = hideFiltersBtn.innerText === "Hide filters" ? "Show filters" : "Hide filters";
     filters.classList.toggle("hidden");
 };
 
@@ -463,10 +389,8 @@ clearFiltersBtn.onclick = () => {
         input.style.fontWeight = "normal";
     }
 
-    for (const option of ingredientsDatalist.childNodes){
-        if (option.disabled === true) {
-            option.disabled = false;
-        }
+    for (const option of ingredientsDatalist.childNodes) {
+        if (option.disabled === true) option.disabled = false;
     }
 
     makeInvisible(ingredientsSelectedDiv);
@@ -485,12 +409,8 @@ pageInput.oninput = () => {
     if (pageInputValue !== "") {
         makeInvisible(resultsContentDiv);
 
-        if (parseInt(pageInputValue) > totalPages) {
-            pageInput.value = totalPages;
-        }
-        if (parseInt(pageInputValue) < 1) {
-            pageInput.value = 1;
-        }
+        if (parseInt(pageInputValue) > totalPages) pageInput.value = totalPages;
+        if (parseInt(pageInputValue) < 1) pageInput.value = 1;
         pages = paginate(mealsCreated.length, parseInt(pageInput.value));
 
         clearTimeout(timer);
@@ -502,9 +422,7 @@ pageInput.oninput = () => {
 
 pageInput.onblur = () => {
     const currentPage = pages.currentPage;
-    if (parseInt(pageInput.value) !== currentPage) {
-        pageInput.value = currentPage;
-    }
+    if (parseInt(pageInput.value) !== currentPage) pageInput.value = currentPage;
 };
 
 pageInput.onclick = () => {
