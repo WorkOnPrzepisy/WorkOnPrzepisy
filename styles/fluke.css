@@ -143,8 +143,8 @@ body,
     position: absolute;
     right: 180px;
     border: 0;
-    height: 35px;
-    width: 35px;
+    height: 38px;
+    width: 38px;
     background: url("../img/heart.png");
     background-size: cover;
     background-position: center center;
@@ -305,6 +305,16 @@ body,
     #button-generate-recipe {
         margin-bottom: 5px;
     }
+    .try-again {
+        top: 400px;
+        margin-right: 1.2vw;
+    }
+    #favorite {
+        height: 35px;
+        width: 35px;
+        right: 120px;
+        top: 380px;
+    }
 }
 
 @media all and (max-width: 970px) {
@@ -320,6 +330,12 @@ body,
     }
     .content-description {
         margin-top: 100px;
+    }
+    #favorite {
+        height: 35px;
+        width: 35px;
+        right: 80px;
+        top: 380px;
     }
 }
 
@@ -354,6 +370,15 @@ body,
         display: flex;
         align-items: center;
     }
+    #favorite {
+        position: fixed;
+        height: 40px;
+        width: 40px;
+        right: 0;
+        margin-right: 2.4vw;
+        top: 290px;
+        z-index: 20;
+    }
 }
 
 @media all and (max-width: 548px) {
@@ -386,4 +411,8 @@ body,
         font-size: 11px;
         color: var(--light-texts-color);
     }
+}
+
+button:focus {
+    outline: none;
 }
