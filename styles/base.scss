@@ -119,7 +119,6 @@ $dark-texts-color: #707070;
                         transition: all 0.3s;
                         position: relative;
                         white-space: nowrap;
-                        // width: 100%;
 
                         &::before {
                             content: attr(data-content);
