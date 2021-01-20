@@ -134,6 +134,10 @@
   transition: all 0.3s;
 }
 
+.container .nav .nav-links ul li.invisible {
+  display: none;
+}
+
 .container .nav .nav-links ul li.right-nav {
   margin-right: 0px;
   margin-left: auto;
