@@ -232,7 +232,6 @@ $dark-texts-color: #707070;
     }
 }
 
-
 @media (max-width: 800px) {
     .container {
         .nav {
@@ -241,11 +240,6 @@ $dark-texts-color: #707070;
             align-items: flex-start;
             min-height: 100px;
             max-height: 100px;
-
-            &.active {
-                max-height: 330px;
-                min-height: 330px;
-            }
 
             .brand-logo-wrapper {
                 margin-top: 20px;
@@ -272,22 +266,6 @@ $dark-texts-color: #707070;
                     border-radius: 10px;
                 }
     
-                &.clicked {
-                    transform: translateX(8px);
-    
-                    .bar:nth-of-type(1) {
-                        transform: rotate(45deg) translateY(13px);
-                    }
-    
-                    .bar:nth-of-type(2) {
-                        opacity: 0;
-                    }
-    
-                    .bar:nth-of-type(3) {
-                        transform: rotate(-45deg) translateY(-13px);
-                    }
-                }
-    
                 &:hover .bar {
                     transition: all 1s;
                     background-color: $buttons-color;
@@ -302,11 +280,6 @@ $dark-texts-color: #707070;
                 width: 100%;
                 height: auto;
     
-                &.active {
-                    display: flex;
-                    opacity: 1;
-                }
-    
                 ul {
                     flex-direction: column;
                     width: auto;
@@ -316,9 +289,11 @@ $dark-texts-color: #707070;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-    
-                        &.invisible {
-                            display: none;
+
+                        a {
+                            display: block;
+                            text-align: center;
+                            margin: 5px;
                         }
     
                         &.right-nav {
@@ -344,12 +319,33 @@ $dark-texts-color: #707070;
                                 margin-left: 0px;
                             }
                         }
+
+                    }
+                }
+            }
+
+            &.active {
+                max-height: 330px;
+                min-height: 330px;
+
+                .nav-links {
+                    display: flex;
+                    opacity: 1;
+                }
+
+                .toggle-button {
+                    transform: translateX(8px);
     
-                        a {
-                            display: block;
-                            text-align: center;
-                            margin: 5px;
-                        }
+                    .bar:nth-of-type(1) {
+                        transform: rotate(45deg) translateY(13px);
+                    }
+    
+                    .bar:nth-of-type(2) {
+                        opacity: 0;
+                    }
+    
+                    .bar:nth-of-type(3) {
+                        transform: rotate(-45deg) translateY(-13px);
                     }
                 }
             }
@@ -372,9 +368,17 @@ $dark-texts-color: #707070;
         .nav {
             .nav-links {
                 ul {
-                    .nav-item {
-                        a {
-                            font-size: 18px;
+                    li {
+                        &.right-nav {
+                            a {
+                                font-size: 16px;
+                            }
+                        }
+
+                        &.nav-item {
+                            a {
+                                font-size: 20px;
+                            }
                         }
                     }
                 }
@@ -385,9 +389,11 @@ $dark-texts-color: #707070;
             .social-media {
                 ul {
                     li {
-                        i {
-                            font-size: 36px;
-                            transition: all 0.5s;
+                        a {
+                            i {
+                                font-size: 35px;
+                                transition: all 0.5s;
+                            }
                         }
                     }
                 }
