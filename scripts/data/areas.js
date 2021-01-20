@@ -1,4 +1,4 @@
-const areas = [
+export default [
   "american",
   "british",
   "canadian",
@@ -25,5 +25,3 @@ const areas = [
   "unknown",
   "vietnamese"
 ];
-
-export default areas;

@@ -14,9 +14,11 @@ const IDS_WITHOUT_PREVIEW = [
 let ingredientsSelected = [];
 const resultsIds = [];
 const mealsCreated = [];
-let pages = {};
+let pages;
 let timer;
 
+const mealIdInput = document.querySelector(".meal-id");
+const searchForm = document.querySelector(".search-form");
 const searchInput = document.querySelector(".search-input");
 const hideFiltersBtn = document.querySelector(".hide-filters-btn");
 const clearFiltersBtn = document.querySelector(".clear-filters-btn");
@@ -42,6 +44,7 @@ const paginationNextBtn = document.querySelector(".next-btn");
 const pageInput = document.querySelector(".page-input");
 const pagesNumberDiv = document.querySelector(".pages-number");
 
+const randomPickForm = document.querySelector(".random-pick-form");
 const randomPickBtn = document.querySelector(".random-pick-btn");
 
 const fillSelect = (list, select) => {
@@ -141,11 +144,15 @@ const createMeals = (defaultMeals = false) => {
             const mealDiv = document.createElement("div");
             const mealImg = document.createElement("img");
             const mealP = document.createElement("p");
-            const mealDetails = document.createElement("button");
+            const mealButton = document.createElement("button");
 
             mealDiv.className = "meal";
-            mealDetails.innerText = "Details";
-            mealDetails.type = "button";
+            mealButton.innerText = "Details";
+            mealButton.type = "button";
+            mealButton.onclick = () => {
+                mealIdInput.value = idMeal;
+                searchForm.submit();
+            };
 
             strMeal = cutStringIfTooLong(strMeal, 22);
             mealP.append(strMeal);
@@ -158,7 +165,7 @@ const createMeals = (defaultMeals = false) => {
 
             mealDiv.append(mealP);
             mealDiv.append(mealImg);
-            mealDiv.append(mealDetails);
+            mealDiv.append(mealButton);
             mealsCreated.push(mealDiv);
             resultsIds.push(idMeal);
         }
@@ -213,19 +220,15 @@ showMeals();
 const mealsFilter = () => {
     return meals.filter(({ingredients, strMeal, strCategory, strArea}) => {
         let value = true;
-        const ingredientsNames = ingredients.map(({name}) => {
-            return name
-        });
 
         for (const ingredient of ingredientsSelected) {
-            if (!ingredientsNames.includes(ingredient)) {
+            if (!ingredients.includes(ingredient)) {
                 value = false;
                 break;
             }
         }
 
         return (
-
             (strMeal.toLowerCase().includes(searchInput.value.toLowerCase()) || searchInput.value === "") &&
             (value || ingredientsSelected.length === 0) &&
             (strCategory === categorySelect.value || categorySelect.value === "") &&
@@ -508,6 +511,11 @@ pageInput.onblur = () => {
 
 pageInput.onclick = () => {
     pageInput.value = "";
+}
+
+randomPickBtn.onclick = () => {
+    mealIdInput.value = resultsIds[Math.floor(Math.random() * resultsIds.length)];
+    searchForm.submit();
 }
 
 setTimeout(() => {

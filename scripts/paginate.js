@@ -1,4 +1,6 @@
-function paginate(
+// source: https://github.com/cornflourblue/jw-paginate
+
+export default function paginate(
     totalItems = 0,
     currentPage = 1,
     pageSize = 12,
@@ -58,5 +60,3 @@ function paginate(
         pages: pages
     };
 }
-
-export default paginate;

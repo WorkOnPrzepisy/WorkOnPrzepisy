@@ -1,4 +1,4 @@
-const categories = [
+export default [
   "beef",
   "breakfast",
   "chicken",
@@ -14,5 +14,3 @@ const categories = [
   "vegan",
   "vegetarian",
 ];
-
-export default categories;

@@ -16,8 +16,9 @@
         <main class="main">
 
             <form action="" class="search-form">
+                <input type="hidden" class="meal-id" name="meal-id">
                 <div class="form-row row first-row-inputs">
-                    <input type="search" name="search-input" id="search-input" placeholder="Filter by name" class="search-input m10">
+                    <input type="search" id="search-input" placeholder="Filter by name" class="search-input m10">
                     <div class="search-buttons">
                         <button class="hide-filters-btn m10" type="button">Hide filters</button>
                         <button class="clear-filters-btn m10" type="button" disabled>Clear</button>
@@ -25,17 +26,17 @@
                 </div>
                 <div class="filters">
                     <div class="form-row row search-selects">
-                        <input id="meal-ingredients" name="meal-ingredients" placeholder="Ingredients" onfocus="this.placeholder = ''"
+                        <input id="meal-ingredients" placeholder="Ingredients" onfocus="this.placeholder = ''"
                         onblur="this.placeholder = 'Ingredients'" class="m10" list="ingredients"/>
                         <datalist id="ingredients">
                         </datalist>
         
-                        <input id="meal-category" name="meal-category" placeholder="Categories" onfocus="this.placeholder = ''"
+                        <input id="meal-category" placeholder="Categories" onfocus="this.placeholder = ''"
                         onblur="this.placeholder = 'Categories'" class="m10" list="categories"/>
                         <datalist id="categories">
                         </datalist>
         
-                        <input id="meal-area" name="meal-area" placeholder="Areas" onfocus="this.placeholder = ''"
+                        <input id="meal-area" placeholder="Areas" onfocus="this.placeholder = ''"
                         onblur="this.placeholder = 'Areas'" class="m10" list="areas"/>
                         <datalist id="areas">
                         </datalist>
@@ -56,10 +57,9 @@
                         <button type="button" class="next-btn"><i class="fas fa-angle-right"></i></button>
                     </div>
                     <div class="form-row row sixth-row-buttons">
-                        <button class="random-pick-btn m10" type="button">Pick for me</button>
+                        <button type="button" class="random-pick-btn m10">Pick for me</button>
                     </div>
                 </div>
-
             </form>
 
         </main>

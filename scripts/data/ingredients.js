@@ -1,4 +1,4 @@
-const ingredients = [
+export default [
   "ackee",
   "allspice",
   "almond extract",
@@ -528,5 +528,3 @@ const ingredients = [
   "yogurt",
   "zucchini",
 ];
-
-export default ingredients;
