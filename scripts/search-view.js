@@ -44,7 +44,6 @@ const paginationNextBtn = document.querySelector(".next-btn");
 const pageInput = document.querySelector(".page-input");
 const pagesNumberDiv = document.querySelector(".pages-number");
 
-const randomPickForm = document.querySelector(".random-pick-form");
 const randomPickBtn = document.querySelector(".random-pick-btn");
 
 const fillSelect = (list, select) => {
@@ -317,7 +316,6 @@ const showIngredientSmall = (ingredientStr) => {
                     break;
                 }
             }
- 
         }
         setTimeout(() => {
             newIngredientDiv.remove();
