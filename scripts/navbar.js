@@ -8,24 +8,32 @@ toggleButton.onclick = () => {
     toggleButton.classList.toggle('clicked');
 }
 
-const loginButton = document.querySelector(".login");
-const logoutButton = document.querySelector(".logout");
+const loginButton = document.querySelector(".login-signup a");
+const logoutButton = document.querySelector(".logout a");
 
 const forLogged = document.querySelectorAll(".for-logged");
 const forUnlogged = document.querySelector(".for-unlogged");
 
-toggleInvisible = () => {
+handleLogin = () => {
     for (const node of forLogged) {
-        node.classList.toggle("invisible");
+        node.style.display = "flex";
     }
-    forUnlogged.classList.toggle("invisible");
-}
+    forUnlogged.style.display = "none";
+};
+
+handleLogout = () => {
+    for (const node of forLogged) {
+        node.style.display = "none";
+    }
+    forUnlogged.style.display = "flex";
+};
+
 
 loginButton.onclick = () => {
-    toggleInvisible();
+    handleLogin();
 }
 
 logoutButton.onclick = () => {
-    toggleInvisible();
+    handleLogout();
 }
 
