@@ -8,6 +8,16 @@ const getData = (key) => {
     }
 }
 
+const storeData = (key, item) => {
+    if (!localStorage) return;
+
+    try {
+        return localStorage.setItem(key, JSON.stringify(item));
+    } catch (err) {
+        console.error(`error storing item ${key} to localStorage`, err);
+    }
+}
+
 const api = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
 
 const tdIntable1 = document.querySelector("#table--1 > tbody");
@@ -73,6 +83,18 @@ const addElementInTableHtml = (i, idMeal) => {
     tdIntable1.appendChild(tr);
 }
 
+const removeItemHtml = (removeTbody) => {
+    // console.log(removeTbody);
+    // if (removeTbody.length > 1) {
+    //     console.log("remove", removeTbody);
+    for (el of removeTbody) {
+        el.remove();
+        //     }
+        // } else {
+        //     removeTbody.remove();
+    }
+}
+
 const addApiInHTML = (apiWithId) => {
 
 }
@@ -96,4 +118,92 @@ const addDataFromLocalStorage = () => {
     const key = "Recipe";
     return getData(key);
 }
+
+const buttonSelectAll = document.querySelector(".button-select-basket");
+
+let isClick = 0;
+
+buttonSelectAll.addEventListener('click', function select() {
+
+    const inputCheckbox = document.querySelectorAll(".input-checkbox");
+
+    for (el of inputCheckbox) {
+        //console.log("el.checked", el.checked);
+
+        if (!el.checked) {
+            //console.log(el.checked);
+            el.checked = true;
+            //console.log(el.checked);
+        }
+    }
+    console.log(isClick);
+    isClick++;
+});
+
+buttonSelectAll.addEventListener('click', function onselect() {
+    if (isClick === 2) {
+        const inputCheckbox = document.querySelectorAll(".input-checkbox");
+        for (el of inputCheckbox) {
+            //console.log(isClick);
+            if (el.checked) {
+                el.checked = false;
+            }
+        }
+        isClick = 0;
+    }
+});
+
+const removeAddTable = (key, getTabeWithData) => {
+
+    storeData(key, getTabeWithData);
+    const removeTbody = document.querySelectorAll('.tbody-table-1 tr');
+    removeItemHtml(removeTbody);
+    addItemHTML();
+}
+
+const removeIconButtonTbody = document.querySelector(".tbody-table-1");
+
+removeIconButtonTbody.addEventListener('click', (e) => {
+    if (e.target.tagName === "DIV" && e.target.classList.contains("div-remove")) {
+        const whichTr = e.target.parentNode.parentNode;
+
+        let getTabeWithData = addDataFromLocalStorage();
+        console.log(getTabeWithData);
+
+        const indexTr = whichTr.classList.value[whichTr.classList.value.length - 1];
+        console.log("tu", indexTr);
+        getTabeWithData.splice(indexTr, 1);
+        const key = "Recipe";
+
+        removeAddTable(key, getTabeWithData);
+    }
+})
+
+const removeButton = document.querySelector("#remove-checked");
+removeButton.addEventListener('click', () => {
+    const inputCheckbox = document.querySelectorAll(".input-checkbox");
+    let getTabeWithData = addDataFromLocalStorage();
+    console.log("yable:", getTabeWithData);
+    let tableWithIndexTr = [];
+    for (el of inputCheckbox) {
+        console.log("el1", el);
+        if (el.checked) {
+            console.log("el2", el);
+            const whichTr = el.parentNode.parentNode.parentNode.parentNode;
+            console.log(whichTr);
+            const indexTr = whichTr.classList.value[whichTr.classList.value.length - 1];
+            console.log("tu", indexTr);
+            tableWithIndexTr.push(indexTr);
+            console.log(tableWithIndexTr);
+        }
+    }
+    for (let i = tableWithIndexTr.length - 1; i >= 0; i--) {
+        getTabeWithData.splice(el, 1);
+    }
+    const key = "Recipe";
+    removeAddTable(key, getTabeWithData);
+})
+
+
+
 addItemHTML();

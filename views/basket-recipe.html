@@ -99,17 +99,19 @@
                             
                             <th class="top-menu div-button-top-menu">
                                 <button class="button button-select-basket">Select all</button>
-                                <button class="button button-continue-adding-recipes">Continue adding recipes</button>
+                                <a href="../views/base.html">
+                                    <button class="button button-continue-adding-recipes">Continue adding recipes</button>
+                                </a>
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="tbody-table-1">
                         <!--dodawane za pomoca js !!-->
                         
                     </tbody>
                 </table>
                 <div class="bottom-menu-basket">
-                <button class="button" id="remove-all">Remove</button>
+                <button class="button" id="remove-checked" title="remove checked recipe">Remove</button>
                 <button class="button" id="generate-shopping-list-basket">Generate shopping list</button>
             </div>
             </div>

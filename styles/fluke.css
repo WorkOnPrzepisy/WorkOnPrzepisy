@@ -139,6 +139,19 @@ body,
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+#favorite {
+    position: absolute;
+    right: 180px;
+    border: 0;
+    height: 35px;
+    width: 35px;
+    background: url("../img/heart.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 20;
+}
+
 .content-list-ingredients {
     display: flex;
     flex-direction: column;
@@ -212,6 +225,21 @@ body,
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     outline: none;
     cursor: pointer;
+}
+
+.try-again {
+    margin-right: 2.8vw;
+    border: 0;
+    height: 50px;
+    width: 50px;
+    background: url("../img/again.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: fixed;
+    right: 0;
+    top: 510px;
+    z-index: 20;
 }
 
 .content-description {

@@ -1,5 +1,4 @@
 const jsPdf = window.jspdf;
-//const { jsPDF } = require('jspdf');
 const apiMeal = "https://www.themealdb.com/api/json/v1/1/";
 $("#carouselFade").carousel();
 let idMealPage = '';
@@ -16,43 +15,37 @@ const pageIsFluke = isFluke();
 
 const downloadApi = async(api) => {
     apiDownoand = await (await fetch(api)).json();
-    console.log(apiDownoand.meals[0]);
     return apiDownoand.meals[0];
 };
 
 const downloadSuitableApi = (pageIsFluke) => {
     if (pageIsFluke) {
         let buttonFluke = document.querySelector("#button-draw-recipe");
-        //console.log(buttonFluke);
         buttonFluke.removeAttribute("style");
         const title = document.querySelector("title");
         title.innerText = "Fluke";
         let apiDownoandSuitable = downloadApi(`${apiMeal}random.php`);
-        console.log(apiDownoandSuitable);
         return apiDownoandSuitable;
     } else {
         const title = document.querySelector("title");
         title.innerText = "Recipe";
         const hrefInPage = window.location.href;
         const idMeals = hrefInPage.slice(hrefInPage.indexOf("&") + 1);
-        console.log(idMeals);
         let apiDownoandSuitable = downloadApi(`${apiMeal}lookup.php?i=${idMeals}`);
         return apiDownoandSuitable;
     }
 };
 
 const addElementsFromApi = () => {
-    //let apiDownoand = downloadSuitableApi(pageIsFluke);
 
-    console.log(apiDownoand);
 
     const addInHTMl = apiDownoand
         .then((resp) => {
-            //console.log(resp);
+
             const { idMeal, strMeal, strMealThumb, strInstructions } = resp;
             const tabObiectIngredients = [];
             let i = 1;
-            //console.log(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null);
+
             while (!!(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null)) {
                 tabObiectIngredients.push({
                     measure: resp[`strMeasure${i}`],
@@ -60,8 +53,7 @@ const addElementsFromApi = () => {
                 });
                 i++;
             }
-            //console.log(tabObiectIngredients);
-            //console.log(strMeal, strMealThumb,tabObiectIngredients);
+
             idMealPage = ''
             idMealPage += idMeal;
             return { strMeal, strMealThumb, tabObiectIngredients, strInstructions };
@@ -72,7 +64,7 @@ const addElementsFromApi = () => {
 
     addInHTMl
         .then((resp) => {
-            //console.log(resp);
+
             const hTitleDish = document.querySelector("#title-dish");
             const imgDish = document.querySelector("#img-dish");
             const listIngredients = document.querySelector("#list-ingredients");
@@ -130,7 +122,6 @@ const buttonFluke = document.querySelector("#button-draw-recipe");
 buttonFluke.addEventListener("click", () => {
 
     apiDownoand = downloadSuitableApi(pageIsFluke);
-    console.log("click", apiDownoand);
     addElementsFromApi();
     removalAddedElementsToHtml(apiDownoand);
 });
@@ -141,16 +132,14 @@ const generateListIngredientsPdf = (doc, margin, recipe) => {
     lengthLiElements = liElements.length
     for (let j = 0; j < lengthLiElements; j++) {
         const liElementText = liElements[j].innerText;
-        console.log(recipe, j);
+
         if (recipe && j == 13) {
             i = 120;
         } else if (recipe && j > 13) {
-            console.log(liElementText);
             doc.text(20, i, `[   ]  ${liElementText}`);
         } else {
-            console.log(liElementText);
             doc.text(margin, i, `[   ]  ${liElementText}`);
-            console.log(i);
+
         }
         i += 10;
     }
@@ -167,7 +156,6 @@ const generateInstructions = (doc, instructions) => {
     for (let i = 0; i < lengthArrayInstructions; i++) {
         if (i === multiple) {
             const arrayWithString = instructionsSAdd.substring(start, i);
-            console.log("arr", arrayWithString);
             doc.text(20, j, `${arrayWithString}`);
             start = i;
             multiple += 80;
@@ -217,7 +205,6 @@ const generateRecipePdf = () => {
     generateListIngredientsPdf(doc, margin, recipe);
 
     generateInstructions(doc, instructions);
-    //console.log(instructions.split(''));
 
     const title = hTitleDish.replace(' ', '_')
     doc.save(`Recip_${title}.pdf`);
@@ -271,20 +258,43 @@ const addRecipeToLocalStorage = () => {
     let tabWithIdMealLocalStoage = [];
     const dataLocalS = getData(key);
     if (dataLocalS === null) {
-        //console.log(state);
         tabWithIdMealLocalStoage.push(state);
         storeData(key, tabWithIdMealLocalStoage);
         tabWithIdMealLocalStoage = [];
     } else {
-        //console.log(state);
         let listRecipe = tabWithIdMealLocalStoage.concat(dataLocalS);
         listRecipe.push(state);
-        console.log(2, listRecipe);
         storeData(key, listRecipe);
     }
-}
+};
 
 iconAddRecipe.addEventListener('click', () => {
 
     addRecipeToLocalStorage();
-})
+});
+
+const buttonFavourite = document.querySelector("#favorite");
+
+let isClick = 0;
+
+buttonFavourite.addEventListener('click', () => {
+
+    buttonFavourite.style.backgroundImage = 'url("../img/heartClick.png")';
+    isClick++;
+});
+
+buttonFavourite.addEventListener('click', () => {
+    if (isClick === 2) {
+        buttonFavourite.style.backgroundImage = 'url("../img/heart.png")';
+        isClick = 0;
+    }
+
+});
+
+const tryAgain = document.querySelector(".try-again");
+
+tryAgain.addEventListener('click', () => {
+    apiDownoand = downloadSuitableApi(pageIsFluke);
+    addElementsFromApi();
+    removalAddedElementsToHtml(apiDownoand);
+});
