@@ -91,6 +91,10 @@ $dark-texts-color: #707070;
                         margin-right: 0px;
                         margin-left: auto;
 
+                        &.for-logged {
+                            display: none;
+                        }
+
                         .login::after {
                             content: "/";
                             margin-left: 5px;
@@ -291,8 +295,9 @@ $dark-texts-color: #707070;
             }
 
             .nav-links {
+                opacity: 0;
                 margin-top: 10px;
-                transition: all 0.3s ease-in-out;
+                transition: all 1s ease-in-out;
                 overflow: hidden;
                 width: 100%;
                 height: auto;
