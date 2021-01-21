@@ -97,7 +97,6 @@ export default [
   "chicken legs",
   "chicken stock",
   "chicken stock cube",
-  "chicken thigh",
   "chicken thighs",
   "chickpeas",
   "chilled butter",
