@@ -58,15 +58,15 @@
 }
 
 .container .nav .brand-logo-wrapper:hover .brand-logo {
-  -webkit-transform: scale(0.73);
-          transform: scale(0.73);
+  -webkit-transform: scale(0.24);
+          transform: scale(0.24);
 }
 
 .container .nav .brand-logo-wrapper .brand-logo {
   width: auto;
   height: auto;
-  -webkit-transform: scale(0.68);
-          transform: scale(0.68);
+  -webkit-transform: scale(0.22);
+          transform: scale(0.22);
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }

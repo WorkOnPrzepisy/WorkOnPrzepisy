@@ -41,13 +41,13 @@ $dark-texts-color: #707070;
             margin-right: calc(20vw - 150px);
 
             &:hover .brand-logo {
-                transform: scale(0.73);
+                transform: scale(0.24);
             }
 
             .brand-logo {
                 width: auto;
                 height: auto;
-                transform: scale(0.68);
+                transform: scale(0.22);
                 transition: all 0.5s;
             }
 
