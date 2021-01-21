@@ -35,8 +35,6 @@
   background-color: #2AA1B7;
   padding: 0 50px;
   z-index: 100;
-  -webkit-transition: all 1s ease-in-out 0.3s;
-  transition: all 1s ease-in-out 0.3s;
   overflow: hidden;
 }
 
@@ -56,19 +54,19 @@
   border-radius: 50%;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
-  margin-right: calc(20vw - 160px);
+  margin-right: calc(20vw - 150px);
 }
 
 .container .nav .brand-logo-wrapper:hover .brand-logo {
-  -webkit-transform: scale(0.65);
-          transform: scale(0.65);
+  -webkit-transform: scale(0.73);
+          transform: scale(0.73);
 }
 
 .container .nav .brand-logo-wrapper .brand-logo {
   width: auto;
   height: auto;
-  -webkit-transform: scale(0.6);
-          transform: scale(0.6);
+  -webkit-transform: scale(0.68);
+          transform: scale(0.68);
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
@@ -294,6 +292,8 @@
 @media (max-width: 800px) {
   .container .nav {
     position: relative;
+    -webkit-transition: min-height 1s ease-in-out 0.3s,  max-height 1s ease-in-out 0.3s;
+    transition: min-height 1s ease-in-out 0.3s,  max-height 1s ease-in-out 0.3s;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -325,8 +325,6 @@
     margin-right: auto;
     width: 30px;
     height: 21px;
-    -webkit-transition: all 0.2s;
-    transition: all 0.2s;
   }
   .container .nav .toggle-button .bar {
     -webkit-transition: all 1s;
@@ -337,15 +335,13 @@
     border-radius: 10px;
   }
   .container .nav .toggle-button:hover .bar {
-    -webkit-transition: all 1s;
-    transition: all 1s;
     background-color: #FFD471;
   }
   .container .nav .nav-links {
     opacity: 0;
     margin-top: 10px;
-    -webkit-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
+    -webkit-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
     overflow: hidden;
     width: 100%;
     height: auto;
@@ -412,10 +408,6 @@
     display: -ms-flexbox;
     display: flex;
     opacity: 1;
-  }
-  .container .nav.active .toggle-button {
-    -webkit-transform: translateX(8px);
-            transform: translateX(8px);
   }
   .container .nav.active .toggle-button .bar:nth-of-type(1) {
     -webkit-transform: rotate(45deg) translateY(13px);

@@ -27,7 +27,6 @@ $dark-texts-color: #707070;
         background-color: $main-color;
         padding: 0 50px;
         z-index: 100;
-        transition: all 1s ease-in-out 0.3s;
         overflow: hidden;
 
         .brand-logo-wrapper {
@@ -39,16 +38,16 @@ $dark-texts-color: #707070;
             width: 65px;
             border-radius: 50%;
             transition: all 0.5s;
-            margin-right: calc(20vw - 160px);
+            margin-right: calc(20vw - 150px);
 
             &:hover .brand-logo {
-                transform: scale(0.65);
+                transform: scale(0.73);
             }
 
             .brand-logo {
                 width: auto;
                 height: auto;
-                transform: scale(0.6);
+                transform: scale(0.68);
                 transition: all 0.5s;
             }
 
@@ -236,6 +235,8 @@ $dark-texts-color: #707070;
     .container {
         .nav {
             position: relative;
+            transition: min-height 1s ease-in-out 0.3s, 
+                        max-height 1s ease-in-out 0.3s;
             flex-direction: column;
             align-items: flex-start;
             min-height: 100px;
@@ -256,7 +257,6 @@ $dark-texts-color: #707070;
                 margin-right: auto;
                 width: 30px;
                 height: 21px;
-                transition: all 0.2s;
 
                 .bar {
                     transition: all 1s;
@@ -267,7 +267,6 @@ $dark-texts-color: #707070;
                 }
     
                 &:hover .bar {
-                    transition: all 1s;
                     background-color: $buttons-color;
                 }
             }
@@ -275,7 +274,7 @@ $dark-texts-color: #707070;
             .nav-links {
                 opacity: 0;
                 margin-top: 10px;
-                transition: all 1s ease-in-out;
+                transition: opacity 1s ease-in-out;
                 overflow: hidden;
                 width: 100%;
                 height: auto;
@@ -333,9 +332,7 @@ $dark-texts-color: #707070;
                     opacity: 1;
                 }
 
-                .toggle-button {
-                    transform: translateX(8px);
-    
+                .toggle-button {    
                     .bar:nth-of-type(1) {
                         transform: rotate(45deg) translateY(13px);
                     }
