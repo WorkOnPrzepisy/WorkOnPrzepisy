@@ -370,6 +370,12 @@ body {
         font-size: 11px;
         color: var(--light-texts-color);
     }
+    .caption h2 {
+        font-size: 25px;
+    }
+    .caption p {
+        font-size: 13px;
+    }
 }
 
 button:focus {
