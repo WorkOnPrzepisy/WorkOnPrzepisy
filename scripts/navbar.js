@@ -6,3 +6,5 @@ toggleButton.addEventListener('click', () => {
     navLinks.classList.toggle('active');
     loginLogout.classList.toggle('active');
 });
+
+

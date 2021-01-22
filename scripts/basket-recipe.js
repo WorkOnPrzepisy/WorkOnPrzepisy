@@ -26,7 +26,8 @@ console.log(tdIntable1);
 let strMeals = '';
 const downoandApi = async(api, generateList) => {
 
-    const apiDownoand = await (await (await fetch(api)).json());
+    const apiDownoand = await (await fetch(api)).json();
+    //bez sensu?
     if (!generateList) {
         strMeals = '';
         strMeals += apiDownoand.meals[0].strMeal;
@@ -36,9 +37,10 @@ const downoandApi = async(api, generateList) => {
     }
 }
 
-const addElementInTableHtml = (i, idMeal) => {
+const addElementInTableHtml = (i, idMeal, title) => {
     const tr = document.createElement('tr');
     tr.classList.add(`tr--${i}`);
+
 
     const tdcol1 = document.createElement('td');
     tdcol1.classList.add(`col--1`, `col-checkbox`);
@@ -61,21 +63,46 @@ const addElementInTableHtml = (i, idMeal) => {
     tdcol2.classList.add(`col--2`, `col-title`);
     const tdcol2h4 = document.createElement('h4');
     tdcol2h4.classList.add('h4-title-Recipe');
-    tdcol2h4.innerText = strMeals;
+    tdcol2h4.innerText = title;
+    const aElement = document.createElement('a');
+    aElement.classList.add('aElementTitle');
+    aElement.href = `../views/fluke.html?page=&${idMeal}`;
+    aElement.appendChild(tdcol2h4)
     const divTitle = document.createElement('div');
     divTitle.classList.add('div-title-Recipe');
-    divTitle.appendChild(tdcol2h4);
+    divTitle.appendChild(aElement);
+
 
     const tdcol3 = document.createElement('td');
     tdcol3.classList.add(`col--3`, `col-remove`);
+    const divCol3 = document.createElement('div');
+    divCol3.classList.add('div-col-3');
     const divRemove = document.createElement('div');
     divRemove.classList.add('div-remove');
     divRemove.setAttribute('title', 'Remove this recipe');
+    const buttonRemoveValue = document.createElement('button');
+    buttonRemoveValue.classList.add('button-remove-value');
+    const inputValue = document.createElement('input');
+    inputValue.classList.add('inputCountRecipe');
+    inputValue.setAttribute('type', 'number');
+    const buttonAddValue = document.createElement('button');
+    buttonAddValue.classList.add('button-add-value');
+    const divAddRemoveInput = document.createElement('div');
+    divAddRemoveInput.classList.add('add-remove-input');
+
+    divAddRemoveInput.appendChild(buttonRemoveValue);
+    divAddRemoveInput.appendChild(inputValue);
+    divAddRemoveInput.appendChild(buttonAddValue);
+
+    divCol3.appendChild(divAddRemoveInput);
+    divCol3.appendChild(divRemove)
+
+
 
 
     tdcol1.appendChild(divCheckbox);
     tdcol2.appendChild(divTitle);
-    tdcol3.appendChild(divRemove);
+    tdcol3.appendChild(divCol3);
     tr.appendChild(tdcol1);
     tr.appendChild(tdcol2);
     tr.appendChild(tdcol3);
@@ -95,9 +122,9 @@ const removeItemHtml = (removeTbody) => {
     }
 }
 
-const addApiInHTML = (apiWithId) => {
+//const addApiInHTML = (apiWithId) => {
 
-}
+//}
 
 const addItemHTML = async() => {
 
@@ -107,10 +134,10 @@ const addItemHTML = async() => {
     const arrWithMealsLength = arrWithMeals.length;
     for (let i = 0; i < arrWithMealsLength; i++) {
 
-        const apiWithId = api + arrWithMeals[i].idMeals;
-        console.log(apiWithId);
-        await downoandApi(apiWithId, false);
-        addElementInTableHtml(i, arrWithMeals[i].idMeals);
+        //const apiWithId = api + arrWithMeals[i].idMeals;
+        //console.log(apiWithId);
+        //await downoandApi(apiWithId, false);
+        addElementInTableHtml(i, arrWithMeals[i].idMeals, arrWithMeals[i].title);
     }
 }
 
@@ -165,7 +192,7 @@ const removeIconButtonTbody = document.querySelector(".tbody-table-1");
 
 removeIconButtonTbody.addEventListener('click', (e) => {
     if (e.target.tagName === "DIV" && e.target.classList.contains("div-remove")) {
-        const whichTr = e.target.parentNode.parentNode;
+        const whichTr = e.target.parentNode.parentNode.parentNode;
 
         let getTabeWithData = addDataFromLocalStorage();
         console.log(getTabeWithData);
@@ -203,6 +230,7 @@ removeButton.addEventListener('click', () => {
     const key = "Recipe";
     removeAddTable(key, getTabeWithData);
 })
+
 
 
 
