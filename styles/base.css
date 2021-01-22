@@ -208,9 +208,9 @@
 }
 
 .main {
-    padding: 0px;
-    padding-top: 100px;
-    margin: 0;
+    padding: 50px;
+    padding-top: 120px;
+    min-height: calc(100vh - 150px);
 }
 
 .footer {
