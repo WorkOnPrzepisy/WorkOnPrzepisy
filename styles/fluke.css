@@ -16,9 +16,8 @@ body {
     width: 100%;
 }
 
-.main {
+.slider-container {
     margin-top: 100px;
-    padding: 0;
 }
 
 .slide1,
@@ -335,6 +334,9 @@ body {
     }
     .caption {
         bottom: 0;
+    }
+    .slider-container {
+        margin-top: 0;
     }
 }
 

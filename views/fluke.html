@@ -19,7 +19,7 @@
         <nav class="nav">
             <div class="brand-logo-wrapper">
                 <a href="#">
-                    <img class="brand-logo" src="../img/logo.png" />
+                    <img class="brand-logo" src="../img/logo.png">
                 </a>
             </div>
 
@@ -31,61 +31,77 @@
 
             <div class="nav-links">
                 <ul>
-                    <li><a href="base.html" data-content="Main">Main</a></li>
-                    <li><a href="fluke.html?page=fluke" data-content="I'm feeling lucky">I'm feeling lucky</a></li>
-                    <li><a href="#" data-content="Recipes">Recipes</a></li>
-                    <li><a href="#" data-content="Contact">Contact</a></li>
+                    <li class="nav-item">
+                        <a href="#" data-content="Main">Main</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-content="I'm Feeling Lucky">I'm Feeling Lucky</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-content="Recipes">Recipes</a>
+                    </li>
+                    <li class="nav-item for-logged">
+                        <a href="#" data-content="Add Recipe">Add Recipe</a>
+                    </li>
+                    <li class="nav-item for-logged">
+                        <a href="#" data-content="Favourites">Favourites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-content="About Us">About Us</a>
+                    </li>
+                    <li class="right-nav login-signup for-unlogged">
+                        <a href="#" data-content="Log In" class="login">Log In</a>
+                        <a href="#" data-content="Sign Up" class="signup">Sign Up</a>
+                    </li>
+                    <li class="right-nav logout for-logged">
+                        <a href="#" data-content="Log Out">Log Out</a>
+                    </li>
                 </ul>
-            </div>
-            <div class="login-logout">
-                <a href="#" data-content="Log in">Log in</a>
-                <div class="backslash">/</div>
-                <a href="#" data-content="Log out">Log out</a>
             </div>
         </nav>
 
         <!--            main             -->
-
-        <main class="main container-fluke">
-            <div class="slider-container">
-                <div class="slider">
-                    <div class="slide slide1">
-                        <div class="caption">
-                            <h1> If more of us valued food and cheer and song above hoarded gold, it would be a merrier world.</h1>
-                            <p>~~ J.R.R. Tolkien
-                            </p>
-                        </div>
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slide slide1">
+                    <div class="caption">
+                        <h1> If more of us valued food and cheer and song above hoarded gold, it would be a merrier world.</h1>
+                        <p>~~ J.R.R. Tolkien
+                        </p>
                     </div>
-                    <div class="slide slide2">
-                        <div class="caption">
-                            <h2> One cannot think well, love well, sleep well, if one has not dined well.</h2>
-                            <p>~~ Virginia Woolf, A Room of One's Own
-                            </p>
-                        </div>
+                </div>
+                <div class="slide slide2">
+                    <div class="caption">
+                        <h2> One cannot think well, love well, sleep well, if one has not dined well.</h2>
+                        <p>~~ Virginia Woolf, A Room of One's Own
+                        </p>
                     </div>
-                    <div class="slide slide3">
-                        <div class="caption">
-                            <h2> Ask not what you can do for your country. Ask what’s for lunch.</h2>
-                            <p>~~ Orson Welles
-                            </p>
-                        </div>
+                </div>
+                <div class="slide slide3">
+                    <div class="caption">
+                        <h2> Ask not what you can do for your country. Ask what’s for lunch.</h2>
+                        <p>~~ Orson Welles
+                        </p>
                     </div>
-                    <div class="slide slide4">
-                        <div class="caption">
-                            <h2> There is no love sincerer than the love of food.</h2>
-                            <p> George Bernard Shaw, Man and Superman
-                            </p>
-                        </div>
+                </div>
+                <div class="slide slide4">
+                    <div class="caption">
+                        <h2> There is no love sincerer than the love of food.</h2>
+                        <p> George Bernard Shaw, Man and Superman
+                        </p>
                     </div>
-                    <div class="slide slide5">
-                        <div class="caption">
-                            <h2> I cook with wine, sometimes I even add it to the food.</h2>
-                            <p>W.C. Fields
-                            </p>
-                        </div>
+                </div>
+                <div class="slide slide5">
+                    <div class="caption">
+                        <h2> I cook with wine, sometimes I even add it to the food.</h2>
+                        <p>W.C. Fields
+                        </p>
                     </div>
                 </div>
             </div>
+        </div>
+        <main class="container-fluke">
+
             <section class="container-recipe">
                 <div class="content-title">
                     <h3 id="title-dish"></h3>

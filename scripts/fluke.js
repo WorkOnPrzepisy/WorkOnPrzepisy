@@ -291,10 +291,20 @@ buttonFavourite.addEventListener('click', () => {
 
 });
 
-const tryAgain = document.querySelector(".try-again");
+const addTryAgain = () => {
+    const tryAgain = document.querySelector(".try-again");
+    console.log(pageIsFluke);
 
-tryAgain.addEventListener('click', () => {
-    apiDownoand = downloadSuitableApi(pageIsFluke);
-    addElementsFromApi();
-    removalAddedElementsToHtml(apiDownoand);
-});
+    if (pageIsFluke) {
+
+        tryAgain.addEventListener('click', () => {
+            apiDownoand = downloadSuitableApi(pageIsFluke);
+            addElementsFromApi();
+            removalAddedElementsToHtml(apiDownoand);
+        });
+    } else if (!pageIsFluke) {
+        tryAgain.style.visibility = "hidden";
+    }
+}
+
+addTryAgain();
