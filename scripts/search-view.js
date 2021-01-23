@@ -1,5 +1,4 @@
 import paginate from './paginate.js';
-import meals from './data/meals.js';
 import ingredientsList from './data/ingredients.js';
 import areasList from './data/areas.js';
 import categoriesList from './data/categories.js';
@@ -121,7 +120,7 @@ const getMeals = async () => {
 
 }
 
-const createMeals = async (defaultMeals = false) => {
+const createMeals = async () => {
     mealsCreated.length = 0;
     resultsIds.length = 0;
     
@@ -194,7 +193,7 @@ const showMealsWithScroll = () => {
     window.scrollTo(0, windowScrollYBefore + difference);
 };
 
-createMeals(true)
+createMeals()
 .then(
     () => {
         showMeals();
@@ -413,7 +412,7 @@ clearFiltersBtn.onclick = () => {
     makeInvisible(results);
 
     setTimeout(() => {
-        createMeals(true).then(() => {
+        createMeals().then(() => {
                 showMeals();
             }
         )
