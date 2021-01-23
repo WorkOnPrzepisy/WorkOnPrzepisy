@@ -37,12 +37,6 @@ const results = document.querySelector(".results");
 const resultsInfo = document.querySelector(".results-info");
 const resultsContentDiv = document.querySelector(".results-content");
 
-// const paginationButtonsDiv = document.querySelector(".pagination-buttons");
-// const paginationPreviousBtn = document.querySelector(".previous-btn");
-// const paginationNextBtn = document.querySelector(".next-btn");
-// const pageInput = document.querySelector(".page-input");
-// const pagesNumberDiv = document.querySelector(".pages-number");
-
 const paginationButtonsDivs = document.querySelectorAll(".pagination-buttons");
 const paginationPreviousBtns = document.querySelectorAll(".previous-btn");
 const paginationNextBtns = document.querySelectorAll(".next-btn");
@@ -92,6 +86,20 @@ const changePageButtonHandler = (next=true) => {
 
 };
 
+const paginationButtonHandler = (btns) => {
+    const next = btns === paginationNextBtns ? true : false;
+    btns.forEach((node, index) => {
+        node.onclick = () => {
+            changePageButtonHandler(next);
+            if (index === 1) {
+                searchInput.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+};
+
 const updatePagination = () => {
     pages = paginate(mealsCreated.length);
     const {totalPages} = pages;
@@ -105,23 +113,8 @@ const updatePagination = () => {
             node.style.display = "flex";
         }
 
-        for (const node of paginationPreviousBtns) {
-            node.onclick = () => {
-                changePageButtonHandler(false);
-                searchInput.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        }
-
-        for (const node of paginationNextBtns) {
-            node.onclick = () => {
-                changePageButtonHandler(true);
-                searchInput.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        }
+        paginationButtonHandler(paginationPreviousBtns);
+        paginationButtonHandler(paginationNextBtns);
 
         for (const node of pagesNumberDivs) {
             node.innerText = `/ ${totalPages}`;
@@ -190,8 +183,6 @@ const createMeals = async () => {
 
         return innerMealsCreated;
     })
-
-
 }
 
 const showMeals = () => {
