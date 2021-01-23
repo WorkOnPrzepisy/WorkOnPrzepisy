@@ -82,8 +82,8 @@ body {
     position: absolute;
     right: 180px;
     border: 0;
-    height: 38px;
-    width: 38px;
+    height: 35px;
+    width: 35px;
     background: url("../img/heart.png");
     background-size: cover;
     background-position: center center;
@@ -249,8 +249,8 @@ body {
         margin-right: 1.2vw;
     }
     #favorite {
-        height: 35px;
-        width: 35px;
+        height: 33px;
+        width: 33px;
         right: 120px;
         top: 380px;
     }
@@ -278,8 +278,8 @@ body {
         margin-top: 100px;
     }
     #favorite {
-        height: 35px;
-        width: 35px;
+        height: 33px;
+        width: 33px;
         right: 80px;
         top: 380px;
     }
@@ -321,10 +321,10 @@ body {
     }
     #favorite {
         position: fixed;
-        height: 40px;
-        width: 40px;
+        height: 38px;
+        width: 38px;
         right: 0;
-        margin-right: 2.4vw;
+        margin-right: 2.6vw;
         top: 290px;
         z-index: 20;
     }
@@ -375,6 +375,9 @@ body {
     }
     .caption p {
         font-size: 13px;
+    }
+    #favorite {
+        margin-right: 4vw;
     }
 }
 
