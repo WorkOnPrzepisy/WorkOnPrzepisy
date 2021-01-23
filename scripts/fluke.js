@@ -151,7 +151,7 @@ const generateInstructions = (doc, instructions) => {
     lengthArrayInstructions = instructionsSAdd.length;
     let start = 0;
     let multiple = 80;
-    j = 210;
+    let j = 210;
 
     for (let i = 0; i < lengthArrayInstructions; i++) {
         if (i === multiple) {
@@ -172,7 +172,6 @@ const generateInstructions = (doc, instructions) => {
 
 const generateShoppingListPdf = () => {
     const doc = jsPdf.jsPDF();
-    //const doc = new jsPDF();
     const margin = 30;
     const hTitleDish = document.querySelector("#title-dish").innerText;
     doc.getFontList("Lobster");
@@ -188,7 +187,6 @@ const generateShoppingListPdf = () => {
 const generateRecipePdf = () => {
     recipe = true;
     const doc = jsPdf.jsPDF();
-    //const doc = new jsPDF();
     const hTitleDish = document.querySelector("#title-dish").innerHTML;
     const imgDish = document.querySelector("#img-dish");
     const instructions = document.querySelector(".instructions").innerHTML;
@@ -293,7 +291,6 @@ buttonFavourite.addEventListener('click', () => {
 
 const addTryAgain = () => {
     const tryAgain = document.querySelector(".try-again");
-    console.log(pageIsFluke);
 
     if (pageIsFluke) {
 
