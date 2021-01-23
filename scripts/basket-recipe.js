@@ -37,7 +37,7 @@ const downoandApi = async(api, generateList) => {
     }
 }
 */
-const addElementInTableHtml = (i, idMeal, title) => {
+const addElementInTableHtml = (i, idMeal, title, count) => {
     const tr = document.createElement('tr');
     tr.classList.add(`tr--${i}`);
 
@@ -85,6 +85,7 @@ const addElementInTableHtml = (i, idMeal, title) => {
     const inputValue = document.createElement('input');
     inputValue.classList.add('inputCountRecipe');
     inputValue.setAttribute('type', 'number');
+    inputValue.value = count;
     const buttonAddValue = document.createElement('button');
     buttonAddValue.classList.add('button-add-value');
     const divAddRemoveInput = document.createElement('div');
@@ -124,53 +125,81 @@ const removeItemHtml = (removeTbody) => {
 
 //}
 
-const addItemHTML = async() => {
-
+const countArrWthMeals = () => {
     const arrWithMeals = addDataFromLocalStorage();
     //console.log(arrWithMeals);
     const copyArrWithMeals = JSON.parse(JSON.stringify(arrWithMeals));
 
     console.log(arrWithMeals);
 
-    let arrWithCountMeals = [];
+
 
     for (let i = 0; i < copyArrWithMeals.length; i++) {
-        arrWithCountMeals.push(copyArrWithMeals[i]);
-        arrWithCountMeals[i].countMeal = 1;
-        let last = 0;
-        console.log(i);
-        console.log(arrWithCountMeals[i]);
+        let arrWithCountMeals = [];
+        //arrWithCountMeals.push(copyArrWithMeals[i]);
+        copyArrWithMeals[i].countMeal = (copyArrWithMeals[i].countMeal || 1);
+        //let last = 0;
+        console.log("i1", i);
+        console.log("arr", arrWithCountMeals);
         for (let j = i; j < copyArrWithMeals.length; j++) {
 
 
-            if (arrWithCountMeals[i].idMeals === copyArrWithMeals[j].idMeals) {
-                console.log(arrWithCountMeals[i].idMeals, "===", copyArrWithMeals[j].idMeals);
+            if (copyArrWithMeals[i].idMeals === copyArrWithMeals[j].idMeals) {
+                console.log();
+                console.log(copyArrWithMeals[i].idMeals, "===", copyArrWithMeals[j].idMeals);
 
-                console.log(arrWithCountMeals[i].countMeal);
+
+                console.log("i", i);
                 console.log("j", j);
-                arrWithCountMeals[i].countMeal += 1;
-                last = j;
+                copyArrWithMeals[i].countMeal += 1;
+                console.log(copyArrWithMeals[i]);
+                console.log(copyArrWithMeals[i].countMeal);
+                last = copyArrWithMeals[i].countMeal - 1;
+                arrWithCountMeals.push(j);
 
             }
+            console.log("last", last);
         }
-        copyArrWithMeals.splice(i, last);
-        console.log(copyArrWithMeals);
-        break;
-    }
+        copyArrWithMeals[i].countMeal -= 1;
+        for (el of copyArrWithMeals) {
+            console.log("pcM", el);
+        }
+        for (let i = arrWithCountMeals.length - 1; i > 0; i--) {
+            console.log("remove", arrWithCountMeals[i]);
+            copyArrWithMeals.splice(arrWithCountMeals[i], 1);
+        }
 
-    console.log(arrWithCountMeals);
+        console.log("pi", i, "pl", last);
+
+        for (el of copyArrWithMeals) {
+            console.log("cM", el);
+        }
+        for (el of arrWithCountMeals) {
+            console.log("aM", el);
+        }
+
+
+    }
 
     console.log("tab:", copyArrWithMeals);
     console.log("tab1", arrWithMeals);
 
-    // uniqueCount = ["a", "b", "c", "d", "d", "e", "a", "b", "c", "f", "g", "h", "h", "h", "e", "a"];
-    // var count = {};
-    // uniqueCount.forEach(function(i) {
-    //     console.log(count);
-    //     console.log(count[i]);
-    //     count[i] = (count[i] || 0) + 1;
-    // });
-    // //console.log(count);
+    storeData("Recipe", copyArrWithMeals)
+
+    return copyArrWithMeals;
+}
+
+const addItemHTML = () => {
+
+    const copyArrWithMeals = countArrWthMeals();
+    for (let i = 0; i < copyArrWithMeals.length; i++) {
+
+        //const apiWithId = api + arrWithMeals[i].idMeals;
+        //console.log(apiWithId);
+        //await downoandApi(apiWithId, false);
+        addElementInTableHtml(i, copyArrWithMeals[i].idMeals, copyArrWithMeals[i].title, copyArrWithMeals[i].countMeal);
+
+    }
 
 
 
@@ -229,6 +258,7 @@ buttonSelectAll.addEventListener('click', function onselect() {
 const removeAddTable = (key, getTabeWithData) => {
 
     storeData(key, getTabeWithData);
+    console.log(storeData);
     const removeTbody = document.querySelectorAll('.tbody-table-1 tr');
     removeItemHtml(removeTbody);
     addItemHTML();
@@ -240,8 +270,8 @@ removeIconButtonTbody.addEventListener('click', (e) => {
     if (e.target.tagName === "DIV" && e.target.classList.contains("div-remove")) {
         const whichTr = e.target.parentNode.parentNode.parentNode;
 
-        let getTabeWithData = addDataFromLocalStorage();
-        //console.log(getTabeWithData);
+        let getTabeWithData = countArrWthMeals();
+        console.log(getTabeWithData);
 
         //console.log(whichTr);
         const whichTrIndex = whichTr.classList.value;

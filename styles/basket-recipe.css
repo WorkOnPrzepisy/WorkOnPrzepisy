@@ -234,10 +234,10 @@ input[type=checkbox] {
 }
 
 .div-remove {
-    margin-right: 70px;
+    margin-right: 30px;
     float: right;
-    height: 45px;
-    width: 45px;
+    height: 44px;
+    width: 44px;
     background: url("../img/iconRemoveRecipe.png");
     background-size: cover;
     background-position: center center;
@@ -284,7 +284,7 @@ input:focus {
     -moz-transition: all 0.3s ease-out;
     -ms-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
-    border: 2px solid rgba(42, 161, 183, 0.8);
+    border: 1.8px solid rgb(42, 161, 183);
 }
 
 .inputCountRecipe {
@@ -297,7 +297,10 @@ input:focus {
     -moz-transition: all 0.3s ease-out;
     -ms-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
-    border: 2px solid rgba(42, 161, 183, 0.8);
+    border: 1.8px solid rgb(42, 161, 183);
+    text-align: center;
+    font-family: "Lobster";
+    color: var(--dark-texts-color);
 }
 
 .button-add-value {
@@ -314,7 +317,7 @@ input:focus {
     -moz-transition: all 0.3s ease-out;
     -ms-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
-    border: 2px solid rgba(42, 161, 183, 0.8);
+    border: 1.8px solid rgb(42, 161, 183);
 }
 
 .div-col-3 {
