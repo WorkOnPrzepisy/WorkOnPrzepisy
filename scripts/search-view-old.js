@@ -106,66 +106,45 @@ const updatePagination = () => {
     }
 };
 
-const getMeals = async () => {
-
-    const baseUrl = "http://localhost:3000/meals?";
-    const nameUrl = "name_like=";
-    const ingredientsUrl = "&ingredientsList_like=";
-    const categoryUrl = "&category_like=";
-    const areaUrl = "&area_like=";
-
-    const fullUrl = baseUrl + nameUrl + searchInput.value + ingredientsUrl + ingredientsSelected.join(",") + 
-        categoryUrl + categorySelect.value + areaUrl + areaSelect.value;
-
-    return fetch(fullUrl).then((response) => response.json())
-
-}
-
-const createMeals = async (defaultMeals = false) => {
+const createMeals = (defaultMeals = false) => {
     mealsCreated.length = 0;
     resultsIds.length = 0;
     
-    return getMeals().then((mealsToCreate) => {
-        const mealsNumber = mealsToCreate.length;
-        randomPickBtn.style.display = mealsNumber < 2 ? "none" : "block";
-        const innerMealsCreated = [];
-    
-        if (mealsNumber > 0) {
-            for (let {name, imageUrl, id} of mealsToCreate) {
-                const mealDiv = document.createElement("div");
-                const mealImg = document.createElement("img");
-                const mealP = document.createElement("p");
-                const mealButton = document.createElement("button");
-    
-                mealDiv.className = "meal";
-                mealButton.innerText = "Details";
-                mealButton.type = "button";
-                mealButton.onclick = () => {
-                    mealIdInput.value = id;
-                    searchForm.submit();
-                };
-    
-                name = cutStringIfTooLong(name, 22);
-                mealP.append(name);
-    
-                mealImg.src = IDS_WITHOUT_PREVIEW.includes(id) ? imageUrl : `${imageUrl}/preview`; 
-    
-                mealDiv.append(mealP);
-                mealDiv.append(mealImg);
-                mealDiv.append(mealButton);
-                innerMealsCreated.push(mealDiv);
-                mealsCreated.push(mealDiv);
-                resultsIds.push(id);
-            }
+    const mealsToCreate = defaultMeals ? meals : mealsFilter();
+
+    const mealsNumber = mealsToCreate.length;
+    randomPickBtn.style.display = mealsNumber < 2 ? "none" : "block";
+
+    if (mealsNumber > 0) {
+        for (let {strMeal, strMealThumb, idMeal} of mealsToCreate) {
+            const mealDiv = document.createElement("div");
+            const mealImg = document.createElement("img");
+            const mealP = document.createElement("p");
+            const mealButton = document.createElement("button");
+
+            mealDiv.className = "meal";
+            mealButton.innerText = "Details";
+            mealButton.type = "button";
+            mealButton.onclick = () => {
+                mealIdInput.value = idMeal;
+                searchForm.submit();
+            };
+
+            strMeal = cutStringIfTooLong(strMeal, 22);
+            mealP.append(strMeal);
+
+            mealImg.src = IDS_WITHOUT_PREVIEW.includes(idMeal) ? strMealThumb : `${strMealThumb}/preview`; 
+
+            mealDiv.append(mealP);
+            mealDiv.append(mealImg);
+            mealDiv.append(mealButton);
+            mealsCreated.push(mealDiv);
+            resultsIds.push(idMeal);
         }
-        
-        addResultsInfo(mealsNumber);
-        updatePagination();
-
-        return innerMealsCreated;
-    })
-
-
+    }
+    
+    addResultsInfo(mealsNumber);
+    updatePagination();
 }
 
 const showMeals = () => {
@@ -194,13 +173,23 @@ const showMealsWithScroll = () => {
     window.scrollTo(0, windowScrollYBefore + difference);
 };
 
-createMeals(true)
-.then(
-    () => {
-        showMeals();
-    }
-)
+createMeals(true);
+showMeals();
 
+const mealsFilter = () => {
+    return meals.filter(({ingredients, strMeal, strCategory, strArea}) => {
+
+        for (const ingredient of ingredientsSelected) {
+            if (!ingredients.includes(ingredient)) return false;
+        }
+
+        return (
+            (strMeal.toLowerCase().includes(searchInput.value.toLowerCase()) || searchInput.value === "") &&
+            (strCategory === categorySelect.value || categorySelect.value === "") &&
+            (strArea === areaSelect.value || areaSelect.value === "")
+        )
+    });
+}
 
 const checkIfDisableClearBtn = () => {
     clearFiltersBtn.disabled = 
@@ -243,10 +232,9 @@ ingredientsSelect.onchange = () => {
 
         clearTimeout(timer);
         timer = setTimeout(() => {
-            createMeals().then(() => {
-                showMeals();
-                checkIfDisableInputs();
-            })
+            createMeals();
+            showMeals();
+            checkIfDisableInputs();
         }, 500);
     }
 };
@@ -282,11 +270,10 @@ const showIngredientSmall = (ingredientStr) => {
 
         clearTimeout(timer);
         timer = setTimeout(() => {
-            createMeals().then(() => {
-                showMeals();
-                checkIfDisableClearBtn();
-                checkIfEnableInputs();
-            })
+            createMeals();
+            showMeals();
+            checkIfDisableClearBtn();
+            checkIfEnableInputs();
         }, 500);
 
     };
@@ -310,14 +297,13 @@ searchInput.oninput = () => {
 
     clearTimeout(timer);
     timer = setTimeout(() => {
-        createMeals().then(() => {
-            if (mealsCreated.length < 2) searchInput.maxLength = searchInput.value.length;
-            else searchInput.removeAttribute("maxlength");
-            showMeals();
-            checkIfDisableClearBtn();
-            checkIfDisableInputs();
-            checkIfEnableInputs();
-        })
+        createMeals();
+        if (mealsCreated.length < 2) searchInput.maxLength = searchInput.value.length;
+        else searchInput.removeAttribute("maxlength");
+        showMeals();
+        checkIfDisableClearBtn();
+        checkIfDisableInputs();
+        checkIfEnableInputs();
     }, 500);
 };
 
@@ -342,12 +328,11 @@ const selectClickHandle = (select) => {
 
         clearTimeout(timer);
         timer = setTimeout(() => {
-            createMeals().then(() => {
-                showMeals();
-                checkIfDisableClearBtn();
-                checkIfEnableInputs();
-                checkIfDisableInputs();
-            })
+            createMeals();
+            showMeals();
+            checkIfDisableClearBtn();
+            checkIfEnableInputs();
+            checkIfDisableInputs();
         }, 500);
     }
 };
@@ -370,11 +355,10 @@ const changeSelectHandler = (select, list) => {
 
     clearTimeout(timer);
     timer = setTimeout(() => {
-        createMeals().then(() => {
-            showMeals();
-            checkIfDisableClearBtn();
-            checkIfDisableInputs();
-        })
+        createMeals();
+        showMeals();
+        checkIfDisableClearBtn();
+        checkIfDisableInputs();
     }, 500);
 }
 
@@ -413,10 +397,8 @@ clearFiltersBtn.onclick = () => {
     makeInvisible(results);
 
     setTimeout(() => {
-        createMeals(true).then(() => {
-                showMeals();
-            }
-        )
+        createMeals(true);
+        showMeals();
     }, 500);
 };
 
