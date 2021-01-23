@@ -37,11 +37,17 @@ const results = document.querySelector(".results");
 const resultsInfo = document.querySelector(".results-info");
 const resultsContentDiv = document.querySelector(".results-content");
 
-const paginationButtonsDiv = document.querySelector(".pagination-buttons");
-const paginationPreviousBtn = document.querySelector(".previous-btn");
-const paginationNextBtn = document.querySelector(".next-btn");
-const pageInput = document.querySelector(".page-input");
-const pagesNumberDiv = document.querySelector(".pages-number");
+// const paginationButtonsDiv = document.querySelector(".pagination-buttons");
+// const paginationPreviousBtn = document.querySelector(".previous-btn");
+// const paginationNextBtn = document.querySelector(".next-btn");
+// const pageInput = document.querySelector(".page-input");
+// const pagesNumberDiv = document.querySelector(".pages-number");
+
+const paginationButtonsDivs = document.querySelectorAll(".pagination-buttons");
+const paginationPreviousBtns = document.querySelectorAll(".previous-btn");
+const paginationNextBtns = document.querySelectorAll(".next-btn");
+const pageInputs = document.querySelectorAll(".page-input");
+const pagesNumberDivs = document.querySelectorAll(".pages-number");
 
 const randomPickBtn = document.querySelector(".random-pick-btn");
 
@@ -75,7 +81,9 @@ const changePageButtonHandler = (next=true) => {
     makeInvisible(resultsContentDiv);
 
     pages = paginate(mealsCreated.length, pages.currentPage + pageSwitch);
-    pageInput.value = pages.currentPage;
+    for (const node of pageInputs) {
+        node.value = pages.currentPage;
+    }
 
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -88,23 +96,42 @@ const updatePagination = () => {
     pages = paginate(mealsCreated.length);
     const {totalPages} = pages;
 
-    if (totalPages < 2) paginationButtonsDiv.style.display = "none";
-    else {
-        paginationButtonsDiv.style.display = "flex";
+    if (totalPages < 2) {
+        for (const node of paginationButtonsDivs) {
+            node.style.display = "none";
+        }
+    } else {
+        for (const node of paginationButtonsDivs) {
+            node.style.display = "flex";
+        }
 
-        paginationPreviousBtn.onclick = () => {
-            changePageButtonHandler(false);
-        };
-    
-        paginationNextBtn.onclick = () => {
-            changePageButtonHandler(true);
-        };
-        
-        pagesNumberDiv.innerText = `/ ${totalPages}`;
-        pageInput.value = 1;
+        for (const node of paginationPreviousBtns) {
+            node.onclick = () => {
+                changePageButtonHandler(false);
+                searchInput.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        for (const node of paginationNextBtns) {
+            node.onclick = () => {
+                changePageButtonHandler(true);
+                searchInput.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        for (const node of pagesNumberDivs) {
+            node.innerText = `/ ${totalPages}`;
+        }
+
+        for (const node of pageInputs) {
+            node.value = 1;
+        }
     }
 };
-
 const getMeals = async () => {
 
     const baseUrl = "http://localhost:3000/meals?";
@@ -172,8 +199,14 @@ const showMeals = () => {
 
     const {currentPage, endPage, startIndex, endIndex} = pages;
 
-    paginationPreviousBtn.disabled = currentPage === 1 ? true : false;
-    paginationNextBtn.disabled = currentPage === endPage ? true : false;
+
+    for (const node of paginationPreviousBtns) {
+        node.disabled = currentPage === 1 ? true : false;
+    }
+
+    for (const node of paginationNextBtns) {
+        node.disabled = currentPage === endPage ? true : false;
+    }
 
     const mealsToShow = mealsCreated.slice(startIndex, endIndex + 1);
 
@@ -419,32 +452,39 @@ clearFiltersBtn.onclick = () => {
     }, 500);
 };
 
-pageInput.oninput = () => {
-    const pageInputValue = pageInput.value;
-    const totalPages = pages.totalPages;
+for (const node of pageInputs) {
+    node.oninput = () => {
+        const pageInputValue = node.value;
+        const totalPages = pages.totalPages;
+    
+        if (pageInputValue !== "") {
+            makeInvisible(resultsContentDiv);
+    
+            if (parseInt(pageInputValue) > totalPages) node.value = totalPages;
+            if (parseInt(pageInputValue) < 1) node.value = 1;
+            for (const innerNode of pageInputs) {
+                innerNode.value = node.value;
+            }
+            pages = paginate(mealsCreated.length, parseInt(node.value));
+    
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                showMealsWithScroll();
+            }, 500);
+        }
+    };
 
-    if (pageInputValue !== "") {
-        makeInvisible(resultsContentDiv);
+    node.onblur = () => {
+        const currentPage = pages.currentPage;
+        if (parseInt(node.value) !== currentPage) node.value = currentPage;
+    };
 
-        if (parseInt(pageInputValue) > totalPages) pageInput.value = totalPages;
-        if (parseInt(pageInputValue) < 1) pageInput.value = 1;
-        pages = paginate(mealsCreated.length, parseInt(pageInput.value));
-
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            showMealsWithScroll();
-        }, 500);
+    node.onclick = () => {
+        node.value = "";
     }
-};
-
-pageInput.onblur = () => {
-    const currentPage = pages.currentPage;
-    if (parseInt(pageInput.value) !== currentPage) pageInput.value = currentPage;
-};
-
-pageInput.onclick = () => {
-    pageInput.value = "";
 }
+
+
 
 randomPickBtn.onclick = () => {
     mealIdInput.value = resultsIds[Math.floor(Math.random() * resultsIds.length)];
@@ -453,5 +493,7 @@ randomPickBtn.onclick = () => {
 
 setTimeout(() => {
     resultsContentDiv.classList.toggle("start");
-    paginationButtonsDiv.classList.toggle("stopped");
+    for (const node of paginationButtonsDivs) {
+        node.classList.toggle("stopped");
+    }
 }, 3000);
