@@ -110,7 +110,6 @@ $dark-texts-color: #707070;
                         }
                     }
 
-
                     &.for-logged {
                         display: none;
                     }
@@ -277,7 +276,7 @@ $dark-texts-color: #707070;
             .nav-links {
                 opacity: 0;
                 margin-top: 10px;
-                transition: opacity 1s ease-in-out;
+                transition: all 1s ease-in-out;
                 overflow: hidden;
                 width: 100%;
                 height: auto;
