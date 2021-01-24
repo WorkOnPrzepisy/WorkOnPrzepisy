@@ -1,7 +1,4 @@
 import paginate from './paginate.js';
-import ingredientsList from './data/ingredients.js';
-import areasList from './data/areas.js';
-import categoriesList from './data/categories.js';
 
 const IDS_WITHOUT_PREVIEW = [
     "52930",
@@ -45,24 +42,27 @@ const pagesNumberDivs = document.querySelectorAll(".pages-number");
 
 const randomPickBtn = document.querySelector(".random-pick-btn");
 
-const fillSelect = (list, select) => {
-    for (const item of list) {
-        const newItem = document.createElement("option");
-
-        const words = item.split(" ");
-        const wordsCapitalized = [];
-        for (const word of words) {
-            wordsCapitalized.push(word[0].toUpperCase() + word.slice(1));
+const fillSelect = async (name, select) => {
+    const Url = "http://localhost:3000/" + name;
+    fetch(Url).then(response => response.json()).then((list) => {
+        for (const item of list) {
+            const newItem = document.createElement("option");
+    
+            const words = item.split(" ");
+            const wordsCapitalized = [];
+            for (const word of words) {
+                wordsCapitalized.push(word[0].toUpperCase() + word.slice(1));
+            }
+    
+            newItem.value = wordsCapitalized.join(" ");
+            select.append(newItem);
         }
-
-        newItem.value = wordsCapitalized.join(" ");
-        select.append(newItem);
-    }
+    });
 };
 
-fillSelect(ingredientsList, ingredientsDatalist);
-fillSelect(categoriesList, categoriesDatalist);
-fillSelect(areasList, areasDatalist);
+fillSelect("ingredients", ingredientsDatalist);
+fillSelect("categories", categoriesDatalist);
+fillSelect("areas", areasDatalist);
 
 const cutStringIfTooLong = (text, maxLength) => text.length > maxLength ? text.substring(0, maxLength) : text;
 
