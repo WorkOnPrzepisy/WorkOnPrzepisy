@@ -250,6 +250,10 @@
   transition: all 0.5s ease-in-out;
 }
 
+.container .footer .footer-nav ul li.for-logged {
+  display: none;
+}
+
 .container .footer .footer-text {
   margin: 20px;
   color: #D8D7D8;
@@ -400,8 +404,8 @@
     margin-left: 0px;
   }
   .container .nav.active {
-    max-height: 330px;
-    min-height: 330px;
+    max-height: 300px;
+    min-height: 300px;
   }
   .container .nav.active .nav-links {
     display: -webkit-box;
@@ -445,11 +449,8 @@
   .container .footer .footer-text {
     font-size: 20px;
   }
-  .container .footer .footer-nav {
-    width: 300px;
-  }
   .container .footer .footer-nav ul {
-    height: 80px;
+    height: 120px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

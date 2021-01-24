@@ -191,6 +191,9 @@ $dark-texts-color: #707070;
                             transition: all 0.5s ease-in-out;
                         }
                     }
+                    &.for-logged{
+                        display: none;
+                    }
                 }
             }
         }
@@ -324,8 +327,8 @@ $dark-texts-color: #707070;
             }
 
             &.active {
-                max-height: 330px;
-                min-height: 330px;
+                max-height: 300px;
+                min-height: 300px;
 
                 .nav-links {
                     display: flex;
@@ -400,11 +403,9 @@ $dark-texts-color: #707070;
                 font-size: 20px;
             }
     
-            .footer-nav {
-                width: 300px;
-    
+            .footer-nav {    
                 ul {
-                    height: 80px;
+                    height: 120px;
                     display: flex;
                     justify-content: center;
                     align-items: flex-start;
