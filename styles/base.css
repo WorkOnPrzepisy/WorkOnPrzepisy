@@ -435,11 +435,19 @@
 }
 
 @media (min-width: 1200px) {
+  .container .nav {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
   .container .nav .nav-links ul li.right-nav a {
     font-size: 16px;
   }
   .container .nav .nav-links ul li.nav-item a {
     font-size: 20px;
+  }
+  .container .footer {
+    padding-left: 100px;
+    padding-right: 100px;
   }
   .container .footer .social-media ul li a i {
     font-size: 35px;
