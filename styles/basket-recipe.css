@@ -507,4 +507,16 @@ button:focus {
     .caption h2 {
         font-size: 25px;
     }
+    .container-modal p {
+        margin: 0 10px 10px 10px;
+    }
+    .modal-content {
+        width: 300px;
+        margin: 50% auto 50% auto;
+    }
+    .button-cancel,
+    .button-delete {
+        margin: 5px;
+        padding: 8px 20px;
+    }
 }
