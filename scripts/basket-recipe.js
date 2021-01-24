@@ -1,3 +1,7 @@
+const jdpsf = window.jspdf;
+
+const api = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
+
 const getData = (key) => {
     if (!localStorage) return;
 
@@ -18,25 +22,20 @@ const storeData = (key, item) => {
     }
 }
 
-const api = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
+
 
 const tdIntable1 = document.querySelector("#table--1 > tbody");
 
-//console.log(tdIntable1);
-/*
-const downoandApi = async(api, generateList) => {
+const downoandApi = async(api) => {
 
     const apiDownoand = await (await fetch(api)).json();
-    //bez sensu?
-    if (!generateList) {
-        strMeals = '';
-        strMeals += apiDownoand.meals[0].strMeal;
-        //console.log(1, strMeals);
-    } else {
-        return apiDownoand.meals[0];
-    }
+    //console.log(apiDownoand.meals[0]);
+    const meal = apiDownoand.meals[0];
+
+    return meal;
+
 }
-*/
+
 const addElementInTableHtml = (i, idMeal, title, count) => {
     const tr = document.createElement('tr');
     tr.classList.add(`tr--${i}`);
@@ -109,25 +108,14 @@ const addElementInTableHtml = (i, idMeal, title, count) => {
 }
 
 const removeItemHtml = (removeTbody) => {
-    // console.log(removeTbody);
-    // if (removeTbody.length > 1) {
-    //     console.log("remove", removeTbody);
+
     for (el of removeTbody) {
-        ///console.log(el);
         el.remove();
-        //     }
-        // } else {
-        //     removeTbody.remove();
     }
 }
 
-//const addApiInHTML = (apiWithId) => {
-
-//}
-
 const countArrWthMeals = () => {
     const arrWithMeals = addDataFromLocalStorage();
-    //console.log(arrWithMeals);
     const copyArrWithMeals = JSON.parse(JSON.stringify(arrWithMeals));
 
     console.log(arrWithMeals);
@@ -137,52 +125,54 @@ const countArrWthMeals = () => {
     for (let i = 0; i < copyArrWithMeals.length; i++) {
         let arrWithCountMeals = [];
         //arrWithCountMeals.push(copyArrWithMeals[i]);
-        copyArrWithMeals[i].countMeal = (copyArrWithMeals[i].countMeal || 1);
+        copyArrWithMeals[i].countMeal = (copyArrWithMeals[i].countMeal ? copyArrWithMeals[i].countMeal : 1);
         //let last = 0;
-        console.log("i1", i);
-        console.log("arr", arrWithCountMeals);
+        //console.log("i1", i);
+        //console.log("arr", arrWithCountMeals);
         for (let j = i; j < copyArrWithMeals.length; j++) {
 
 
             if (copyArrWithMeals[i].idMeals === copyArrWithMeals[j].idMeals) {
-                console.log();
-                console.log(copyArrWithMeals[i].idMeals, "===", copyArrWithMeals[j].idMeals);
+                //console.log();
+                //console.log(copyArrWithMeals[i].idMeals, "===", copyArrWithMeals[j].idMeals);
 
 
                 console.log("i", i);
                 console.log("j", j);
                 copyArrWithMeals[i].countMeal += 1;
-                console.log(copyArrWithMeals[i]);
+                //console.log(copyArrWithMeals[i]);
                 console.log(copyArrWithMeals[i].countMeal);
                 last = copyArrWithMeals[i].countMeal - 1;
                 arrWithCountMeals.push(j);
 
             }
-            console.log("last", last);
+            //console.log("last", last);
         }
+
         copyArrWithMeals[i].countMeal -= 1;
-        for (el of copyArrWithMeals) {
-            console.log("pcM", el);
-        }
+        // for (el of copyArrWithMeals) {
+        //     console.log("pcM", el);
+        // }
         for (let i = arrWithCountMeals.length - 1; i > 0; i--) {
+            console.log(arrWithCountMeals);
             console.log("remove", arrWithCountMeals[i]);
             copyArrWithMeals.splice(arrWithCountMeals[i], 1);
         }
 
-        console.log("pi", i, "pl", last);
+        //console.log("pi", i, "pl", last);
 
-        for (el of copyArrWithMeals) {
-            console.log("cM", el);
-        }
-        for (el of arrWithCountMeals) {
-            console.log("aM", el);
-        }
+        // for (el of copyArrWithMeals) {
+        //     console.log("cM", el);
+        // }
+        // for (el of arrWithCountMeals) {
+        //     console.log("aM", el);
+        // }
 
 
     }
 
     console.log("tab:", copyArrWithMeals);
-    console.log("tab1", arrWithMeals);
+    //console.log("tab1", arrWithMeals);
 
     storeData("Recipe", copyArrWithMeals)
 
@@ -200,20 +190,6 @@ const addItemHTML = () => {
         addElementInTableHtml(i, copyArrWithMeals[i].idMeals, copyArrWithMeals[i].title, copyArrWithMeals[i].countMeal);
 
     }
-
-
-
-    // for (let i = 0; i < arrWithMeals.length; i++) {
-
-    //     //let count =
-
-
-    //     //const apiWithId = api + arrWithMeals[i].idMeals;
-    //     //console.log(apiWithId);
-    //     //await downoandApi(apiWithId, false);
-    //     //addElementInTableHtml(i, arrWithMeals[i].idMeals, arrWithMeals[i].title);
-
-    // }
 }
 
 const addDataFromLocalStorage = () => {
@@ -225,28 +201,24 @@ const buttonSelectAll = document.querySelector(".button-select-basket");
 
 let isClick = 0;
 
-buttonSelectAll.addEventListener('click', function select() {
+const select = () => {
 
     const inputCheckbox = document.querySelectorAll(".input-checkbox");
 
     for (el of inputCheckbox) {
-        //console.log("el.checked", el.checked);
-
         if (!el.checked) {
-            //console.log(el.checked);
             el.checked = true;
-            //console.log(el.checked);
         }
     }
-    //console.log(isClick);
     isClick++;
-});
+}
 
-buttonSelectAll.addEventListener('click', function onselect() {
+buttonSelectAll.addEventListener('click', select);
+
+buttonSelectAll.addEventListener('click', () => {
     if (isClick === 2) {
         const inputCheckbox = document.querySelectorAll(".input-checkbox");
         for (el of inputCheckbox) {
-            //console.log(isClick);
             if (el.checked) {
                 el.checked = false;
             }
@@ -258,7 +230,6 @@ buttonSelectAll.addEventListener('click', function onselect() {
 const removeAddTable = (key, getTabeWithData) => {
 
     storeData(key, getTabeWithData);
-    console.log(storeData);
     const removeTbody = document.querySelectorAll('.tbody-table-1 tr');
     removeItemHtml(removeTbody);
     addItemHTML();
@@ -271,7 +242,7 @@ removeIconButtonTbody.addEventListener('click', (e) => {
         const whichTr = e.target.parentNode.parentNode.parentNode;
 
         let getTabeWithData = countArrWthMeals();
-        console.log(getTabeWithData);
+        //console.log(getTabeWithData);
 
         //console.log(whichTr);
         const whichTrIndex = whichTr.classList.value;
@@ -285,10 +256,9 @@ removeIconButtonTbody.addEventListener('click', (e) => {
     }
 })
 
-const removeButton = document.querySelector("#remove-checked");
-removeButton.addEventListener('click', () => {
+const getNrIndexMealnputChecked = () => {
     const inputCheckbox = document.querySelectorAll(".input-checkbox");
-    let getTabeWithData = addDataFromLocalStorage();
+
     //console.log("yable:", getTabeWithData);
     let tableWithIndexTr = [];
     for (el of inputCheckbox) {
@@ -305,6 +275,14 @@ removeButton.addEventListener('click', () => {
             //console.log(tableWithIndexTr);
         }
     }
+    return tableWithIndexTr;
+
+}
+
+const removeButton = document.querySelector("#remove-checked");
+removeButton.addEventListener('click', () => {
+    let getTabeWithData = addDataFromLocalStorage();
+    let tableWithIndexTr = getNrIndexMealnputChecked();
     for (let i = tableWithIndexTr.length - 1; i >= 0; i--) {
         getTabeWithData.splice(tableWithIndexTr[i], 1);
         //console.log("tab", getTabeWithData);
@@ -313,4 +291,241 @@ removeButton.addEventListener('click', () => {
     removeAddTable(key, getTabeWithData);
 })
 
+const imdexInTableWithMeals = (e) => {
+    const arrWithCountMeals = addDataFromLocalStorage();
+    const key = "Recipe";
+    const wichMealId = e.target.parentNode.parentNode.parentNode.parentNode;
+    let nrIndexTab = wichMealId.classList.value.slice(wichMealId.classList.value.lastIndexOf('-') + 1)
+    console.log(wichMealId);
+    console.log(nrIndexTab);
+
+    return { key, nrIndexTab, arrWithCountMeals }
+}
+
+removeIconButtonTbody.addEventListener('click', (e) => {
+
+    if (e.target.tagName === "BUTTON" && e.target.classList.contains('button-add-value')) {
+        const { key, nrIndexTab, arrWithCountMeals } = imdexInTableWithMeals(e);
+        arrWithCountMeals[nrIndexTab].countMeal += 1;
+        removeAddTable(key, arrWithCountMeals);
+    }
+    if (e.target.tagName === "BUTTON" && e.target.classList.contains('button-remove-value')) {
+        const { key, nrIndexTab, arrWithCountMeals } = imdexInTableWithMeals(e);
+        arrWithCountMeals[nrIndexTab].countMeal -= 1;
+
+        if (arrWithCountMeals[nrIndexTab].countMeal === 0) {
+            const modal = document.querySelector(".modal");
+            modal.style.display = 'block';
+            console.log("hello");
+            const buttonCancel = modal.querySelector('.button-cancel');
+            const buttonDelete = modal.querySelector('.button-delete');
+
+            console.log(buttonCancel);
+
+            buttonCancel.addEventListener('click', () => {
+                arrWithCountMeals[nrIndexTab].countMeal += 1;
+                modal.style.display = 'none';
+
+            })
+            buttonDelete.addEventListener('click', () => {
+                arrWithCountMeals.splice(nrIndexTab, 1);
+                modal.style.display = 'none';
+                removeAddTable(key, arrWithCountMeals);
+            })
+
+        }
+        console.log("tuu", arrWithCountMeals[nrIndexTab].countMeal);
+
+        removeAddTable(key, arrWithCountMeals);
+    }
+    if (e.target.tagName === "INPUT" && e.target.classList.contains('inputCountRecipe')) {
+        //zmiana wartosci
+        console.log(e.target);
+        const inputCountRecipe = e.target;
+        console.log("1", inputCountRecipe.value);
+        inputCountRecipe.addEventListener('blur', (a) => {
+            const { key, nrIndexTab, arrWithCountMeals } = imdexInTableWithMeals(e);
+            //console.log({ key, nrIndexTab, arrWithCountMeals });
+            arrWithCountMeals[nrIndexTab].countMeal = parseInt(inputCountRecipe.value);
+            //console.log("ar", arrWithCountMeals[nrIndexTab].countMeal);
+            //console.log("in", inputCountRecipe.value);
+            //console.log("tab", arrWithCountMeals);
+            removeAddTable(key, arrWithCountMeals);
+            //console.log(inputCountRecipe.value);
+        })
+    }
+
+})
+
+const getIngredients = async(idMeal) => {
+    let apiRecipe = api;
+    apiRecipe += idMeal;
+    console.log(apiRecipe);
+    let j = 1;
+    let tabObiectIngredients = [];
+    const tab = downoandApi(apiRecipe)
+        .then((prom) => {
+
+            //console.log("tu", prom);
+            const { strMeal } = prom;
+            console.log(strMeal);
+
+            //console.log("juuu", prom[`strIngredient${j}`]);
+            while (!!(prom[`strIngredient${j}`] !== "" && prom[`strIngredient${j}`] != null)) {
+                //console.log("juuu", prom[`strIngredient${j}`]);
+                tabObiectIngredients.push({
+                    measure: prom[`strMeasure${j}`],
+                    ingredient: prom[`strIngredient${j}`],
+                });
+                j++;
+            }
+            //console.log("huhu", tabObiectIngredients);
+            return tabObiectIngredients;
+
+        })
+        .catch((e) => {
+            console.dir(`error in unpacking api: ${e}`);
+        });
+
+    return tab;
+
+
+}
+
+const countTheSameIngredients = (tabWithIngredientsSplit) => {
+    //console.log("fn", tabWithIngredientsSplit);
+    let tabDelete = [];
+    for (let i = 0; i < tabWithIngredientsSplit.length; i++) {
+
+        for (let j = i + 1; j < tabWithIngredientsSplit.length; j++) {
+            //console.log("i", i, "j", j);
+            let ingredient1 = tabWithIngredientsSplit[i].ingredient,
+                ingredient2 = tabWithIngredientsSplit[j].ingredient
+                //console.log(ingredient1.toLowerCase(), ingredient2);
+            if (ingredient1.toLowerCase() === ingredient2.toLowerCase()) {
+                tabWithIngredientsSplit[i].countMeasure *= 2;
+                tabDelete.push(j);
+            }
+        }
+    }
+    for (let i = tabDelete.length - 1; i >= 0; i--) {
+        //console.log("remove", tabWithIngredientsSplit[i]);
+        tabWithIngredientsSplit.splice(tabDelete[i], 1);
+    }
+    //console.log("fn2", tabWithIngredientsSplit);
+    return tabWithIngredientsSplit;
+}
+
+const generateIngredientsPdf = (doc, arrCountTheSameIngredients) => {
+    let i = 60;
+    let margin = 20;
+    let pageCount = 0;
+    let elementsLength = arrCountTheSameIngredients.length;
+    doc.getFontList("Lobster");
+    doc.text(90, 20, "Shopping list");
+    doc.line(20, 30, 190, 30)
+    doc.getFontList("Arial");
+    doc.setFontSize(13);
+    for (let j = 0; j < elementsLength; j++) {
+        let { countMeasure, ingredient } = arrCountTheSameIngredients[j];
+        if (isNaN(countMeasure)) {
+            toString(countMeasure);
+            countMeasure = "";
+        }
+        //console.log(countMeasure, ingredient);
+        if ((i < 260 && pageCount === 0) || (i < 260 && pageCount === 1)) {
+            //console.log("f", i);
+            doc.text(margin, i, `[   ]  ${countMeasure}  ${ingredient}`);
+        }
+        if (i === 260 && pageCount === 0) {
+            //console.log("s", i);
+            doc.text(margin, i, `[   ]  ${countMeasure}  ${ingredient}`);
+            margin = 120;
+            pageCount = 1;
+            i = 50;
+        }
+        if (i === 260 && pageCount === 1) {
+            console.log("t", i);
+            doc.text(margin, i, `[   ]  ${countMeasure}  ${ingredient}`);
+            pageCount = 2;
+        }
+        if (i === 260 && pageCount === 2) {
+            //console.log("fo", i);
+            doc.addPage();
+            doc.getFontList("Lobster");
+            doc.text(90, 20, "Shopping list");
+            doc.line(20, 30, 190, 30);
+            doc.getFontList("Arial");
+            doc.setFontSize(13);
+            margin = 20;
+            pageCount = 0;
+            i = 50;
+        }
+        i += 10;
+    }
+    doc.save("shoppingList.pdf");
+}
+
+const generateShoppingListPdf = async() => {
+    const arrWithCountMeals = addDataFromLocalStorage();
+    let arrWithSelectedDishes = getNrIndexMealnputChecked();
+    if (arrWithSelectedDishes.length === 0) {
+        select();
+        arrWithSelectedDishes = getNrIndexMealnputChecked();
+    }
+    let doc = jspdf.jsPDF();
+    let tabWithIngredients = [];
+    let tabWithIngredientsSplit = [];
+
+    for (let j = 0; j < arrWithSelectedDishes.length; j++) {
+        //console.log("dł", arrWithSelectedDishes.length);
+        const el = arrWithSelectedDishes[j]
+        const idMeal = arrWithCountMeals[el].idMeals;
+        const countMeal = arrWithCountMeals[el].countMeal;
+        const regex = /[^0-9]/i;
+        //console.log("dł j", j);
+        for (let i = 1; i <= countMeal; i++) {
+            await getIngredients(idMeal).then((prom) => {
+                Array.prototype.push.apply(tabWithIngredients, prom);
+                // console.log("no", tabWithIngredients);
+                //console.log("dł j 2", j);
+                //console.log("dł 2", arrWithSelectedDishes.length);
+                if ((arrWithSelectedDishes.length - 1) === j && countMeal == i) {
+                    // console.log("ost");
+                    //console.log("no", tabWithIngredients);
+                    for (let a = 0; a < tabWithIngredients.length; a++) {
+                        //console.log(tabWithIngredients.length);
+                        //console.log(a);
+                        let strIngredients = (tabWithIngredients[a].measure + " " + tabWithIngredients[a].ingredient);
+                        //console.log(strIngredients);
+                        const splitStrIngredients = {
+                            countMeasure: 0,
+                            ingredient: ""
+                        }
+                        splitStrIngredients.countMeasure = parseInt(strIngredients.slice(0, strIngredients.search(regex)));
+                        splitStrIngredients.ingredient = strIngredients.slice(strIngredients.search(regex)).trim().replace("  ", " ");
+                        //console.log(splitStrIngredients);
+                        //console.log(tabWithIngredientsSplit);
+                        tabWithIngredientsSplit.push(splitStrIngredients);
+                    }
+                    //console.log(tabWithIngredientsSplit);
+                    //console.log(typeof tabWithIngredientsSplit);
+                    const arrCountTheSameIngredients = countTheSameIngredients(tabWithIngredientsSplit);
+                    //console.log("fn3", arrCountTheSameIngredients);
+                    generateIngredientsPdf(doc, arrCountTheSameIngredients);
+
+                }
+            })
+        }
+    }
+
+}
+
+
+
+const buttonGenerateShoppingList = document.querySelector('#generate-shopping-list-basket');
+
+buttonGenerateShoppingList.addEventListener('click', () => {
+    generateShoppingListPdf();
+})
 addItemHTML();

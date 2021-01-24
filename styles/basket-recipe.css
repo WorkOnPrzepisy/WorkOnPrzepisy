@@ -345,3 +345,58 @@ button:focus {
     color: var(--dark-texts-color);
     text-decoration: none;
 }
+
+.button-cancel,
+.button-delete {
+    opacity: 0.9;
+}
+
+.button-cancel:hover,
+.button-delete:hover {
+    opacity: 1;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 22;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(112, 112, 112, 0.65);
+}
+
+.modal-content {
+    background-color: rgba(255, 249, 235, 1);
+    width: 320px;
+    height: 150px;
+    margin: 30% auto 20% auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-modal {
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.container-modal p {
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--dark-texts-color);
+    font-size: 18px;
+}
+
+.buttons-model {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.button-delete {
+    background-color: var(--buttons-color);
+    color: var(--dark-texts-color);
+}
