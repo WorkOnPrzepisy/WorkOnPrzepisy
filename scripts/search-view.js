@@ -44,7 +44,8 @@ const randomPickBtn = document.querySelector(".random-pick-btn");
 
 const fillSelect = async (name, select) => {
     const Url = "http://localhost:3000/" + name;
-    fetch(Url).then(response => response.json()).then((list) => {
+    const data = fetch(Url).then(response => response.json()).then((list) => {
+        lists.push(list);
         for (const item of list) {
             const newItem = document.createElement("option");
     
@@ -58,11 +59,19 @@ const fillSelect = async (name, select) => {
             select.append(newItem);
         }
     });
+    return data;
 };
+
+const lists = [];
+let ingredientsList;
+let categoriesList; 
+let areasList;
 
 fillSelect("ingredients", ingredientsDatalist);
 fillSelect("categories", categoriesDatalist);
-fillSelect("areas", areasDatalist);
+fillSelect("areas", areasDatalist).then(() => {
+    [ingredientsList, categoriesList, areasList] = lists;
+});
 
 const cutStringIfTooLong = (text, maxLength) => text.length > maxLength ? text.substring(0, maxLength) : text;
 
