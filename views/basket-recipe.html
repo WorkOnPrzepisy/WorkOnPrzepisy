@@ -103,7 +103,6 @@
         <main class="container-fluke">
 
             <section class="container-basket">
-
                 <div class="modal">
                     <form class="modal-content">
                         <div class="container-modal">
@@ -125,9 +124,10 @@
                                 </th>
 
                                 <th class="top-menu div-button-top-menu">
-                                    <button class="button button-select-basket">Select all</button>
+                                    <button class="button button-select-basket">
+                                        <div class="div-checkbox-select"><label class="label-checkbox"><input class="input-checkbox-select" id="53030" type="checkbox" title="Select all"><span class="span-checkbox" title="Select"></span></label></div><span id="select-span">Select all</span></button>
                                     <a href="search-view.html">
-                                        <button class="button button-continue-adding-recipes">Continue adding recipes</button>
+                                        <button class="button button-continue-adding-recipes"><span class="continue">Continue adding recipes</span><span class="span-continue">></span></button>
                                     </a>
                                 </th>
                             </tr>
@@ -180,7 +180,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js"></script>
+        <script src=" https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js "></script>
+        <script src="../scripts/navbar.js"></script>
 
         <script type="text/javaScript" src="../scripts/basket-recipe.js"></script>
 </body>

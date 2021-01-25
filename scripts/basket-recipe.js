@@ -198,7 +198,7 @@ const addDataFromLocalStorage = () => {
 }
 
 const buttonSelectAll = document.querySelector(".button-select-basket");
-
+const inputSelectAll = document.querySelector(".input-checkbox-select");
 let isClick = 0;
 
 const select = () => {
@@ -216,6 +216,20 @@ const select = () => {
 buttonSelectAll.addEventListener('click', select);
 
 buttonSelectAll.addEventListener('click', () => {
+    if (isClick === 2) {
+        const inputCheckbox = document.querySelectorAll(".input-checkbox");
+        for (el of inputCheckbox) {
+            if (el.checked) {
+                el.checked = false;
+            }
+        }
+        isClick = 0;
+    }
+});
+
+inputSelectAll.addEventListener('click', select);
+
+inputSelectAll.addEventListener('click', () => {
     if (isClick === 2) {
         const inputCheckbox = document.querySelectorAll(".input-checkbox");
         for (el of inputCheckbox) {

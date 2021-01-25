@@ -17,6 +17,10 @@ body {
     width: 100%;
 }
 
+.span-continue {
+    display: none;
+}
+
 .slide1,
 .slide2,
 .slide3,
@@ -263,8 +267,9 @@ input:focus {
 }
 
 .button-remove-value {
-    height: 22px;
-    width: 22px;
+    margin-right: 5px;
+    height: 20px;
+    width: 20px;
     background-color: var(--background-color);
     background-image: url("../img/reduce.png");
     background-position: center center;
@@ -276,12 +281,33 @@ input:focus {
     -moz-transition: all 0.3s ease-out;
     -ms-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
-    border: 1.8px solid rgb(42, 161, 183);
+    /*border: 1.8px solid rgb(42, 161, 183);*/
+    border: 0;
+}
+
+#table--1 tbody tr:hover .button-remove-value,
+#table--1 tbody tr:hover .button-add-value {
+    background-color: rgba(255, 212, 113, .3);
+}
+
+#table--1 tbody tr:hover .button-remove-value:hover,
+#table--1 tbody tr:hover .button-add-value:hover {
+    background-color: rgba(255, 249, 235, .8);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+#table--1 tbody tr:hover .inputCountRecipe {
+    background-color: rgba(255, 249, 235, .8);
+}
+
+#table--1 tbody tr:hover .add-remove-input:hover .inputCountRecipe {
+    background-color: rgba(255, 249, 235, 1);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .inputCountRecipe {
-    height: 22px;
-    width: 22px;
+    height: 26px;
+    width: 30px;
     background: var(--background-color);
     border-radius: 5px;
     transition: all 0.3s ease-out;
@@ -289,15 +315,17 @@ input:focus {
     -moz-transition: all 0.3s ease-out;
     -ms-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
-    border: 1.8px solid rgb(42, 161, 183);
+    border: 1.8px solid rgba(255, 212, 113, .7);
     text-align: center;
     font-family: "Lobster";
+    font-size: 14.2px;
     color: var(--dark-texts-color);
 }
 
 .button-add-value {
-    height: 22px;
-    width: 22px;
+    margin-left: 5px;
+    height: 20px;
+    width: 20px;
     background-color: var(--background-color);
     background-image: url("../img/add.png");
     background-position: center center;
@@ -309,7 +337,8 @@ input:focus {
     -moz-transition: all 0.3s ease-out;
     -ms-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
-    border: 1.8px solid rgb(42, 161, 183);
+    /*border: 1.8px solid rgb(42, 161, 183);*/
+    border: 0;
 }
 
 .div-col-3 {
@@ -387,6 +416,10 @@ button:focus {
 .button-delete {
     background-color: var(--buttons-color);
     color: var(--dark-texts-color);
+}
+
+.div-checkbox-select {
+    display: none;
 }
 
 @media all and (max-width: 1200px) {
@@ -469,16 +502,31 @@ button:focus {
 }
 
 @media all and (max-width: 470px) {
+    .h4-title-Recipe {
+        font-size: 16px;
+    }
+    .div-col-3 {
+        padding-right: 20px;
+    }
     #table--1 {
         width: 100%;
         margin: 0;
     }
-    .button-continue-adding-recipes,
+    .button-continue-adding-recipes {
+        margin: 5px 30px 5px 5px;
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+    }
     #generate-shopping-list-basket {
         width: 120px;
         height: 45px;
     }
-    .button-select-basket,
+    #select-span {
+        display: none;
+    }
     #remove-checked {
         width: 70px;
         height: 35px;
@@ -490,13 +538,25 @@ button:focus {
         height: 50px;
         width: 400px;
     }
-    .div-button-top-menu {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
+    .continue {
+        display: none;
+    }
+    .span-continue {
+        display: inline;
+        font-size: 30px;
+        margin-bottom: 5px;
+    }
+    .button-select-basket {
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        background-color: rgba(255, 212, 113, .8);
     }
     .div-remove {
         display: none;
+    }
+    .div-checkbox-select {
+        display: block;
     }
     .div-checkbox {
         margin: 10px 1px 10px 2px;

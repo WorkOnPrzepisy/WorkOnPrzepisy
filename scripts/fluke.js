@@ -148,6 +148,8 @@ const generateListIngredientsPdf = (doc, margin, recipe) => {
 const generateInstructions = (doc, instructions) => {
     const instructionsS = instructions.split('<br>');
     const instructionsSAdd = instructionsS.join(" ");
+    console.log(instructionsSAdd);
+    console.log(instructions);
     lengthArrayInstructions = instructionsSAdd.length;
     let start = 0;
     let multiple = 80;
@@ -178,7 +180,7 @@ const generateShoppingListPdf = () => {
     doc.text(90, 20, "Shopping list");
     doc.line(20, 30, 190, 30)
     doc.text(30, 45, `${hTitleDish}`);
-    doc.getFontList("Arial");
+    doc.getFontList("Lobster");
     doc.setFontSize(13);
     generateListIngredientsPdf(doc, margin);
     doc.save("shoppingList.pdf");
