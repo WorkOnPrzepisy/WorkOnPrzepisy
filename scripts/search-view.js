@@ -42,20 +42,17 @@ const pagesNumberDivs = document.querySelectorAll(".pages-number");
 
 const randomPickBtn = document.querySelector(".random-pick-btn");
 
+const capitalizeFirstLetters = (words) => (
+    words.split(" ").map((word) => word[0].toUpperCase() + word.slice(1)).join(" ")
+);
+
 const fillSelect = async (name, select) => {
     const Url = "http://localhost:3000/" + name;
     const data = fetch(Url).then(response => response.json()).then((list) => {
         lists.push(list);
         for (const item of list) {
             const newItem = document.createElement("option");
-    
-            const words = item.split(" ");
-            const wordsCapitalized = [];
-            for (const word of words) {
-                wordsCapitalized.push(word[0].toUpperCase() + word.slice(1));
-            }
-    
-            newItem.value = wordsCapitalized.join(" ");
+            newItem.value = capitalizeFirstLetters(item);
             select.append(newItem);
         }
     });
@@ -233,7 +230,6 @@ createMeals()
     }
 )
 
-
 const checkIfDisableClearBtn = () => {
     clearFiltersBtn.disabled = 
             searchInput.value === "" &&
@@ -290,7 +286,8 @@ const showIngredientSmall = (ingredientStr) => {
     newIngredientDiv.className = "ingredient-selected";
     const newIngredientImg = document.createElement("img");
     const newIngredientP = document.createElement("p");
-    newIngredientP.append(ingredientStr);
+    const ingredientStrUpper = capitalizeFirstLetters(ingredientStr);
+    newIngredientP.append(ingredientStrUpper);
     newIngredientImg.src = getIngredientSmallImgUrl(ingredientStr);
     newIngredientDiv.append(newIngredientImg);
     newIngredientDiv.append(newIngredientP);
@@ -483,8 +480,6 @@ for (const node of pageInputs) {
         node.value = "";
     }
 }
-
-
 
 randomPickBtn.onclick = () => {
     mealIdInput.value = resultsIds[Math.floor(Math.random() * resultsIds.length)];
