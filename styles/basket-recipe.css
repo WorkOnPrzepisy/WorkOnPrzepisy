@@ -21,6 +21,10 @@ body {
     display: none;
 }
 
+.container-fluke {
+    min-height: 460px;
+}
+
 .slide1,
 .slide2,
 .slide3,
