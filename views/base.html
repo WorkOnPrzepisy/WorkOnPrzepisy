@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eat Me</title>
+    <link rel="stylesheet" href="../styles/base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/search-main.css">
+    <link rel="stylesheet" href="../styles/fontawesome-free-5.15.1-web/css/all.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="nav">
+            <div class="brand-logo-wrapper">
+                <a href="#">
+                    <img class="brand-logo" src="../img/logo.png">
+                </a>
+            </div>
+
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+
+            <div class="nav-links">
+                <ul>
+                    <li class="nav-item">
+                        <a href="#" data-content="Main">Main</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="fluke.html?page=fluke" data-content="I'm Feeling Lucky">I'm Feeling Lucky</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-content="Recipes">Recipes</a>
+                    </li>
+                    <li class="nav-item for-logged">
+                        <a href="#" data-content="Add Recipe">Add Recipe</a>
+                    </li>
+                    <li class="nav-item for-logged">
+                        <a href="#" data-content="Favourites">Favourites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-content="About Us">About Us</a>
+                    </li>
+                    <li class="right-nav login-signup for-unlogged">
+                        <a href="#" data-content="Log In" class="login">Log In</a>
+                        <a href="#" data-content="Sign Up" class="signup">Sign Up</a>
+                    </li>
+                    <li class="right-nav logout for-logged">
+                        <a href="#" data-content="Log Out">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slide slide1">
+                    <div class="caption">
+                        <h1> Find yours new favorite dish!</h1>
+                        <p> Sign up and enjoy all features of "Eat me"
+                        </p>
+                        <button href="">Join us!</button>
+                    </div>
+                </div>
+                <div class="slide slide2">
+                    <div class="caption">
+                        <h2> Let us suprise you!</h2>
+                        <p> Are you looking for recipe for a lunch, but it's hard to choose?
+                        </p>
+                    </div>
+                </div>
+                <div class="slide slide3">
+                    <div class="caption">
+                        <h2> Variety of recipies for everyone!</h2>
+                        <p>We can help you find you a recipe with your favorite ingredients!
+                        </p>
+                    </div>
+                </div>
+                <div class="slide slide4">
+                    <div class="caption">
+                        <h2> Trying new recipies is easy!</h2>
+                        <p> You can generete shopping list with ingriedients you need.
+                        </p>
+                    </div>
+                </div>
+                <div class="slide slide5">
+                    <div class="caption">
+                        <h2> Add your own recepies!</h2>
+                        <p>Sign in and share your ideas with everyone!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main class="main">
+            <!-- searchbox input -->
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="search" name="search-input" placeholder="search meal" id='search-input'>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+
+
+            <!-- Lastly added -->
+
+            <div class="new-header">
+                <h2>Our Freshly Added</h2>
+            </div>
+            <div class="new-added">
+
+                <!-- <h2>nowe przepisy</h2> -->
+                <div class="new-content">
+                    <div class="header">
+                        <h3 id='dish-name1'></h3>
+                    </div>
+
+                    <div class="image-content" id='new-image'>
+                        <img src="" id='new-image-content'>
+                    </div>
+
+                    <div class="button">
+
+                        <a class="a-more-recipe" href="fluke.html?page=">
+                            <button class="button-more-recipe">more</button>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <div class="new-content">
+                    <div class="header">
+                        <h3 id='dish-name2'></h3>
+                    </div>
+                    <div class="image-content">
+                        <img src="" id="new-image-content-2" alt="">
+                    </div>
+                    <div class="button">
+                        <a class="a-more-recipe" href="fluke.html?page=">
+                            <button class="button-more-recipe">more</button>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="new-content">
+                    <div class="header">
+                        <h3 id='dish-name3'></h3>
+                    </div>
+                    <div class="image-content">
+                        <img src="" alt="" id='new-image-content-3'>
+                    </div>
+                    <div class="button">
+                        <a class="a-more-recipe" href="fluke.html?page=">
+                            <button class="button-more-recipe">more</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-more">
+                <button type="submit" class="more">See more</button>
+            </div>
+            <div class="about-us-container">
+                <div class="about-us-logo">
+                    <img src="/img/logo.jpg" alt="logo" srcset="/img/logo.jpg 1.9w">
+                </div>
+                <div class="about-us">
+                    <h2>About Us</h2>
+                    </br>
+                    <p> ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, velit ut! Velit sequi tempore vero excepturi ea quae mollitia, vel dignissimos! Perspiciatis dolore consectetur atque tenetur eum! Maxime, molestias rem?</p>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="#" data-content="Main">Main</a></li>
+                    <li><a href="fluke.html?page=fluke" data-content="I'm feeling lucky">I'm feeling lucky</a></li>
+                    <li><a href="#" data-content="Recipes">Recipes</a></li>
+                    <li><a href="#" data-content="Add Recipe">Add Recipe</a></li>
+                    <li><a href="#" data-content="Favourites">Favourites</a></li>
+                    <li><a href="#" data-content="About Us">About Us</a></li>
+                </ul>
+            </nav>
+            <div class="footer-text">
+                <q>Laughter is brightest where food is best.</q><br> Irish Proverb
+            </div>
+            <nav class="social-media">
+                <ul>
+                    <li><a href=""><i class="fab fa-facebook"></i></a></li>
+                    <li><a href=""><i class="fab fa-pinterest"></i></a></li>
+                    <li><a href=""><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </nav>
+        </footer>
+    </div>
+    <script src="../scripts/navbar.js"></script>
+    <script src="../scripts/search.js"></script>
+    <script src="../scripts/main.js"></script>
+
+</body>
+
+</html>

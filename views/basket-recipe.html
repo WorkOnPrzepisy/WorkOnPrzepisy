@@ -4,17 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fluke</title>
+    <title>Basket</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../styles/base.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/fluke.css" />
+    <link rel="stylesheet" href="../styles/basket-recipe.css" />
 
 
 </head>
 
-<body class="loaded">
+<body>
     <div class="container">
         <nav class="nav">
             <div class="brand-logo-wrapper">
@@ -32,7 +32,7 @@
             <div class="nav-links">
                 <ul>
                     <li class="nav-item">
-                        <a href="#" data-content="Main">Main</a>
+                        <a href="base.html" data-content="Main">Main</a>
                     </li>
                     <li class="nav-item">
                         <a href="fluke.html?page=fluke" data-content="I'm Feeling Lucky">I'm Feeling Lucky</a>
@@ -99,55 +99,51 @@
                 </div>
             </div>
         </div>
+
         <main class="container-fluke">
 
-            <section class="container-recipe">
-
-                <div class="container-loading">
-                    <div class="loading"></div>
-                </div>
-
-                <div class="content-title">
-                    <h3 id="title-dish"></h3>
-                </div>
-                <div class="content-dish">
-                    <div class="content-img">
-                        <img id="img-dish" src="" />
-                        <button id="favorite" style="visibility: hidden;"></button>
-                    </div>
-
-                    <div class="content-list-ingredients">
-                        <div>
-                            <h3>Ingredients</h3>
-                            <div class="list-ingredients-columns">
-                                <ul id="list-ingredients"></ul>
-                                <ul id="list-ingredients-col2"></ul>
+            <section class="container-basket">
+                <div class="modal">
+                    <form class="modal-content">
+                        <div class="container-modal">
+                            <p>Are you sure you want to delete this recipe?</p>
+                            <div class="buttons-model">
+                                <button type="button" class="button button-cancel">Cancel</button>
+                                <button type="button" class="button button-delete">Delete</button>
                             </div>
                         </div>
-                        <div class="contener-button">
-                            <div class="content-generate-list">
-                                <button class="button" id="button-generate-recipe">
-                        Generate a recipe</button>
-                            </div>
-                            <div class="content-generate-list">
-                                <button class="button" id="button-generate-list">
-                        Generate a shopping list</button>
-                            </div>
-                        </div>
+                    </form>
+                </div>
+                <div class="tab-list-recipe">
+                    <table id="table--1">
+                        <thead>
+                            <tr class="tr-th1">
+                                <th class="top-menu top-menu-th-title" colspan="2">
+                                    <div class="container-top-menu-title">
+                                        <h3 class="top-menu-title">Recipe title</h3>
+                                </th>
+
+                                <th class="top-menu div-button-top-menu">
+                                    <button class="button button-select-basket">
+                                        <div class="div-checkbox-select"><label class="label-checkbox"><input class="input-checkbox-select" id="53030" type="checkbox" title="Select all"><span class="span-checkbox" title="Select"></span></label></div><span id="select-span">Select all</span></button>
+                                    <a href="search-view.html">
+                                        <button class="button button-continue-adding-recipes"><span class="continue">Continue adding recipes</span><span class="span-continue">></span></button>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody-table-1">
+
+                        </tbody>
+                    </table>
+                    <div class="bottom-menu-basket">
+                        <button class="button" id="remove-checked" title="remove checked recipe">Remove</button>
+                        <button class="button" id="generate-shopping-list-basket">Generate shopping list</button>
                     </div>
-                    <div class="content-add-icon">
-                        <button id="icon-add-recipe" title="Add the recipe to the basket"></button>
-                        <button class="try-again" title="
-                  try drawing the recipe again"></button>
                     </div>
-                </div>
-                <div class="content-description">
-                    <h3 class="instructions-title">Instructions</h3>
-                </div>
-                <div class="content-draw-recipe">
-                    <button class="button" id="button-draw-recipe" style="visibility: hidden;">
-                  I'm feeling lucky</button>
-                </div>
+
+
+
             </section>
         </main>
 
@@ -179,13 +175,15 @@
                 </ul>
             </nav>
         </footer>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        </div>
 
-    <script src=" https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js "></script>
-    <script src="../scripts/navbar.js"></script>
-    <script type="text/javaScript" src="../scripts/fluke.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+        <script src=" https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js "></script>
+        <script src="../scripts/navbar.js"></script>
+
+        <script type="text/javaScript" src="../scripts/basket-recipe.js"></script>
 </body>
 
 </html>

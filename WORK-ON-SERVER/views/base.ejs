@@ -1,0 +1,89 @@
+
+<main class="main">
+   <div class="slider-container">
+      <div class="slider">
+          <div class="slide slide1">
+              <div class="caption">
+                  <h1> Find yours new favorite dish!</h1>
+                  <p> Sign up and enjoy all features of "Eat me"
+                  </p>
+                  <button href="">Join us!</button>
+              </div>
+          </div>
+          <div class="slide slide2">
+              <div class="caption">
+                  <h2> Let us suprise you!</h2>
+                  <p> Are you looking for recipe for a lunch, but it's hard to choose? 
+                    </p>
+              </div>
+          </div>
+          <div class="slide slide3">
+              <div class="caption">
+                  <h2> Variety of recipies for everyone!</h2>
+                  <p>We can help you find you a recipe with your favorite ingredients! 
+                      </p>
+              </div>
+          </div>
+          <div class="slide slide4">
+              <div class="caption">
+                  <h2> Trying new recipies is easy!</h2>
+                  <p> You can generete shopping list with ingriedients you need.
+                      </p>
+              </div>
+          </div>
+          <div class="slide slide5">
+              <div class="caption">
+                  <h2> Add your own recepies!</h2>
+                  <p>Sign in and share your ideas with everyone!
+                      </p>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="about-us-container">
+   <div class="about-us-logo">
+       <img src="/public/img/logo.jpg" alt="logo" srcset="/img/logo.jpg 1.9w">
+   </div> 
+   <div class="about-us">
+   <h2>About Us</h2></br>
+   <p> ipsum dolor sit amet consectetur adipisicing elit. 
+           Perspiciatis, velit ut! Velit sequi tempore vero excepturi ea quae mollitia,
+            vel dignissimos! Perspiciatis dolore consectetur atque tenetur eum! Maxime, molestias rem?</p>
+   </div>
+
+</div>
+<div class="new-header">
+   <h2>Our Freshly Added</h2>
+</div> 
+<div class="contenerek">
+<% arrayfile.forEach(function(file) { %>
+   <div class="new-added">
+      <div class="new-content">
+         <div class="header">
+            <h3 id='dish-name1'><%=file.strMeal%></h3>
+         </div>
+   
+         <div class="image-content" id='new-image'>
+            <img 
+            id='new-image-content'
+            src="data:image/<%=file.images.contentType%>;base64,
+            <%=file.images.strMealThumb.toString('base64')%>"
+            alt="photo"
+         />
+         </div>
+         <div class="buttonn">
+            <a href="/fluke?db_id=<%=file._id%>" class="btn-verify">
+               <button type="submit">more</button>
+            </a>
+        </div>
+      </div>
+   </div> 
+   <% }) %> 
+</div>
+   <div class="btn-more">
+      <a href="/newly-added">
+      <button type="submit" class="more">See more</button>
+   </a>
+   </div>  
+</main>
+

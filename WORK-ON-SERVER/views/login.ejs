@@ -1,0 +1,34 @@
+
+
+    <div class="container-fluid">
+       <div class="row">
+          <div class="col img-col">
+             <img class="img-size" src="../public/img/foodiesfeed.com_oranges-with-ice (1).jpg" alt="">
+          </div> 
+          <div class="col form-col">
+            <%- include ('partials/messages') %>
+             <a href="/" class="btn-link">
+                <button class="btn btn-outline-primary">Home</button>
+             </a> 
+             <h2>Login</h2>
+             <form method="POST">
+                <div class="form-group">
+                  <input name="email" type="email" class="form-control" placeholder="Username" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <small id="emailHelp" class="form-text text-muted"></small>
+                   
+                </div>
+                <div class="form-group">
+                  
+                  <input name="password" type="password" class="form-control" placeholder="password" id="exampleInputPassword1">
+                </div>
+                <button type="submit"  class="btn btn-outline-primary">Submit</button>
+              </form>
+              <a  href="/users/forgotten">
+               <button class="btn btn-outline-secondary mt-2">Forgotten</button>
+            </a>
+            <a href="/users/register">
+               <button class="btn btn-outline-info mt-2">Register</button>
+            </a> 
+          </div>
+       </div>
+   </div>
