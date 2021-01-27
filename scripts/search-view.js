@@ -1,4 +1,7 @@
 import paginate from './paginate.js';
+import ingredients from '../data/ingredients.js';
+import categories from '../data/categories.js';
+import areas from '../data/areas.js';
 
 const IDS_WITHOUT_PREVIEW = [
     "52930",
@@ -49,30 +52,18 @@ const capitalizeFirstLetters = (words) => (
     .join(" ")
 );
 
-const fillSelect = async (name, select) => {
-    const Url = "http://localhost:3000/" + name;
-    return fetch(Url)
-           .then(response => response.json())
-           .then((list) => {
-                lists.push(list);
-                for (const item of list) {
-                    const newItem = document.createElement("option");
-                    newItem.value = capitalizeFirstLetters(item);
-                    select.append(newItem);
-                }
-    });
+const fillSelect = (list, select) => {
+    for (const item of list) {
+        const newItem = document.createElement("option");
+        newItem.value = capitalizeFirstLetters(item);
+        select.append(newItem);
+    }
 };
 
-const lists = [];
-let ingredientsList;
-let categoriesList; 
-let areasList;
 
-fillSelect("ingredients", ingredientsDatalist);
-fillSelect("categories", categoriesDatalist);
-fillSelect("areas", areasDatalist).then(() => {
-    [ingredientsList, categoriesList, areasList] = lists;
-});
+fillSelect(ingredients, ingredientsDatalist);
+fillSelect(categories, categoriesDatalist);
+fillSelect(areas, areasDatalist);
 
 const cutStringIfTooLong = (text, maxLength) => 
     text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
@@ -140,11 +131,11 @@ const updatePagination = () => {
 };
 const getMeals = async () => {
 
-    const baseUrl = "http://localhost:3000/meals?";
-    const nameUrl = "name_like=";
-    const ingredientsUrl = "&ingredientsList_like=";
-    const categoryUrl = "&category_like=";
-    const areaUrl = "&area_like=";
+    const baseUrl = "http://localhost:3000/meals/meals?";
+    const nameUrl = "name=";
+    const ingredientsUrl = "&ingredients=";
+    const categoryUrl = "&category=";
+    const areaUrl = "&area=";
 
     const fullUrl = baseUrl + nameUrl + searchInput.value + 
         ingredientsUrl + ingredientsSelected.join(",") + 
@@ -164,7 +155,7 @@ const createMeals = async () => {
         const innerMealsCreated = [];
     
         if (mealsNumber > 0) {
-            for (let {name, imageUrl, id} of mealsToCreate) {
+            for (let {name, imageUrl, _id} of mealsToCreate) {
                 const mealDiv = document.createElement("div");
                 const mealImg = document.createElement("img");
                 const mealP = document.createElement("p");
@@ -174,21 +165,21 @@ const createMeals = async () => {
                 mealButton.innerText = "Details";
                 mealButton.type = "button";
                 mealButton.onclick = () => {
-                    mealIdInput.value = id;
+                    mealIdInput.value = _id;
                     searchForm.submit();
                 };
     
                 name = cutStringIfTooLong(name, 22);
                 mealP.append(name);
     
-                mealImg.src = IDS_WITHOUT_PREVIEW.includes(id) ? imageUrl : `${imageUrl}/preview`; 
+                mealImg.src = IDS_WITHOUT_PREVIEW.includes(_id) ? imageUrl : `${imageUrl}/preview`; 
     
                 mealDiv.append(mealP);
                 mealDiv.append(mealImg);
                 mealDiv.append(mealButton);
                 innerMealsCreated.push(mealDiv);
                 mealsCreated.push(mealDiv);
-                resultsIds.push(id);
+                resultsIds.push(_id);
             }
         }
         
@@ -266,17 +257,12 @@ ingredientsSelect.onchange = () => {
     const ingredientSelectValue = ingredientsSelect.value.toLowerCase();
     ingredientsSelect.value = "";
 
-    if (ingredientsList.includes(ingredientSelectValue)) {
+    if (ingredients.includes(ingredientSelectValue)) {
             if (ingredientsSelected.length === 0) {
                 clearFiltersBtn.disabled = false;
                 ingredientsSelectedDiv.classList.toggle("invisible");
-                ingredientsSelect.disabled = true;
             }
-            // if (ingredientsSelected.length === 0) {
-            //     clearFiltersBtn.disabled = false;
-            //     ingredientsSelectedDiv.classList.toggle("invisible");
-            // }
-            // if (ingredientsSelected.length === 2) ingredientsSelect.disabled = true;
+            if (ingredientsSelected.length === 2) ingredientsSelect.disabled = true;
 
         ingredientsSelected.push(ingredientSelectValue);
         showIngredientSmall(ingredientSelectValue);
@@ -424,11 +410,11 @@ const changeSelectHandler = (select, list) => {
 }
 
 categorySelect.onchange = () => {
-    changeSelectHandler(categorySelect, categoriesList);
+    changeSelectHandler(categorySelect, categories);
 };
 
 areaSelect.onchange = () => {
-    changeSelectHandler(areaSelect, areasList);
+    changeSelectHandler(areaSelect, areas);
 };
 
 hideFiltersBtn.onclick = () => {
