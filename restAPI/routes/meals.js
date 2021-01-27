@@ -42,10 +42,27 @@ router.get('/meals', async (req, res) => {
   }
 })
 
+
+// Getting Random
+router.get('/meals/random', async (req, res) => {
+  
+  try {
+    // const meal = await Meal.aggregate([{$sample: {size: 1}}]);
+    const meal = await Meal.aggregate([{$sample: {size: 1}}]);
+    res.json(meal)
+
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+
 // Getting One
 router.get('/meals/:id', getMeal, (req, res) => {
   res.json(res.meal)
 })
+
+
 
 // Creating one
 router.post('/meals', async (req, res) => {
