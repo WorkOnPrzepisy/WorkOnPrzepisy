@@ -8,6 +8,7 @@ const dbConnection = async () => {
     const db = await connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      dbName: ""
     });
 
     if (db) {

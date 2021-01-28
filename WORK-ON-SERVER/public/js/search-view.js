@@ -130,8 +130,9 @@ const updatePagination = () => {
     }
 };
 const getMeals = async () => {
-
-    const baseUrl = "http://localhost:7000/meals/meals?";
+    
+    const baseUrl = "http://localhost:7000/meals?";
+    // const baseUrl = "http://localhost:7000/meals/meals?";
     const nameUrl = "name=";
     const ingredientsUrl = "&ingredients=";
     const categoryUrl = "&category=";
