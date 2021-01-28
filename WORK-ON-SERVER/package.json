@@ -1,0 +1,39 @@
+{
+  "name": "image_buffer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "author": "JAKUB ZYLA",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^2.4.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "ejs-lint": "^1.1.0",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
+    "file-type": "^16.1.0",
+    "g": "^2.0.1",
+    "jquery": "^3.5.1",
+    "json-server": "^0.16.3",
+    "mongoose": "^5.11.11",
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.1",
+    "node-localstorage": "^2.1.6",
+    "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "select-dom": "^7.1.0",
+    "sharp": "^0.27.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}

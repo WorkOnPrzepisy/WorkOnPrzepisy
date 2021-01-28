@@ -1,0 +1,11 @@
+.image-part{ 
+   height: 100vh; 
+   width: 100%;
+}
+
+.btn-home{ 
+   position: absolute;
+   top: 5px;
+   right: 0;
+} 
+
