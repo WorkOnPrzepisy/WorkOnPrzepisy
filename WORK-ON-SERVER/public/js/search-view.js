@@ -1,4 +1,7 @@
-import paginate from './paginate.js';
+import paginate from '../../../scripts/paginate.js';
+import ingredients from '../../../scripts/data/ingredients.js';
+import categories from '../../../scripts/data/categories.js';
+import areas from '../../../scripts/data/areas.js';
 
 const IDS_WITHOUT_PREVIEW = [
     "52930",
@@ -42,45 +45,33 @@ const pagesNumberDivs = document.querySelectorAll(".pages-number");
 
 const randomPickBtn = document.querySelector(".random-pick-btn");
 
-const fillSelect = async (name, select) => {
-   const Url = "http://localhost:3000/" + name;
-   const data = fetch(Url).then(response => response.json()).then((list) => {
-       lists.push(list);
-       for (const item of list) {
-           const newItem = document.createElement("option");
+const capitalizeFirstLetters = (words) => (
+    words
+    .split(" ")
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(" ")
+);
 
-           const words = item.split(" ");
-           const wordsCapitalized = [];
-           for (const word of words) {
-               wordsCapitalized.push(word[0].toUpperCase() + word.slice(1));
-           }
-
-           newItem.value = wordsCapitalized.join(" ");
-           select.append(newItem);
-       }
-   });
-   return data;
+const fillSelect = (list, select) => {
+    for (const item of list) {
+        const newItem = document.createElement("option");
+        newItem.value = capitalizeFirstLetters(item);
+        select.append(newItem);
+    }
 };
 
-const lists = [];
-let ingredientsList;
-let categoriesList; 
-let areasList;
 
-fillSelect("ingredients", ingredientsDatalist);
-fillSelect("categories", categoriesDatalist);
-fillSelect("areas", areasDatalist).then(() => {
-   [ingredientsList, categoriesList, areasList] = lists;
-});
+fillSelect(ingredients, ingredientsDatalist);
+fillSelect(categories, categoriesDatalist);
+fillSelect(areas, areasDatalist);
 
-fillSelect("ingredients", ingredientsDatalist);
-fillSelect("categories", categoriesDatalist);
-fillSelect("areas", areasDatalist);
-
-const cutStringIfTooLong = (text, maxLength) => text.length > maxLength ? text.substring(0, maxLength) : text;
+const cutStringIfTooLong = (text, maxLength) => 
+    text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 
 const addResultsInfo = (numberOfMealsToCreate) => {
-    resultsInfo.innerText = numberOfMealsToCreate === 0 ? "No results" : numberOfMealsToCreate === 1 ? "1 meal:" : `${numberOfMealsToCreate} meals:`;
+    resultsInfo.innerText = numberOfMealsToCreate === 0 ? 
+        "No results" : numberOfMealsToCreate === 1 ? 
+        "1 meal:" : `${numberOfMealsToCreate} meals:`;
 };
 
 const changePageButtonHandler = (next=true) => {
@@ -140,13 +131,14 @@ const updatePagination = () => {
 };
 const getMeals = async () => {
 
-    const baseUrl = "http://localhost:3000/meals?";
-    const nameUrl = "name_like=";
-    const ingredientsUrl = "&ingredientsList_like=";
-    const categoryUrl = "&category_like=";
-    const areaUrl = "&area_like=";
+    const baseUrl = "http://localhost:3000/meals/meals?";
+    const nameUrl = "name=";
+    const ingredientsUrl = "&ingredients=";
+    const categoryUrl = "&category=";
+    const areaUrl = "&area=";
 
-    const fullUrl = baseUrl + nameUrl + searchInput.value + ingredientsUrl + ingredientsSelected.join(",") + 
+    const fullUrl = baseUrl + nameUrl + searchInput.value + 
+        ingredientsUrl + ingredientsSelected.join(",") + 
         categoryUrl + categorySelect.value + areaUrl + areaSelect.value;
 
     return fetch(fullUrl).then((response) => response.json())
@@ -163,7 +155,7 @@ const createMeals = async () => {
         const innerMealsCreated = [];
     
         if (mealsNumber > 0) {
-            for (let {name, imageUrl, id} of mealsToCreate) {
+            for (let {name, imageUrl, _id} of mealsToCreate) {
                 const mealDiv = document.createElement("div");
                 const mealImg = document.createElement("img");
                 const mealP = document.createElement("p");
@@ -173,21 +165,21 @@ const createMeals = async () => {
                 mealButton.innerText = "Details";
                 mealButton.type = "button";
                 mealButton.onclick = () => {
-                    mealIdInput.value = id;
+                    mealIdInput.value = _id;
                     searchForm.submit();
                 };
     
                 name = cutStringIfTooLong(name, 22);
                 mealP.append(name);
     
-                mealImg.src = IDS_WITHOUT_PREVIEW.includes(id) ? imageUrl : `${imageUrl}/preview`; 
+                mealImg.src = IDS_WITHOUT_PREVIEW.includes(_id) ? imageUrl : `${imageUrl}/preview`; 
     
                 mealDiv.append(mealP);
                 mealDiv.append(mealImg);
                 mealDiv.append(mealButton);
                 innerMealsCreated.push(mealDiv);
                 mealsCreated.push(mealDiv);
-                resultsIds.push(id);
+                resultsIds.push(_id);
             }
         }
         
@@ -204,13 +196,13 @@ const showMeals = () => {
     const {currentPage, endPage, startIndex, endIndex} = pages;
 
 
-    for (const node of paginationPreviousBtns) {
+    for (const node of paginationPreviousBtns) 
         node.disabled = currentPage === 1 ? true : false;
-    }
+    
 
-    for (const node of paginationNextBtns) {
+    for (const node of paginationNextBtns) 
         node.disabled = currentPage === endPage ? true : false;
-    }
+    
 
     const mealsToShow = mealsCreated.slice(startIndex, endIndex + 1);
 
@@ -237,7 +229,6 @@ createMeals()
     }
 )
 
-
 const checkIfDisableClearBtn = () => {
     clearFiltersBtn.disabled = 
             searchInput.value === "" &&
@@ -257,7 +248,8 @@ const checkIfDisableInputs = () => {
 
 const checkIfEnableInputs = () => {
     if (mealsCreated.length > 1) {
-        for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) input.disabled = false;
+        for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) 
+            input.disabled = false;
     }
 }
 
@@ -265,7 +257,7 @@ ingredientsSelect.onchange = () => {
     const ingredientSelectValue = ingredientsSelect.value.toLowerCase();
     ingredientsSelect.value = "";
 
-    if (ingredientsList.includes(ingredientSelectValue)) {
+    if (ingredients.includes(ingredientSelectValue)) {
             if (ingredientsSelected.length === 0) {
                 clearFiltersBtn.disabled = false;
                 ingredientsSelectedDiv.classList.toggle("invisible");
@@ -287,19 +279,22 @@ ingredientsSelect.onchange = () => {
     }
 };
 
-const getIngredientSmallImgUrl = (ingredientStr) => `https://www.themealdb.com/images/ingredients/${ingredientStr}-Small.png`;
+const getIngredientSmallImgUrl = (ingredientStr) => 
+    `https://www.themealdb.com/images/ingredients/${ingredientStr}-Small.png`;
 
 const showIngredientSmall = (ingredientStr) => {
     const newIngredientDiv = document.createElement("div");
     newIngredientDiv.className = "ingredient-selected";
     const newIngredientImg = document.createElement("img");
     const newIngredientP = document.createElement("p");
-    newIngredientP.append(ingredientStr);
+    const ingredientStrUpper = capitalizeFirstLetters(ingredientStr);
+    newIngredientP.append(ingredientStrUpper);
     newIngredientImg.src = getIngredientSmallImgUrl(ingredientStr);
     newIngredientDiv.append(newIngredientImg);
     newIngredientDiv.append(newIngredientP);
     newIngredientDiv.onclick = () => {
-        ingredientsSelected = ingredientsSelected.filter((ingredient) => ingredient !== ingredientStr);
+        ingredientsSelected = ingredientsSelected.filter((ingredient) => 
+            ingredient !== ingredientStr);
         if (ingredientsSelected.length === 0) ingredientsSelectedDiv.classList.toggle("invisible");
         if (mealsCreated.length > 1) ingredientsSelect.disabled = false;
         for (const option of ingredientsDatalist.childNodes) {
@@ -415,15 +410,16 @@ const changeSelectHandler = (select, list) => {
 }
 
 categorySelect.onchange = () => {
-    changeSelectHandler(categorySelect, categoriesList);
+    changeSelectHandler(categorySelect, categories);
 };
 
 areaSelect.onchange = () => {
-    changeSelectHandler(areaSelect, areasList);
+    changeSelectHandler(areaSelect, areas);
 };
 
 hideFiltersBtn.onclick = () => {
-    hideFiltersBtn.innerText = hideFiltersBtn.innerText === "Hide filters" ? "Show filters" : "Hide filters";
+    hideFiltersBtn.innerText = hideFiltersBtn.innerText === "Hide filters" ? 
+        "Show filters" : "Hide filters";
     filters.classList.toggle("hidden");
 };
 
@@ -487,8 +483,6 @@ for (const node of pageInputs) {
         node.value = "";
     }
 }
-
-
 
 randomPickBtn.onclick = () => {
     mealIdInput.value = resultsIds[Math.floor(Math.random() * resultsIds.length)];
