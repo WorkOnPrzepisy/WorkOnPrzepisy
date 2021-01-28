@@ -1,6 +1,5 @@
 const jsPdf = window.jspdf;
 const apiMeal = "https://www.themealdb.com/api/json/v1/1/";
-$("#carouselFade").carousel();
 let idMealPage = '';
 
 let apiDownoand;
@@ -108,6 +107,7 @@ const removalAddedElementsToHtml = () => {
 
     hTitleDish.innerText = "";
     imgDish.src = "";
+    console.log(listIngredients);
     for (el of listIngredients) {
         el.remove();
     }
