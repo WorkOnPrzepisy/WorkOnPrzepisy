@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "data": "json-server --watch meals.json"
+    "dev": "nodemon index.js"
   },
   "author": "JAKUB ZYLA",
   "license": "ISC",
