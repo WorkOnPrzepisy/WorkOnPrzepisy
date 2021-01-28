@@ -30,7 +30,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(flash())
 
 const store = new MongoDBStore({
-   uri: 'mongodb+srv://jakub123:lubieplacki123@fork-on.ffczi.mongodb.net/<dbname>?retryWrites=true&w=majority',
+   // uri: 'mongodb+srv://jakub123:lubieplacki123@fork-on.ffczi.mongodb.net/<dbname>?retryWrites=true&w=majority',
+   uri: 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority',
    collection: 'mySessions'
 });
 
@@ -381,7 +382,20 @@ app.get('/meals/:id', getMeal, (req, res) => {
   res.json(res.meal)
 })
 
-
+async function getMeal(req, res, next) {
+   let meal
+   try {
+     meal = await Meal.findById(req.params.id)
+     if (meal == null) {
+       return res.status(404).json({ message: 'Cannot find meal' })
+     }
+   } catch (err) {
+     return res.status(500).json({ message: err.message })
+   }
+ 
+   res.meal = meal
+   next()
+ }
 
 
 // Routing
