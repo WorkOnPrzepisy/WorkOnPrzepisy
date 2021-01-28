@@ -330,6 +330,60 @@ app.post('/userek/fave',async (req,res)=>{
 
 
 
+/// meals database - Damian
+
+const Meal = require('./models/meal.js')
+
+
+// Getting by category
+app.get('/meals', async (req, res) => {
+  try {
+    let meals;
+    if (req.query.ingredients !== "") {
+      const ingredients = req.query.ingredients.split(",")
+      meals = await Meal.find({
+        "name": {$regex: req.query.name, $options: 'i'},
+        "category": {$regex: req.query.category, $options: 'i'},
+        "area": {$regex: req.query.area, $options: 'i'},
+        "ingredients.name": {$all: ingredients}
+      })
+    } else {
+      meals = await Meal.find({
+        "name": {$regex: req.query.name, $options: 'i'},
+        "category": {$regex: req.query.category, $options: 'i'},
+        "area": {$regex: req.query.area, $options: 'i'}
+      })
+    }
+    res.json(meals)
+
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+
+// Getting Random
+app.get('/meals/random', async (req, res) => {
+  
+  try {
+    // const meal = await Meal.aggregate([{$sample: {size: 1}}]);
+    const meal = await Meal.aggregate([{$sample: {size: 1}}]);
+    res.json(meal)
+
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+
+// Getting One
+app.get('/meals/:id', getMeal, (req, res) => {
+  res.json(res.meal)
+})
+
+
+
+
 // Routing
 app.use('/', require('./routes/index.js'))
 app.use('/users', require('./routes/users.js'))
