@@ -314,11 +314,13 @@ const showIngredientSmall = (ingredientStr) => {
         }, 500);
 
         makeInvisible(results);
+        clearFiltersBtn.disabled = true;
 
         clearTimeout(timer);
         timer = setTimeout(() => {
             createMeals().then(() => {
                 showMeals();
+                clearFiltersBtn.disabled = false;
                 checkIfDisableClearBtn();
                 checkIfEnableInputs();
             })
@@ -342,6 +344,7 @@ const makeInvisible = (element) => {
 
 searchInput.oninput = () => {
     makeInvisible(results);
+    clearFiltersBtn.disabled = true;
 
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -349,6 +352,7 @@ searchInput.oninput = () => {
             if (mealsCreated.length < 2) searchInput.maxLength = searchInput.value.length;
             else searchInput.removeAttribute("maxlength");
             showMeals();
+            clearFiltersBtn.disabled = false;
             checkIfDisableClearBtn();
             checkIfDisableInputs();
             checkIfEnableInputs();
@@ -372,6 +376,7 @@ const selectClickHandle = (select) => {
     if (select.value !== "") {
         select.value = "";
         select.style.fontWeight = "normal";
+        clearFiltersBtn.disabled = "true";
 
         makeInvisible(results);
 
@@ -379,6 +384,7 @@ const selectClickHandle = (select) => {
         timer = setTimeout(() => {
             createMeals().then(() => {
                 showMeals();
+                clearFiltersBtn.disabled = "false";
                 checkIfDisableClearBtn();
                 checkIfEnableInputs();
                 checkIfDisableInputs();

@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eat Me</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/favicons/favicon-16x16.png">
+    <!-- <link rel="manifest" href="/site.webmanifest"> -->
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
@@ -25,7 +32,7 @@
         <nav class=nav>
             <div class="brand-logo-wrapper">
                 <a href="#">
-                    <img class="brand-logo" src="../public/img/logo.png">
+                    <img class="brand-logo" src="../public/img/logo.svg">
                 </a>
             </div>
 
@@ -40,16 +47,23 @@
 
             <div class="nav-links">
                 <ul>
-                    <li><a href="/" data-content="Main">Main</a></li>
-                    <li><a href="/fluke" data-content="I'm feeling lucky">I'm feeling lucky</a></li>
-                    <li><a href="/search-view" data-content="Recipes">Recipes</a></li>
-                    <li><a href="/basket" data-content="Basket">Basket</a></li>
+                    <li class="nav-item">
+                        <a href="/" data-content="Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/fluke" data-content="I'm Feeling Lucky">I'm Feeling Lucky</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/search-view" data-content="Recipes">Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/basket" data-content="Basket">Basket</a>
+                    </li>
+                    <li class="right-nav login-signup for-unlogged">
+                        <a href="/users/login" data-content="Log In" class="login">Log In</a>
+                        <a href="/users/register" data-content="Sign Up" class="signup">Sign Up</a>
+                    </li>
                 </ul>
-            </div>
-            <div class="login-logout">
-                <a href="/users/login" data-content="Log in">Log in</a>
-                <div class="backslash">/</div>
-                <a href="/users/logout" data-content="Log out">Log out</a>
             </div>
         </nav>
 
@@ -61,10 +75,18 @@
         <footer class="footer">
             <nav class="footer-nav">
                 <ul>
-                    <li><a href="#" data-content="Main">Main</a></li>
-                    <li><a href="#" data-content="I'm feeling lucky">I'm feeling lucky</a></li>
-                    <li><a href="#" data-content="Recipes">Recipes</a></li>
-                    <!-- <li><a href="#" data-content="Contact">Contact</a></li> -->
+                    <li class="nav-item">
+                        <a href="/" data-content="Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/fluke" data-content="I'm Feeling Lucky">I'm Feeling Lucky</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/search-view" data-content="Recipes">Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/basket" data-content="Basket">Basket</a>
+                    </li>
                 </ul>
             </nav>
             <div class="footer-text">
