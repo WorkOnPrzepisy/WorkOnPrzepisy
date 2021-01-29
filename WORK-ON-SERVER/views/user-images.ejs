@@ -1,0 +1,68 @@
+<main class="main">
+   <div class="search-container">
+     <div class="form-row row first-row-inputs">
+        <form id='formId' action="">  
+              <input type="search" id="searchInputData" placeholder="Filter by name" class="search-input m10">
+        </form>
+    </div>
+   </div> 
+<div class="new-header">
+   <h2>Yours Fave Collection</h2>
+</div> 
+<div id="new-container" class="contenerek"></div>
+<div class="contenerek" id='conteiner-result'>
+      <% results.forEach(function(data) { %>
+         <div class="new-added">
+            <div class="new-content">
+               <div class="header">
+                  <h3 id='dish-name1'><%=data.strMeal%></h3>
+               </div>
+            
+               <div class="image-content" id='new-image'>
+                  <img src="<%=data.strMealThumb%>" height='300px' width='300px' alt=""> 
+               </div>
+               
+               <div class="buttonn">
+                  <a href="/users/happines?api_id=<%= data.idMeal%>" class="btn-verify">
+                     <button type="submit">more</button>
+                  </a>
+                  </div> 
+            </div>
+         </div> 
+         <% }) %>  
+
+
+   <% images.forEach(function(data){ %>
+      <div class="new-added">
+         <div class="new-content">
+            <div class="header">
+               <h3 id='dish-name1'><%=data.strMeal%></h3>
+            </div>
+         
+            <div class="image-content" id='new-image'>
+               <img class="img-size"
+               id='new-image-content'
+               src="data:image/<%=data.images.contentType%>;base64,
+               <%=data.images.strMealThumb.toString('base64')%>"
+               alt="photo"
+            />  
+            </div>
+            
+            <div class="buttonn">
+               <a href="/users/happines?db_id=<%= data._id%>" class="btn-verify">
+                  <button type="submit">more</button>
+               </a>
+            </div> 
+         </div>
+      </div> 
+    <%}) %>
+
+
+ 
+ 
+ 
+</main>
+
+<div class="content-img">
+
+ </div>

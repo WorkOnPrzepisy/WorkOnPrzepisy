@@ -1,0 +1,36 @@
+<main class="main">
+   <div class="search-container">
+         <form id='formId' action="">  
+            <input type="search" id="searchInputData" placeholder="Filter by name" class="search-input m10">
+         </form>
+   </div> 
+<div class="new-header">
+   <h2>Our Whole Collection</h2>
+</div> 
+<div id="new-container" class="contenerek"></div>
+<div class="contenerek" id='conteiner-result'>
+<% arrayfile.forEach(function(file) { %>
+   <div class="new-added">
+      <div class="new-content">
+         <div class="header">
+            <h3 id='dish-name1'><%=file.strMeal%></h3>
+         </div>
+      
+         <div class="image-content" id='new-image'>
+            <img 
+            id='new-image-content'
+            src="data:image/<%=file.images.contentType%>;base64,
+            <%=file.images.strMealThumb.toString('base64')%>"
+            alt="photo"
+         />
+         </div>
+         <div class="buttonn">
+            <a href="/fluke?db_id=<%=file._id%>" class="btn-verify">
+               <button type="submit">more</button>
+            </a>
+        </div>
+      </div>
+   </div> 
+   <% }) %>  
+</main>
+

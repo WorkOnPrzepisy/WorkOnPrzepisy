@@ -1,0 +1,96 @@
+       
+    <div class="slider-container">
+      <div class="slider">
+          <div class="slide slide1">
+              <div class="caption">
+                  <h2> If more of us valued food and cheer and song above hoarded gold, it would be a merrier world.</h2>
+                  <p>~~ J.R.R. Tolkien
+                  </p>
+              </div>
+          </div>
+          <div class="slide slide2">
+              <div class="caption">
+                  <h2> One cannot think well, love well, sleep well, if one has not dined well.</h2>
+                  <p>~~ Virginia Woolf, A Room of One's Own
+                  </p>
+              </div>
+          </div>
+          <div class="slide slide3">
+              <div class="caption">
+                  <h2> Ask not what you can do for your country. Ask what’s for lunch.</h2>
+                  <p>~~ Orson Welles
+                  </p>
+              </div>
+          </div>
+          <div class="slide slide4">
+              <div class="caption">
+                  <h2> There is no love sincerer than the love of food.</h2>
+                  <p> George Bernard Shaw, Man and Superman
+                  </p>
+              </div>
+          </div>
+          <div class="slide slide5">
+              <div class="caption">
+                  <h2> I cook with wine, sometimes I even add it to the food.</h2>
+                  <p>W.C. Fields
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+
+  <form action="" class="search-form">
+    <input type="hidden" class="meal-id" name="meal-id">
+    <div class="form-row row first-row-inputs">
+        <input type="search" id="search-input" placeholder="Filter by name" class="search-input m10">
+        <div class="search-buttons">
+            <button class="hide-filters-btn m10" type="button">Hide filters</button>
+            <button class="clear-filters-btn m10" type="button" disabled>Clear</button>
+        </div>
+    </div>
+    <div class="filters">
+        <div class="form-row row search-selects">
+            <input id="meal-ingredients" placeholder="Ingredients" onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'Ingredients'" class="m10" list="ingredients"/>
+            <datalist id="ingredients">
+            </datalist>
+
+            <input id="meal-category" placeholder="Categories" onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'Categories'" class="m10" list="categories"/>
+            <datalist id="categories">
+            </datalist>
+
+            <input id="meal-area" placeholder="Areas" onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'Areas'" class="m10" list="areas"/>
+            <datalist id="areas">
+            </datalist>
+        </div>
+        <div class="form-row row ingredients-selected invisible">
+
+        </div>
+    </div>
+    <div class="results">
+        <div class="form-row row pagination-buttons">
+            <button type="button" class="previous-btn"><i class="fas fa-angle-left"></i></button>
+            <input type="number" class="page-input" value="1" min="1"/>
+            <div class="pages-number"></div>
+            <button type="button" class="next-btn"><i class="fas fa-angle-right"></i></button>
+        </div>
+        <div class="form-row results-wrapper">
+            <h2 class="results-info m10"></h2>
+            <div class="row results-content start"></div>
+        </div>
+        <div class="form-row row pagination-buttons">
+            <button type="button" class="previous-btn"><i class="fas fa-angle-left"></i></button>
+            <input type="number" class="page-input" value="1" min="1"/>
+            <div class="pages-number"></div>
+            <button type="button" class="next-btn"><i class="fas fa-angle-right"></i></button>
+        </div>
+        <div class="form-row row sixth-row-buttons">
+            <button type="button" class="random-pick-btn m10">Pick for me</button>
+        </div>
+    </div>
+</form>
