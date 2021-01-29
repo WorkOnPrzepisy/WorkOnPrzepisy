@@ -1,7 +1,7 @@
-import paginate from '../../../scripts/paginate.js';
-import ingredients from '../../../scripts/data/ingredients.js';
-import categories from '../../../scripts/data/categories.js';
-import areas from '../../../scripts/data/areas.js';
+import paginate from './paginate.js';
+import ingredients from './data/ingredients.js';
+import categories from './data/categories.js';
+import areas from './data/areas.js';
 
 const IDS_WITHOUT_PREVIEW = [
     "52930",
