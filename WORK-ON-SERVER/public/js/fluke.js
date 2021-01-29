@@ -13,6 +13,7 @@ const isFluke = function() {
 };
 const pageIsFluke = isFluke();
 
+
 const urlParams = Object.fromEntries(new URLSearchParams(document.location.search));
 
 const downloadApi = async(api, random) => {
@@ -50,6 +51,8 @@ const downloadApi = async(api, random) => {
         });
         return apiDownoand;
     }
+
+
 };
 
 const downloadDb = async db_id => {

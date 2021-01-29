@@ -1,14 +1,14 @@
 <main class="main">
    <div class="search-container">
-      <form id="search-form">
-         <input type="search" name="search-input" placeholder="search meal"id='search-input' >
-         <button type="submit">Search</button>
-      </form> 
+      <form id='formId' action="">  
+         <input type="search" id="searchInputData" placeholder="Filter by name" class="search-input m10">
+      </form>
    </div> 
 <div class="new-header">
    <h2>Our Whole Collection</h2>
 </div> 
-<div class="contenerek">
+<div id="new-container" class="contenerek"></div>
+<div class="contenerek"id='conteiner-result'>
 <% arrayfile.forEach(function(file) { %>
    <div class="new-added">
       <div class="new-content">
@@ -24,8 +24,8 @@
             alt="photo"
          />
          </div>
-         <div class="button">
-            <a href="/users/fluke?db_id=<%=file._id%>" class="btn-verify">
+         <div class="buttonn">
+            <a href="/users/happines?db_id=<%=file._id%>" class="btn-verify">
                <button type="submit">see more</button>
             </a>
          </div>
