@@ -65,16 +65,16 @@ fillSelect(ingredients, ingredientsDatalist);
 fillSelect(categories, categoriesDatalist);
 fillSelect(areas, areasDatalist);
 
-const cutStringIfTooLong = (text, maxLength) => 
+const cutStringIfTooLong = (text, maxLength) =>
     text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 
 const addResultsInfo = (numberOfMealsToCreate) => {
-    resultsInfo.innerText = numberOfMealsToCreate === 0 ? 
-        "No results" : numberOfMealsToCreate === 1 ? 
+    resultsInfo.innerText = numberOfMealsToCreate === 0 ?
+        "No results" : numberOfMealsToCreate === 1 ?
         "1 meal:" : `${numberOfMealsToCreate} meals:`;
 };
 
-const changePageButtonHandler = (next=true) => {
+const changePageButtonHandler = (next = true) => {
     const pageSwitch = next ? 1 : -1;
     makeInvisible(resultsContentDiv);
 
@@ -106,7 +106,7 @@ const paginationButtonHandler = (btns) => {
 
 const updatePagination = () => {
     pages = paginate(mealsCreated.length);
-    const {totalPages} = pages;
+    const { totalPages } = pages;
 
     if (totalPages < 2) {
         for (const node of paginationButtonsDivs) {
@@ -129,8 +129,8 @@ const updatePagination = () => {
         }
     }
 };
-const getMeals = async () => {
-    
+const getMeals = async() => {
+
     const baseUrl = "http://localhost:7000/meals?";
     // const baseUrl = "http://localhost:7000/meals/meals?";
     const nameUrl = "name=";
@@ -138,43 +138,46 @@ const getMeals = async () => {
     const categoryUrl = "&category=";
     const areaUrl = "&area=";
 
-    const fullUrl = baseUrl + nameUrl + searchInput.value + 
-        ingredientsUrl + ingredientsSelected.join(",") + 
+    const fullUrl = baseUrl + nameUrl + searchInput.value +
+        ingredientsUrl + ingredientsSelected.join(",") +
         categoryUrl + categorySelect.value + areaUrl + areaSelect.value;
 
     return fetch(fullUrl).then((response) => response.json())
 
 }
 
-const createMeals = async () => {
+const createMeals = async() => {
     mealsCreated.length = 0;
     resultsIds.length = 0;
-    
+
     return getMeals().then((mealsToCreate) => {
         const mealsNumber = mealsToCreate.length;
         randomPickBtn.style.display = mealsNumber < 2 ? "none" : "block";
         const innerMealsCreated = [];
-    
+
         if (mealsNumber > 0) {
-            for (let {name, imageUrl, _id} of mealsToCreate) {
+            for (let { name, imageUrl, _id }
+                of mealsToCreate) {
                 const mealDiv = document.createElement("div");
                 const mealImg = document.createElement("img");
                 const mealP = document.createElement("p");
                 const mealButton = document.createElement("button");
-    
+
                 mealDiv.className = "meal";
                 mealButton.innerText = "Details";
                 mealButton.type = "button";
                 mealButton.onclick = () => {
+                    window.location.href = `/fluke?api_id=${_id}`;
+                    /*
                     mealIdInput.value = _id;
-                    searchForm.submit();
+                    searchForm.submit();*/
                 };
-    
+
                 name = cutStringIfTooLong(name, 22);
                 mealP.append(name);
-    
-                mealImg.src = IDS_WITHOUT_PREVIEW.includes(_id) ? imageUrl : `${imageUrl}/preview`; 
-    
+
+                mealImg.src = IDS_WITHOUT_PREVIEW.includes(_id) ? imageUrl : `${imageUrl}/preview`;
+
                 mealDiv.append(mealP);
                 mealDiv.append(mealImg);
                 mealDiv.append(mealButton);
@@ -183,7 +186,7 @@ const createMeals = async () => {
                 resultsIds.push(_id);
             }
         }
-        
+
         addResultsInfo(mealsNumber);
         updatePagination();
 
@@ -194,22 +197,22 @@ const createMeals = async () => {
 const showMeals = () => {
     if (results.classList.contains("invisible")) results.classList.toggle("invisible");
 
-    const {currentPage, endPage, startIndex, endIndex} = pages;
+    const { currentPage, endPage, startIndex, endIndex } = pages;
 
 
-    for (const node of paginationPreviousBtns) 
+    for (const node of paginationPreviousBtns)
         node.disabled = currentPage === 1 ? true : false;
-    
 
-    for (const node of paginationNextBtns) 
+
+    for (const node of paginationNextBtns)
         node.disabled = currentPage === endPage ? true : false;
-    
+
 
     const mealsToShow = mealsCreated.slice(startIndex, endIndex + 1);
 
     resultsContentDiv.innerHTML = "";
     for (const meal of mealsToShow) resultsContentDiv.append(meal);
-    
+
 }
 
 const showMealsWithScroll = () => {
@@ -224,24 +227,24 @@ const showMealsWithScroll = () => {
 };
 
 createMeals()
-.then(
-    () => {
-        showMeals();
-    }
-)
+    .then(
+        () => {
+            showMeals();
+        }
+    )
 
 const checkIfDisableClearBtn = () => {
-    clearFiltersBtn.disabled = 
-            searchInput.value === "" &&
-            ingredientsSelected.length === 0 && 
-            categorySelect.value === "" && 
-            areaSelect.value === "" 
-                ? true : false;
+    clearFiltersBtn.disabled =
+        searchInput.value === "" &&
+        ingredientsSelected.length === 0 &&
+        categorySelect.value === "" &&
+        areaSelect.value === "" ?
+        true : false;
 }
 
 const checkIfDisableInputs = () => {
     if (mealsCreated.length < 2) {
-        for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
+        for (const input of[searchInput, ingredientsSelect, categorySelect, areaSelect]) {
             if (input.value === "") input.disabled = true;
         }
     }
@@ -249,7 +252,7 @@ const checkIfDisableInputs = () => {
 
 const checkIfEnableInputs = () => {
     if (mealsCreated.length > 1) {
-        for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) 
+        for (const input of[searchInput, ingredientsSelect, categorySelect, areaSelect])
             input.disabled = false;
     }
 }
@@ -259,11 +262,11 @@ ingredientsSelect.onchange = () => {
     ingredientsSelect.value = "";
 
     if (ingredients.includes(ingredientSelectValue)) {
-            if (ingredientsSelected.length === 0) {
-                clearFiltersBtn.disabled = false;
-                ingredientsSelectedDiv.classList.toggle("invisible");
-            }
-            if (ingredientsSelected.length === 2) ingredientsSelect.disabled = true;
+        if (ingredientsSelected.length === 0) {
+            clearFiltersBtn.disabled = false;
+            ingredientsSelectedDiv.classList.toggle("invisible");
+        }
+        if (ingredientsSelected.length === 2) ingredientsSelect.disabled = true;
 
         ingredientsSelected.push(ingredientSelectValue);
         showIngredientSmall(ingredientSelectValue);
@@ -280,7 +283,7 @@ ingredientsSelect.onchange = () => {
     }
 };
 
-const getIngredientSmallImgUrl = (ingredientStr) => 
+const getIngredientSmallImgUrl = (ingredientStr) =>
     `https://www.themealdb.com/images/ingredients/${ingredientStr}-Small.png`;
 
 const showIngredientSmall = (ingredientStr) => {
@@ -294,7 +297,7 @@ const showIngredientSmall = (ingredientStr) => {
     newIngredientDiv.append(newIngredientImg);
     newIngredientDiv.append(newIngredientP);
     newIngredientDiv.onclick = () => {
-        ingredientsSelected = ingredientsSelected.filter((ingredient) => 
+        ingredientsSelected = ingredientsSelected.filter((ingredient) =>
             ingredient !== ingredientStr);
         if (ingredientsSelected.length === 0) ingredientsSelectedDiv.classList.toggle("invisible");
         if (mealsCreated.length > 1) ingredientsSelect.disabled = false;
@@ -419,7 +422,7 @@ areaSelect.onchange = () => {
 };
 
 hideFiltersBtn.onclick = () => {
-    hideFiltersBtn.innerText = hideFiltersBtn.innerText === "Hide filters" ? 
+    hideFiltersBtn.innerText = hideFiltersBtn.innerText === "Hide filters" ?
         "Show filters" : "Hide filters";
     filters.classList.toggle("hidden");
 };
@@ -427,12 +430,12 @@ hideFiltersBtn.onclick = () => {
 clearFiltersBtn.onclick = () => {
     clearFiltersBtn.disabled = true;
     ingredientsSelected.length = 0;
-    
+
     setTimeout(() => {
         ingredientsSelectedDiv.innerHTML = "";
     }, 500);
 
-    for (const input of [searchInput, ingredientsSelect, categorySelect, areaSelect]) {
+    for (const input of[searchInput, ingredientsSelect, categorySelect, areaSelect]) {
         input.disabled = false;
         input.value = "";
         input.style.fontWeight = "normal";
@@ -447,9 +450,8 @@ clearFiltersBtn.onclick = () => {
 
     setTimeout(() => {
         createMeals().then(() => {
-                showMeals();
-            }
-        )
+            showMeals();
+        })
     }, 500);
 };
 
@@ -457,17 +459,17 @@ for (const node of pageInputs) {
     node.oninput = () => {
         const pageInputValue = node.value;
         const totalPages = pages.totalPages;
-    
+
         if (pageInputValue !== "") {
             makeInvisible(resultsContentDiv);
-    
+
             if (parseInt(pageInputValue) > totalPages) node.value = totalPages;
             if (parseInt(pageInputValue) < 1) node.value = 1;
             for (const innerNode of pageInputs) {
                 innerNode.value = node.value;
             }
             pages = paginate(mealsCreated.length, parseInt(node.value));
-    
+
             clearTimeout(timer);
             timer = setTimeout(() => {
                 showMealsWithScroll();

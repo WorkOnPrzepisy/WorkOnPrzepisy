@@ -1,10 +1,10 @@
 const jdpsf = window.jspdf;
 
-const urlParams = Object.fromEntries(new URLSearchParams(document.location.search));
+const urlParamsBasket = Object.fromEntries(new URLSearchParams(document.location.search));
 
-const api = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
+const api = "http://localhost:7000/meals/";
 
-const getData = (key) => {
+const getDataBasket = (key) => {
     if (!localStorage) return;
 
     try {
@@ -14,7 +14,7 @@ const getData = (key) => {
     }
 }
 
-const storeData = (key, item) => {
+const storeDataBasket = (key, item) => {
     if (!localStorage) return;
 
     try {
@@ -24,34 +24,28 @@ const storeData = (key, item) => {
     }
 }
 
-console.log(urlParams);
-
 const tdIntable1 = document.querySelector("#table--1 > tbody");
 
-const downoandApi = async(api) => {
+const downoandApiBasket = async(api) => {
 
     const apiDownoand = await (await fetch(api)).json();
-    const meal = apiDownoand.meals[0];
 
-    return meal;
+    return apiDownoand;
 
 }
 
-const downloadDb = async db_id => {
+const downloadDbBasket = async db_id => {
     const query = new URLSearchParams({ db_id });
 
     try {
         const response = await fetch("/users/fluke_id?" + query.toString()).then(_ => _.json());
-
-        console.log(response);
         return response;
-        //another(response)
     } catch (error) {
         console.error(error);
     }
 };
 
-const addElementInTableHtml = (i, idMeal, title, count) => {
+const addElementInTableHtmlBasket = (i, idMeal, title, count) => {
     const tr = document.createElement('tr');
     tr.classList.add(`tr--${i}`);
 
@@ -128,101 +122,61 @@ const addElementInTableHtml = (i, idMeal, title, count) => {
     tdIntable1.appendChild(tr);
 }
 
-const removeItemHtml = (removeTbody) => {
+const removeItemHtmlBasket = (removeTbody) => {
 
-    for (el of removeTbody) {
+    for (let el of removeTbody) {
         el.remove();
     }
 }
 
-const countArrWthMeals = () => {
-    const arrWithMeals = addDataFromLocalStorage();
+const countArrWthMealsBasket = () => {
+    const arrWithMeals = addDataFromLocalStorageBasket();
     const copyArrWithMeals = JSON.parse(JSON.stringify(arrWithMeals));
-
-    console.log(arrWithMeals);
-
 
 
     for (let i = 0; i < copyArrWithMeals.length; i++) {
         let arrWithCountMeals = [];
-        //arrWithCountMeals.push(copyArrWithMeals[i]);
         copyArrWithMeals[i].countMeal = (copyArrWithMeals[i].countMeal ? copyArrWithMeals[i].countMeal : 1);
-        //let last = 0;
-        //console.log("i1", i);
-        //console.log("arr", arrWithCountMeals);
         for (let j = i; j < copyArrWithMeals.length; j++) {
 
 
             if (copyArrWithMeals[i].idMeals === copyArrWithMeals[j].idMeals) {
-                //console.log();
-                //console.log(copyArrWithMeals[i].idMeals, "===", copyArrWithMeals[j].idMeals);
-
-
-                //console.log("i", i);
-                //console.log("j", j);
                 copyArrWithMeals[i].countMeal += 1;
-                //console.log(copyArrWithMeals[i]);
-                console.log(copyArrWithMeals[i].countMeal);
                 copyArrWithMeals[i].countMeal - 1;
                 arrWithCountMeals.push(j);
-
             }
-            //console.log("last", last);
         }
 
         copyArrWithMeals[i].countMeal -= 1;
-        // for (el of copyArrWithMeals) {
-        //     console.log("pcM", el);
-        // }
+
         for (let i = arrWithCountMeals.length - 1; i > 0; i--) {
-            console.log(arrWithCountMeals);
-            console.log("remove", arrWithCountMeals[i]);
             copyArrWithMeals.splice(arrWithCountMeals[i], 1);
         }
-
-        //console.log("pi", i, "pl", last);
-
-        // for (el of copyArrWithMeals) {
-        //     console.log("cM", el);
-        // }
-        // for (el of arrWithCountMeals) {
-        //     console.log("aM", el);
-        // }
-
-
     }
 
-    console.log("tab:", copyArrWithMeals);
-    //console.log("tab1", arrWithMeals);
-
-    storeData("Recipe", copyArrWithMeals)
+    storeDataBasket("Recipe", copyArrWithMeals)
 
     return copyArrWithMeals;
 }
 
-const addItemHTML = () => {
+const addItemHTMLBasket = () => {
 
-    const copyArrWithMeals = countArrWthMeals();
+    const copyArrWithMeals = countArrWthMealsBasket();
     for (let i = 0; i < copyArrWithMeals.length; i++) {
-
-        //const apiWithId = api + arrWithMeals[i].idMeals;
-        //console.log(apiWithId);
-        //await downoandApi(apiWithId, false);
-        addElementInTableHtml(i, copyArrWithMeals[i].idMeals, copyArrWithMeals[i].title, copyArrWithMeals[i].countMeal);
-
+        addElementInTableHtmlBasket(i, copyArrWithMeals[i].idMeals, copyArrWithMeals[i].title, copyArrWithMeals[i].countMeal);
     }
 }
 
-const addDataFromLocalStorage = () => {
+const addDataFromLocalStorageBasket = () => {
     const key = "Recipe";
-    return getData(key);
+    return getDataBasket(key);
 }
 
 const buttonSelectAll = document.querySelector(".button-select-basket");
 const inputSelectAll = document.querySelector(".input-checkbox-select");
 let isClick = 0;
 
-const select = () => {
+const selectBasket = () => {
 
     const inputCheckbox = document.querySelectorAll(".input-checkbox");
 
@@ -234,7 +188,7 @@ const select = () => {
     isClick++;
 }
 
-buttonSelectAll.addEventListener('click', select);
+buttonSelectAll.addEventListener('click', selectBasket);
 
 buttonSelectAll.addEventListener('click', () => {
     if (isClick === 2) {
@@ -248,12 +202,12 @@ buttonSelectAll.addEventListener('click', () => {
     }
 });
 
-inputSelectAll.addEventListener('click', select);
+inputSelectAll.addEventListener('click', selectBasket);
 
 inputSelectAll.addEventListener('click', () => {
     if (isClick === 2) {
         const inputCheckbox = document.querySelectorAll(".input-checkbox");
-        for (el of inputCheckbox) {
+        for (let el of inputCheckbox) {
             if (el.checked) {
                 el.checked = false;
             }
@@ -262,100 +216,82 @@ inputSelectAll.addEventListener('click', () => {
     }
 });
 
-const removeAddTable = (key, getTabeWithData) => {
+const selectBasketBasket = (key, getTabeWithData) => {
 
-    storeData(key, getTabeWithData);
+    storeDataBasket(key, getTabeWithData);
     const removeTbody = document.querySelectorAll('.tbody-table-1 tr');
-    removeItemHtml(removeTbody);
-    addItemHTML();
+    removeItemHtmlBasket(removeTbody);
+    addItemHTMLBasket();
 }
 
-const removeIconButtonTbody = document.querySelector(".tbody-table-1");
+const removeIconButtonTbodyBasket = document.querySelector(".tbody-table-1");
 
-removeIconButtonTbody.addEventListener('click', (e) => {
+removeIconButtonTbodyBasket.addEventListener('click', (e) => {
     if (e.target.tagName === "DIV" && e.target.classList.contains("div-remove")) {
         const whichTr = e.target.parentNode.parentNode.parentNode;
 
-        let getTabeWithData = countArrWthMeals();
-        //console.log(getTabeWithData);
-
-        //console.log(whichTr);
+        let getTabeWithData = countArrWthMealsBasket();
         const whichTrIndex = whichTr.classList.value;
-        //console.log(whichTrIndex);
         const indexTr = whichTrIndex.slice((whichTrIndex.lastIndexOf('-') + 1), );
-        //console.log("tu", indexTr);
         getTabeWithData.splice(indexTr, 1);
         const key = "Recipe";
 
-        removeAddTable(key, getTabeWithData);
+        selectBasketBasket(key, getTabeWithData);
     }
 })
 
-const getNrIndexMealnputChecked = () => {
+const getNrIndexMealnputCheckedBasket = () => {
     const inputCheckbox = document.querySelectorAll(".input-checkbox");
 
-    //console.log("yable:", getTabeWithData);
     let tableWithIndexTr = [];
     for (let el of inputCheckbox) {
-        //console.log("el1", el);
         if (el.checked) {
-            //console.log("el2", el);
             const whichTr = el.parentNode.parentNode.parentNode.parentNode;
-            //console.log(whichTr);
             const whichTrIndex = whichTr.classList.value;
-            //console.log(whichTrIndex);
             const indexTr = whichTrIndex.slice((whichTrIndex.lastIndexOf('-') + 1), );
-            //console.log("tu", indexTr);
             tableWithIndexTr.push(indexTr);
-            //console.log(tableWithIndexTr);
         }
     }
     return tableWithIndexTr;
 
 }
 
-const removeButton = document.querySelector("#remove-checked");
-removeButton.addEventListener('click', () => {
-    let getTabeWithData = addDataFromLocalStorage();
-    let tableWithIndexTr = getNrIndexMealnputChecked();
+const removeButtonBasket = document.querySelector("#remove-checked");
+removeButtonBasket.addEventListener('click', () => {
+    let getTabeWithData = addDataFromLocalStorageBasket();
+    let tableWithIndexTr = getNrIndexMealnputCheckedBasket();
     for (let i = tableWithIndexTr.length - 1; i >= 0; i--) {
         getTabeWithData.splice(tableWithIndexTr[i], 1);
-        //console.log("tab", getTabeWithData);
     }
     const key = "Recipe";
-    removeAddTable(key, getTabeWithData);
+    selectBasketBasket(key, getTabeWithData);
 })
 
-const imdexInTableWithMeals = (e) => {
-    const arrWithCountMeals = addDataFromLocalStorage();
+const imdexInTableWithMealsBasket = (e) => {
+    const arrWithCountMeals = addDataFromLocalStorageBasket();
     const key = "Recipe";
     const wichMealId = e.target.parentNode.parentNode.parentNode.parentNode;
     let nrIndexTab = wichMealId.classList.value.slice(wichMealId.classList.value.lastIndexOf('-') + 1)
-    console.log(wichMealId);
-    console.log(nrIndexTab);
 
     return { key, nrIndexTab, arrWithCountMeals }
 }
 
-removeIconButtonTbody.addEventListener('click', (e) => {
+removeIconButtonTbodyBasket.addEventListener('click', (e) => {
 
     if (e.target.tagName === "BUTTON" && e.target.classList.contains('button-add-value')) {
-        const { key, nrIndexTab, arrWithCountMeals } = imdexInTableWithMeals(e);
+        const { key, nrIndexTab, arrWithCountMeals } = imdexInTableWithMealsBasket(e);
         arrWithCountMeals[nrIndexTab].countMeal += 1;
-        removeAddTable(key, arrWithCountMeals);
+        selectBasketBasket(key, arrWithCountMeals);
     }
     if (e.target.tagName === "BUTTON" && e.target.classList.contains('button-remove-value')) {
-        const { key, nrIndexTab, arrWithCountMeals } = imdexInTableWithMeals(e);
+        const { key, nrIndexTab, arrWithCountMeals } = imdexInTableWithMealsBasket(e);
         arrWithCountMeals[nrIndexTab].countMeal -= 1;
 
         if (arrWithCountMeals[nrIndexTab].countMeal === 0) {
             const modal = document.querySelector(".modal");
             modal.style.display = 'block';
-            console.log("hello");
             const buttonCancel = modal.querySelector('.button-cancel');
             const buttonDelete = modal.querySelector('.button-delete');
-
-            console.log(buttonCancel);
 
             buttonCancel.addEventListener('click', () => {
                 arrWithCountMeals[nrIndexTab].countMeal += 1;
@@ -365,75 +301,63 @@ removeIconButtonTbody.addEventListener('click', (e) => {
             buttonDelete.addEventListener('click', () => {
                 arrWithCountMeals.splice(nrIndexTab, 1);
                 modal.style.display = 'none';
-                removeAddTable(key, arrWithCountMeals);
+                selectBasketBasket(key, arrWithCountMeals);
             })
 
         }
-        console.log("tuu", arrWithCountMeals[nrIndexTab].countMeal);
-
-        removeAddTable(key, arrWithCountMeals);
+        selectBasketBasket(key, arrWithCountMeals);
     }
     if (e.target.tagName === "INPUT" && e.target.classList.contains('inputCountRecipe')) {
-        //zmiana wartosci
-        console.log(e.target);
+
         const inputCountRecipe = e.target;
-        console.log("1", inputCountRecipe.value);
+
         inputCountRecipe.addEventListener('blur', (a) => {
-            const { key, nrIndexTab, arrWithCountMeals } = imdexInTableWithMeals(e);
-            //console.log({ key, nrIndexTab, arrWithCountMeals });
+            const { key, nrIndexTab, arrWithCountMeals } = imdexInTableWithMealsBasket(e);
             arrWithCountMeals[nrIndexTab].countMeal = parseInt(inputCountRecipe.value);
-            //console.log("ar", arrWithCountMeals[nrIndexTab].countMeal);
-            //console.log("in", inputCountRecipe.value);
-            //console.log("tab", arrWithCountMeals);
-            removeAddTable(key, arrWithCountMeals);
-            //console.log(inputCountRecipe.value);
+
+            selectBasketBasket(key, arrWithCountMeals);
+
         })
     }
 
 })
 
-const getIngredients = async(idMeal) => {
+const getIngredientsBasket = async(idMeal) => {
 
     const tabApi = [];
     const tabDb = [];
     if (idMeal.length > 6) {
 
-        const tab = await downloadDb(idMeal)
+        const tab = await downloadDbBasket(idMeal)
 
         const tabBdIngredients = tab.strIngredient1;
         for (let i = 0; i < tabBdIngredients.length; i++) {
             tabDb.push({ ingredient: tabBdIngredients[i][`strIngridient${i + 1}`] });
         }
-        console.log(tabDb);
+
         return tabDb;
 
     } else {
         let apiRecipe = api;
         apiRecipe += idMeal;
-        console.log(apiRecipe);
-        let j = 1;
-        let tabObiectIngredients = [];
-        const tab = await downoandApi(apiRecipe);
-        //console.log("tu", prom);
-        const { strMeal } = tab;
-        console.log(strMeal);
 
-        //console.log("juuu", prom[`strIngredient${j}`]);
-        while (!!(tab[`strIngredient${j}`] !== "" && tab[`strIngredient${j}`] != null)) {
-            //console.log("juuu", prom[`strIngredient${j}`]);
+        let tabObiectIngredients = [];
+        const dataFromApi = await downoandApiBasket(apiRecipe);
+
+        const tabIngredientsFromApi = dataFromApi.ingredients;
+
+        for (let el of tabIngredientsFromApi) {
             tabObiectIngredients.push({
-                measure: tab[`strMeasure${j}`],
-                ingredient: tab[`strIngredient${j}`],
+                measure: el.measure,
+                ingredient: el.name,
             });
-            j++;
         }
-        //console.log("huhu", tabObiectIngredients);
         return tabObiectIngredients;
     }
 
 }
 
-const splitIngredients = (tabWithIngredients) => {
+const splitIngredientsBasket = (tabWithIngredients) => {
     console.log("split", tabWithIngredients);
     const regex = /[^0-9]/i;
     let tabWithIngred = [];
@@ -445,49 +369,52 @@ const splitIngredients = (tabWithIngredients) => {
         }
         if (tabWithIngredients[i].measure) {
             let measure = tabWithIngredients[i].measure;
-            console.log(tabWithIngredients[i].measure);
-            console.log();
+
             for (let j = 0; j < measure.length; j++) {
-                console.log("parse", measure[j].search(regex));
+
                 if (measure[j].search(regex)) {
 
                     meal.measure += measure[j];
-                    console.log("1:", meal.measure);
+
                 } else if (measure[j] == '/') {
 
                     meal.measure += measure[j];
-                    console.log("2:", meal.measure);
+
+                } else if (measure[j] == ' ') {
+                    meal.measure += measure[j];
                 } else {
 
                     meal.ingredient += measure[j];
-                    console.log("3:", meal.measure);
+
                 }
             }
             meal.ingredient += ` ${tabWithIngredients[i].ingredient}`;
             tabWithIngred.push(meal);
-            //console.log(tabWithIngred);
+
 
         } else {
-            console.log(tabWithIngredients[i].ingredient);
+
             let ingredient = tabWithIngredients[i].ingredient;
             for (let j = 0; j < ingredient.length; j++) {
-                console.log("parse", ingredient[j].search(regex));
+
                 if (ingredient[j].search(regex)) {
 
                     meal.measure += ingredient[j];
-                    console.log("1:", meal.ingredient);
+
                 } else if (ingredient[j] == '/') {
 
                     meal.measure += ingredient[j];
-                    console.log("2:", meal.ingredient);
+
+                } else if (ingredient[j] == ' ' && j > 0 && ingredient[j - 1].search(regex)) {
+                    meal.measure += ingredient[j];
                 } else {
 
                     meal.ingredient += ingredient[j];
-                    console.log("3:", meal.ingredient);
+
                 }
             }
             tabWithIngred.push(meal);
-            //console.log(tabWithIngred);
+
         }
 
 
@@ -495,27 +422,124 @@ const splitIngredients = (tabWithIngredients) => {
     return tabWithIngred;
 }
 
-const countTheSameIngredients = (tabWithIngredients) => {
-    console.log("fn", tabWithIngredients);
+const countTheSameIngredientsBasket = (tabWithIngredients) => {
+
 
     for (let i = 0; i < tabWithIngredients.length; i++) {
 
         let ingredient1 = tabWithIngredients[i].ingredient.trim().replace("  ", " ");
-        console.log("1", ingredient1);
+
         for (let j = i + 1; j < tabWithIngredients.length; j++) {
             let ingredient2 = tabWithIngredients[j].ingredient.trim().replace("  ", " ");
-            console.log("2", ingredient2);
+
             if (ingredient1.toLowerCase() === ingredient2.toLowerCase()) {
                 let measure1 = tabWithIngredients[i].measure;
                 let measure2 = tabWithIngredients[j].measure;
+
+                measure1 = measure1.trim();
+                measure2 = measure2.trim();
+
+
+
                 if (measure1 === "" || measure2 === "") {
-                    console.log("tutaj");
+
                     measure1 += measure2;
 
+                } else if (((measure1.indexOf(' ') != -1) || (measure2.indexOf(' ') != -1)) && ((measure1.indexOf('/') != -1) || (measure2.indexOf('/') != -1))) {
+
+
+                    if (measure1.indexOf(' ') === -1 && measure2.indexOf('/') != -1) {
+
+
+                        if (measure1.indexOf('/')) {
+                            let measure1Split = measure1.split('/');
+                            let measure2Split = measure2.split(' ');
+                            let measure2Split2 = measure2Split[1].split('/');
+                            let measureFr1 = parseInt(measure1Split[0]) + parseInt(measure2Split2[0]);
+                            if (measureFr1 === parseInt(measure1Split[1])) {
+                                let measureF = parseInt(measure2[0]) + 1;
+                                tabWithIngredients[i].measure = measureF.toString();
+                            } else {
+                                let measureF = `${measure2[0]} ${measureFr1}/${measureFr2}`;
+                                tabWithIngredients[i].measure = measureF;
+                            }
+                        } else {
+                            let measure2Split = measure2.split(' ');
+                            let measureFr1 = parseInt(measure1) + parseInt(measure2Split[0]);
+
+                            let measureF = parseInt(measure1) + parseInt(measure2Split[0])
+                            measureF = measureF.toString() + `${ measureFr1 }`;
+                            tabWithIngredients[i].measure = measureF;
+                        }
+                    } else if (measure2.indexOf(' ') === -1 && measure1.indexOf('/') != -1) {
+
+                        let measureF = '';
+                        if (measure2.indexOf('/')) {
+                            let measure2Split = measure2.split('/');
+                            let measure1Split = measure1.split(' ');
+                            let measure1Split2 = measure1Split[1].split('/');
+                            let measureFr2 = parseInt(measure2Split[0]) + parseInt(measure1Split2[0]);
+                            if (measureFr2 === parseInt(measure2Split[1])) {
+                                let measureF = parseInt(measure1[0]) + 1;
+                                tabWithIngredients[i].measure = measureF.toString();
+                            } else {
+                                let measureF = `
+                            $ { measure1[0] }
+                            $ { measureFr2 }
+                            /${measureFr1}`;
+                                tabWithIngredients[i].measure = measureF;
+                            }
+                        } else {
+                            let measure1Split = measure1.split(' ');
+                            let measureFr2 = parseInt(measure2) + parseInt(measure1Split[0]);
+
+                            let measureF = parseInt(measure2) + parseInt(measure1Split[0]);
+                            measureF = measureF.toString() + `${measureFr2}`;
+                            tabWithIngredients[i].measure = measureF;
+                        }
+                    } else {
+
+                        let measure2Split = measure2.split(' ');
+                        let measure1Split = measure1.split(' ');
+                        let measure1Split2 = measure1Split[1].split('/');
+                        let measure2Split2 = measure2Split[1].split('/');
+                        let measureFr2 = parseInt(measure2Split2[0]) + parseInt(measure1Split2[0]);
+
+                        if (measureFr2 === parseInt(measure2Split2[1])) {
+                            let measureF = parseInt(measure2Split[0]) + parseInt(measure1Split[0]) + 1;
+
+                            tabWithIngredients[i].measure = measureF.toString();
+                        } else {
+                            let measureF = `${measure1[0]} ${measureFr2}/${measureFr1}`;
+                            tabWithIngredients[i].measure = measureF;
+                        }
+                    }
+                } else if ((measure1.indexOf('/') != -1) || (measure2.indexOf('/') != -1)) {
+
+                    if (measure1.indexOf('/') != -1 && measure2.indexOf('/') != -1) {
+
+                        //let measureF = '';
+                        let measure1Split = measure1.split('/');
+                        let measure2Split = measure2.split('/');
+                        let measureFr1 = parseInt(measure1Split[0]) + parseInt(measure2Split[0]);
+                        if (measureFr1 === parseInt(measure1Split[1])) {
+                            let measureF = 1;
+                            tabWithIngredients[i].measure = measureF.toString();
+                        } else {
+                            let measureF = `${measureFr1}/${measure1Split[1]}`;
+                            tabWithIngredients[i].measure = measureF;
+                        }
+                    } else if (measure1.indexOf('/') != -1 && measure2.indexOf('/') === -1) {
+
+                        let measureF = `${measure2} ${measure1}`;
+                        tabWithIngredients[i].measure = measureF;
+                    } else if (measure1.indexOf('/') === -1 && measure2.indexOf('/') != -1) {
+
+                        let measureF = `${measure1} ${measure2}`;
+                        tabWithIngredients[i].measure = measureF;
+                    }
                 } else if (typeof(parseInt(measure1)) != 'NaN' && typeof(parseInt(measure1)) != 'NaN') {
 
-                    console.log(typeof(parseInt(measure1)) === 'number');
-                    console.log(typeof(parseInt(measure2)) === 'number');
                     measure1 = parseInt(measure1);
                     measure2 = parseInt(measure2);
 
@@ -523,55 +547,48 @@ const countTheSameIngredients = (tabWithIngredients) => {
 
                     tabWithIngredients[i].measure = measure1.toString();
                 }
-                console.log("!!!!!!!!!!!!!!!!!!!", ingredient1, ingredient2);
-
-
-
 
                 tabWithIngredients.splice(j, 1);
             }
 
         }
     }
-    console.log("fn", tabWithIngredients);
+
     return tabWithIngredients;
 }
 
-const generateIngredientsPdf = (doc, arrCountTheSameIngredients) => {
+const generateIngredientsPdfBasket = (doc, arrcountTheSameIngredientsBasket) => {
     let i = 60;
     let margin = 20;
     let pageCount = 0;
-    let elementsLength = arrCountTheSameIngredients.length;
+    let elementsLength = arrcountTheSameIngredientsBasket.length;
     doc.getFontList("Lobster");
     doc.text(90, 20, "Shopping list");
     doc.line(20, 30, 190, 30)
     doc.getFontList("Arial");
     doc.setFontSize(13);
+
     for (let j = 0; j < elementsLength; j++) {
-        let { measure, ingredient } = arrCountTheSameIngredients[j];
-        if (isNaN(measure)) {
-            toString(measure);
-            measure = "";
-        }
-        //console.log(countMeasure, ingredient);
+        let { measure, ingredient } = arrcountTheSameIngredientsBasket[j];
+        measure = measure.trim();
         if ((i < 260 && pageCount === 0) || (i < 260 && pageCount === 1)) {
-            //console.log("f", i);
-            doc.text(margin, i, `[   ]  ${measure}  ${ingredient}`);
+
+            doc.text(margin, i, `[   ]  ${measure} ${ingredient}`);
         }
         if (i === 260 && pageCount === 0) {
-            //console.log("s", i);
-            doc.text(margin, i, `[   ]  ${measure}  ${ingredient}`);
+
+            doc.text(margin, i, `[   ]  ${measure} ${ingredient}`);
             margin = 120;
             pageCount = 1;
             i = 50;
         }
         if (i === 260 && pageCount === 1) {
-            console.log("t", i);
-            doc.text(margin, i, `[   ]  ${measure}  ${ingredient}`);
+
+            doc.text(margin, i, `[   ]  ${measure} ${ingredient}`);
             pageCount = 2;
         }
         if (i === 260 && pageCount === 2) {
-            //console.log("fo", i);
+
             doc.addPage();
             doc.getFontList("Lobster");
             doc.text(90, 20, "Shopping list");
@@ -587,48 +604,46 @@ const generateIngredientsPdf = (doc, arrCountTheSameIngredients) => {
     doc.save("shoppingList.pdf");
 }
 
-const generateShoppingListPdf = async() => {
-    const arrWithCountMeals = addDataFromLocalStorage();
-    let arrWithSelectedDishes = getNrIndexMealnputChecked();
+const generateShoppingListPdfBasket = async() => {
+    const arrWithCountMeals = addDataFromLocalStorageBasket();
+    let arrWithSelectedDishes = getNrIndexMealnputCheckedBasket();
     if (arrWithSelectedDishes.length === 0) {
-        select();
-        arrWithSelectedDishes = getNrIndexMealnputChecked();
+        selectBasket();
+        arrWithSelectedDishes = getNrIndexMealnputCheckedBasket();
     }
     let doc = jspdf.jsPDF();
     let tabWithIngredients = [];
-    //let tabWithIngredientsSplit = [];
+
 
     for (let j = 0; j < arrWithSelectedDishes.length; j++) {
-        console.log("dł", arrWithSelectedDishes);
+
         const el = arrWithSelectedDishes[j]
         const idMeal = arrWithCountMeals[el].idMeals;
         const countMeal = arrWithCountMeals[el].countMeal;
         const regex = /[^0-9]/i;
 
-        console.log(idMeal, countMeal);
+
 
         let i = 0;
         while (i !== countMeal) {
-            const prom = await getIngredients(idMeal)
+            const prom = await getIngredientsBasket(idMeal)
             Array.prototype.push.apply(tabWithIngredients, prom);
 
             i++;
         }
     }
 
-    console.log(tabWithIngredients);
+    const tabWithAllIngerdients = splitIngredientsBasket(tabWithIngredients);
 
-    const tabWithAllIngerdients = splitIngredients(tabWithIngredients);
+    const tabcountTheSameIngredientsBasket = countTheSameIngredientsBasket(tabWithAllIngerdients);
 
-    const tabcountTheSameIngredients = countTheSameIngredients(tabWithAllIngerdients);
-
-    generateIngredientsPdf(doc, tabcountTheSameIngredients);
+    generateIngredientsPdfBasket(doc, tabcountTheSameIngredientsBasket);
 
 }
 
-const buttonGenerateShoppingList = document.querySelector('#generate-shopping-list-basket');
+const buttonGenerateShoppingListBasket = document.querySelector('#generate-shopping-list-basket');
 
-buttonGenerateShoppingList.addEventListener('click', () => {
-    generateShoppingListPdf();
+buttonGenerateShoppingListBasket.addEventListener('click', () => {
+    generateShoppingListPdfBasket();
 })
-addItemHTML();
+addItemHTMLBasket();

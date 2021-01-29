@@ -38,7 +38,7 @@ body {
 }
 
 .slider-container {
-    margin-top: 100px;
+    margin-top: 0;
     width: 100%;
     height: 250px;
 }
@@ -507,6 +507,9 @@ button:focus {
 }
 
 @media all and (max-width: 470px) {
+    .main {
+        width: 328px;
+    }
     .h4-title-Recipe {
         font-size: 16px;
     }
@@ -519,8 +522,8 @@ button:focus {
     }
     .button-continue-adding-recipes {
         margin: 5px 30px 5px 5px;
-        width: 35px;
-        height: 35px;
+        width: 33px;
+        height: 33px;
         border-radius: 10px;
         display: flex;
         align-items: center;
@@ -552,10 +555,13 @@ button:focus {
         margin-bottom: 5px;
     }
     .button-select-basket {
-        width: 35px;
-        height: 35px;
+        width: 33px;
+        height: 33px;
         border-radius: 10px;
         background-color: rgba(255, 212, 113, .8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .div-remove {
         display: none;
