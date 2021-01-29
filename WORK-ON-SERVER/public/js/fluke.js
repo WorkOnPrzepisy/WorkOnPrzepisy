@@ -19,7 +19,6 @@ const downloadApi = async(api) => {
       const btnAdd = document.querySelector('#favorite')
 
       btnAdd.addEventListener('click', async function(e){
-         btnAdd.style.backgroundImage = "url('../img/heartClick.png')"
          await fetch('/users/user-images', {
            method: 'POST', // or 'PUT'
             body: JSON.stringify(idObj),

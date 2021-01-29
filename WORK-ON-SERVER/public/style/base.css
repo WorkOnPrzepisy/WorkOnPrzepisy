@@ -14,7 +14,7 @@
  
 .main{ 
    margin-bottom: 20px;
-   margin-top: 70px;
+   margin-top: 100px;
    
 }
 
@@ -352,7 +352,10 @@
    justify-content: center;
    width: 300px;
    height: 300px;
-} 
+   object-fit: cover;
+   border-radius: 5px;
+}  
+
 .contenerek{ 
    flex-wrap: wrap;
    margin-top: 40px;
@@ -374,9 +377,7 @@
   margin-top: 150px;
    
 } 
-#new-image-content{ 
-   border-radius: 5px;
-}
+
 
 
 
