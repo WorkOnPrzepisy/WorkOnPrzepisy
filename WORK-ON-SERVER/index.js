@@ -8,8 +8,11 @@ const expresssLayouts = require('express-ejs-layouts')
 const session = require('express-session')
 const flash = require('connect-flash')
 const mongoose = require('mongoose') 
-const MongoDBStore = require('connect-mongodb-session')(session);
+
+// const name = "Food App";
 const User = require('./models/User')
+// const MongoDBStore = require('connect-mongodb-session')(session);
+
 const Port = process.env.PORT || 7000;
 const app = express();
 const nodeFetch = require('./node-fetch')
@@ -32,10 +35,12 @@ app.use(express.urlencoded({extended: true}));
 app.use(flash())
 
 
-const store = new MongoDBStore({
-   uri: 'mongodb+srv://jakub123:lubieplacki123@fork-on.ffczi.mongodb.net/<dbname>?retryWrites=true&w=majority',
-   collection: 'mySessions'
-});
+// const store = new MongoDBStore({
+//    // uri: 'mongodb+srv://jakub123:lubieplacki123@fork-on.ffczi.mongodb.net/<dbname>?retryWrites=true&w=majority',
+//    uri: 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority',
+//    collection: 'mySessions'
+// });
+
 
 app.use(session({
    
@@ -44,8 +49,8 @@ app.use(session({
    secret: '1234567890QWERT',
    cookie: { maxAge: 1000 * 60 *60,
       httpOnly: false,
-      path: '/'},
-      store: store
+      path: '/'}
+
 }))
 
 
