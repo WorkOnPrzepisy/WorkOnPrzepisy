@@ -4,10 +4,14 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const expressLayouts = require("express-ejs-layouts");
 const app = express()
+const middleware = require('../config/verify')
 
-// user router
+
+
 app.set('layout', 'layoutLogin', 'layout', 'userLayout');
-router.use(expressLayouts)
+
+router.use(expressLayouts) 
+
 
 router.get('/login', (req,res)=> res.render('login',{ layout: 'layoutLogin'}))
 
@@ -17,7 +21,7 @@ router.get('/images',(req,res)=> res.render('images',{ layout: 'layoutLogin'}))
 
 router.get('/forgotten', (req,res)=> res.render('forgotten',{ layout: 'layoutLogin'}))
 
-router.get('/home', (req,res)=> res.render('usersHome',{ layout: 'userLayout'}))
+router.get('/home',middleware, (req,res)=> res.render('usersHome',{ layout: 'userLayout'}))
 
 router.get('/user-images', (req,res)=> res.render('user-images',{ layout: 'userLayout'}))
 
@@ -122,7 +126,7 @@ router.post('/forgotten', async (req, res) => {
    
    //   Check pass length
    if(password.length < 6){ 
-      errors.push({msg: "Password should ne at least 6 characters"})
+      errors.push({msg: "Password should be at least 6 characters"})
    } 
    
    if(errors.length > 0){ 
@@ -151,43 +155,42 @@ router.post('/forgotten', async (req, res) => {
 
 // Login Handle
 
+
 router.post('/login', async (req, res, next) => {
    
-  try {
-     const {email, password} = req.body;
-     const user = await  User.findOne({email});
-
-     if(!user || user === null) {
-      return res.redirect("/users/login")
-     }
-     else {
-      const isMatch = await bcrypt.compare(password, user.password);
-      if(!isMatch){ 
+   try {
+      const {email, password} = req.body;
+      const user = await  User.findOne({email});
+ 
+      if(!user || user === null) {
        return res.redirect("/users/login")
-    }
-     else {
-        req.session.user = user._id
-        res.redirect("/users/home");
-        
-   }
+      }
+      else {
+       const isMatch = await bcrypt.compare(password, user.password);
+       if(!isMatch){ 
+        return res.redirect("/users/login")
      }
-     
-  } catch (error) {
-     console.log(error)
-  }
-});
+      else {
+         req.session.user = user._id
+         res.redirect("/users/home");
+         
+    }
+      }
+      
+   } catch (error) {
+      console.log(error)
+   }
+ });
+ 
+ 
+ router.get('/logout', (req,res)=>{ 
+    req.flash('success_msg', 'You are logged out')
+    res.redirect("/users/login")
+   //  req.logout()
+ }) 
 
-router.get('/logout', (req,res)=>{ 
-   req.session.destroy();
-   res.clearCookie('my_cookie');
-   res.redirect("/")
-})
 
-// router.get('/logout', (req,res)=>{ 
-//    req.logout();
-//    res.redirect("/")
-//    req.flash('success_msg', 'You are logged out')
-// }) 
+
 
 
 

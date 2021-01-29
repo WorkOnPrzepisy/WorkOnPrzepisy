@@ -8,14 +8,14 @@ const expresssLayouts = require('express-ejs-layouts')
 const session = require('express-session')
 const flash = require('connect-flash')
 const mongoose = require('mongoose') 
-// const name = "Food App";
-const User = require('./models/User')
 const MongoDBStore = require('connect-mongodb-session')(session);
+const User = require('./models/User')
 const Port = process.env.PORT || 7000;
 const app = express();
 const nodeFetch = require('./node-fetch')
-const nodeFetchApiName = require('./nodeFetchApi')
-const nameAPI = require('./fetchName');
+const nodeFetchApiName = require('./nodeFetchApi');
+
+
 
 app.set("view engine", "ejs");
 app.use('/public', express.static('public'))
@@ -25,9 +25,12 @@ app.set('layout', 'layoutLogin')
 app.use(express.json());
 app.use(morgan("tiny"));
 
+
+
 app.use(express.urlencoded({extended: true}));
 
 app.use(flash())
+
 
 const store = new MongoDBStore({
    uri: 'mongodb+srv://jakub123:lubieplacki123@fork-on.ffczi.mongodb.net/<dbname>?retryWrites=true&w=majority',
@@ -42,8 +45,9 @@ app.use(session({
    cookie: { maxAge: 1000 * 60 *60,
       httpOnly: false,
       path: '/'},
-      store: store,
+      store: store
 }))
+
 
 
 
@@ -62,7 +66,8 @@ app.use(expresssLayouts)
 app.get("/", async (req, res) => {
    try {
    const files = await Img.find();
-   const arrayfile= Array.from(files).slice(Math.max(files.length-3,0))
+   const arrayfile1= Array.from(files).slice(Math.max(files.length-3,0))
+   const arrayfile = arrayfile1.reverse()
    res.render('base',{ arrayfile, layout: 'layout' });
    } catch (error) {
    console.log(error);
@@ -75,7 +80,7 @@ app.get("/users/home", async (req, res) => {
    const files = await Img.find();
    const array= Array.from(files).slice(Math.max(files.length-3,0))
    const arrayfile = array.reverse()
-   res.render('usersHome',{ arrayfile, layout: 'userLayout' });
+   res.render('usersHome', { arrayfile, layout: 'userLayout' });
    } catch (error) {
    console.log(error);
    // res.render('error', { message: "dupa"})
@@ -110,7 +115,8 @@ app.get("/users/fluke_id", async (req, res) => {
 
 app.get("/newly-added", async (req, res) => {
    try {
-      const arrayfile = await Img.find({}).exec();
+      const arrayfile1 = await Img.find({}).exec();
+      const arrayfile = await arrayfile1.reverse()
       res.render("newly-added", { layout: "layout", arrayfile });
    } catch (error) {
    console.log(error);
@@ -121,6 +127,7 @@ app.get("/newly-added", async (req, res) => {
 
 app.get("/users/more-added", async (req, res) => {
    try {
+      
       const arrayfile1 = await Img.find({}).exec();
       const arrayfile = await arrayfile1.reverse()
       res.render("more-added", { layout: "userLayout", arrayfile });
@@ -129,17 +136,7 @@ app.get("/users/more-added", async (req, res) => {
    }
 }); 
 
-         // NEED TO BE CHANGED - RENDER BELOW
-// app.get('/users/user-fave',async(req,res)=>{ 
-//    const userId = req.session.user
-//    const userFound= await User.findOne({_id: userId}).exec()
-//    const faveImages =  userFound.favorites
-//    const images = await Img.find({_id : {$in : faveImages }})
-   
-//    res.render('user-fave',{layout: 'userLayout', images})
-   
-// })  
-// THIS IS REDUNDANT
+
 
    // SAVE IMAGES FROM API 
 app.post('/users/user-images',async (req,res)=>{ 
@@ -148,6 +145,7 @@ app.post('/users/user-images',async (req,res)=>{
       const data = await req.body._id
       const userId = req.session.user
       console.log(data);
+      console.log(userId);
       const currentLoggedUser = await User.findOne({_id:userId}).exec()
       const faveMeals = await currentLoggedUser.faveMeals
       await faveMeals.push(data)
@@ -177,10 +175,11 @@ app.get('/users/user-images',async(req,res)=>{
 
 }) 
 
+
 //UPLAODSS FILES BY LOGGED USERS FROM THERM FOVORITES
 
 app.post('/users/favorites', async (req,res)=>{ 
-const {name} = await req.body 
+const {name} = await req.body
 const userId = req.session.user 
 const loggedUser = await User.find(userId).exec()
 const imgFavorites = loggedUser[0].favorites
@@ -199,6 +198,7 @@ return  { name: name.strMeal, _id: name._id, img: name.images.strMealThumb}
 // API NAME RESULTS []
 const apiFetchResult = await nodeFetchApiName(faveIdNum)
 const arrayAPI= apiFetchResult.map((item)=> item.meals[0]) 
+
 
 
 // SINGLE RESULT BY NAME
@@ -234,12 +234,65 @@ key: await findKey(dataBaseResultsName,name),
 key1: await apiName(arrayAPI,name)    
 }  
 
-
-
 res.status(200);
 res.send(obj)
 
 })
+
+
+// MORE-ADDED BY USERS SEARCH-FROM INPUT
+app.post('/more-added-search', async (req,res)=>{ 
+   const {name} = await req.body 
+   const userId = req.session.user 
+   const loggedUser = await User.find(userId).exec()
+   const imgFavorites = loggedUser[0].favorites
+   const arrayofFavorites = await Img.find({_id : {$in : imgFavorites }})
+   
+   
+   
+   // DATABSE RESULTSTS   
+   const dataBaseResultsName = await arrayofFavorites.map((name)=>{ 
+   return  { name: name.strMeal, _id: name._id, img: name.images.strMealThumb}
+   }) 
+   
+
+   
+   // SINGLE RESULT BY NAME
+   
+   function findKey(arr, strName){
+      // Loop over the array
+      for(var i = 0; i < arr.length; i++){
+      for(var key in arr[i]){
+         if(arr[i][key] === strName){
+         const arrayDATA= arr[i]
+            const img ={ 
+               ...arrayDATA,
+               images: { 
+                  imgThumb :Buffer.from(arrayDATA.img.buffer).toString('base64')
+               }
+            }
+            return img
+         
+         }
+      }      
+      } 
+   }
+
+   const obj ={ 
+   key: await findKey(dataBaseResultsName,name)
+   }  
+   
+   
+   
+   res.status(200);
+   res.send(obj)
+   
+   })
+
+
+
+
+
 
 
 // ADD IMAGES TO FAVORITES FROM DATABASE
@@ -327,60 +380,6 @@ app.post('/userek/fave',async (req,res)=>{
       console.log(error);
    }
 }) 
-
-
-
-/// meals database - Damian
-
-const Meal = require('./models/meal.js')
-
-
-// Getting by category
-app.get('/meals', async (req, res) => {
-  try {
-    let meals;
-    if (req.query.ingredients !== "") {
-      const ingredients = req.query.ingredients.split(",")
-      meals = await Meal.find({
-        "name": {$regex: req.query.name, $options: 'i'},
-        "category": {$regex: req.query.category, $options: 'i'},
-        "area": {$regex: req.query.area, $options: 'i'},
-        "ingredients.name": {$all: ingredients}
-      })
-    } else {
-      meals = await Meal.find({
-        "name": {$regex: req.query.name, $options: 'i'},
-        "category": {$regex: req.query.category, $options: 'i'},
-        "area": {$regex: req.query.area, $options: 'i'}
-      })
-    }
-    res.json(meals)
-
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-})
-
-
-// Getting Random
-app.get('/meals/random', async (req, res) => {
-  
-  try {
-    // const meal = await Meal.aggregate([{$sample: {size: 1}}]);
-    const meal = await Meal.aggregate([{$sample: {size: 1}}]);
-    res.json(meal)
-
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-})
-
-
-// Getting One
-app.get('/meals/:id', getMeal, (req, res) => {
-  res.json(res.meal)
-})
-
 
 
 
