@@ -150,12 +150,15 @@ const createMeals = async() => {
     mealsCreated.length = 0;
     resultsIds.length = 0;
 
+    paginationButtonsDivs.display = "none";
+
     return getMeals().then((mealsToCreate) => {
         const mealsNumber = mealsToCreate.length;
         randomPickBtn.style.display = mealsNumber < 2 ? "none" : "block";
         const innerMealsCreated = [];
 
         if (mealsNumber > 0) {
+            paginationButtonsDivs.display = "flex";
             for (let { name, imageUrl, _id }
                 of mealsToCreate) {
                 const mealDiv = document.createElement("div");
@@ -226,6 +229,10 @@ const showMealsWithScroll = () => {
     window.scrollTo(0, windowScrollYBefore + difference);
 };
 
+for (const node of paginationButtonsDivs) {
+    node.style.display = "none";
+}
+
 createMeals()
     .then(
         () => {
@@ -272,11 +279,14 @@ ingredientsSelect.onchange = () => {
         showIngredientSmall(ingredientSelectValue);
 
         makeInvisible(results);
+        clearFiltersBtn.disabled = true;
+
 
         clearTimeout(timer);
         timer = setTimeout(() => {
             createMeals().then(() => {
                 showMeals();
+                clearFiltersBtn.disabled = false;
                 checkIfDisableInputs();
             })
         }, 500);
@@ -403,16 +413,20 @@ areaSelect.onclick = () => {
 
 const changeSelectHandler = (select, list) => {
     makeInvisible(results);
+    
 
     const selectValue = select.value.toLowerCase();
     if (selectValue !== "") select.style.fontWeight = "bold";
-    if (list.includes(selectValue)) clearFiltersBtn.disabled = false;
+    // if (list.includes(selectValue)) clearFiltersBtn.disabled = false;
     else select.value = "";
+
+    clearFiltersBtn.disabled = true;
 
     clearTimeout(timer);
     timer = setTimeout(() => {
         createMeals().then(() => {
             showMeals();
+            clearFiltersBtn.disabled = false;
             checkIfDisableClearBtn();
             checkIfDisableInputs();
         })
@@ -501,7 +515,7 @@ randomPickBtn.onclick = () => {
 
 setTimeout(() => {
     resultsContentDiv.classList.toggle("start");
-    for (const node of paginationButtonsDivs) {
-        node.classList.toggle("stopped");
-    }
+    // for (const node of paginationButtonsDivs) {
+    //     node.classList.toggle("stopped");
+    // }
 }, 3000);
