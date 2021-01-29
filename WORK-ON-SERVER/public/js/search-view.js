@@ -494,8 +494,9 @@ for (const node of pageInputs) {
 }
 
 randomPickBtn.onclick = () => {
-    mealIdInput.value = resultsIds[Math.floor(Math.random() * resultsIds.length)];
-    searchForm.submit();
+    const value = resultsIds[Math.floor(Math.random() * resultsIds.length)];
+    window.location.href = `/fluke?api_id=${value}`;
+    // searchForm.submit();
 }
 
 setTimeout(() => {
