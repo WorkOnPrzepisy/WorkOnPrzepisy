@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fluke</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../styles/base.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/fluke.css" />
+
+
+</head>
+
+<body class="loaded">
+    <div class="container">
+        <nav class="nav">
+            <div class="brand-logo-wrapper">
+                <a href="#">
+                    <img class="brand-logo" src="../img/logo.png">
+                </a>
+            </div>
+
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+
+            <div class="nav-links">
+                <ul>
+                    <li class="nav-item">
+                        <a href="#" data-content="Main">Main</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="fluke.html?page=fluke" data-content="I'm Feeling Lucky">I'm Feeling Lucky</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-content="Recipes">Recipes</a>
+                    </li>
+                    <li class="nav-item for-logged">
+                        <a href="#" data-content="Add Recipe">Add Recipe</a>
+                    </li>
+                    <li class="nav-item for-logged">
+                        <a href="#" data-content="Favourites">Favourites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-content="About Us">About Us</a>
+                    </li>
+                    <li class="right-nav login-signup for-unlogged">
+                        <a href="#" data-content="Log In" class="login">Log In</a>
+                        <a href="#" data-content="Sign Up" class="signup">Sign Up</a>
+                    </li>
+                    <li class="right-nav logout for-logged">
+                        <a href="#" data-content="Log Out">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slide slide1">
+                    <div class="caption">
+                        <h2> If more of us valued food and cheer and song above hoarded gold, it would be a merrier world.</h2>
+                        <p>~~ J.R.R. Tolkien
+                        </p>
+                    </div>
+                </div>
+                <div class="slide slide2">
+                    <div class="caption">
+                        <h2> One cannot think well, love well, sleep well, if one has not dined well.</h2>
+                        <p>~~ Virginia Woolf, A Room of One's Own
+                        </p>
+                    </div>
+                </div>
+                <div class="slide slide3">
+                    <div class="caption">
+                        <h2> Ask not what you can do for your country. Ask what’s for lunch.</h2>
+                        <p>~~ Orson Welles
+                        </p>
+                    </div>
+                </div>
+                <div class="slide slide4">
+                    <div class="caption">
+                        <h2> There is no love sincerer than the love of food.</h2>
+                        <p> George Bernard Shaw, Man and Superman
+                        </p>
+                    </div>
+                </div>
+                <div class="slide slide5">
+                    <div class="caption">
+                        <h2> I cook with wine, sometimes I even add it to the food.</h2>
+                        <p>W.C. Fields
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <main class="container-fluke">
+
+            <section class="container-recipe">
+
+                <div class="container-loading">
+                    <div class="loading"></div>
+                </div>
+
+                <div class="content-title">
+                    <h3 id="title-dish"></h3>
+                </div>
+                <div class="content-dish">
+                    <div class="content-img">
+                        <img id="img-dish" src="" />
+                        <button id="favorite" style="visibility: hidden;"></button>
+                        <button id="favorite2" style="visibility: hidden;"></button>
+                    </div>
+
+                    <div class="content-list-ingredients">
+                        <div>
+                            <h3>Ingredients</h3>
+                            <div class="list-ingredients-columns">
+                                <ul id="list-ingredients"></ul>
+                                <ul id="list-ingredients-col2"></ul>
+                            </div>
+                        </div>
+                        <div class="contener-button">
+                            <div class="content-generate-list">
+                                <button class="button" id="button-generate-recipe">
+                        Generate a recipe</button>
+                            </div>
+                            <div class="content-generate-list">
+                                <button class="button" id="button-generate-list">
+                        Generate a shopping list</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-add-icon">
+                        <button id="icon-add-recipe" title="Add the recipe to the basket"></button>
+                        <button class="try-again" title="
+                  try drawing the recipe again"></button>
+                    </div>
+                </div>
+                <div class="content-description">
+                    <h3 class="instructions-title">Instructions</h3>
+                </div>
+                <div class="content-draw-recipe">
+                    <button class="button" id="button-draw-recipe" style="visibility: hidden;">
+                  I'm feeling lucky</button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="#" data-content="Main">Main</a></li>
+                    <li>
+                        <a href="#" data-content="I'm feeling lucky">I'm feeling lucky</a>
+                    </li>
+                    <li><a href="#" data-content="Recipes">Recipes</a></li>
+                    <li><a href="#" data-content="Contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="footer-text">
+                <q>Laughter is brightest where food is best.</q><br /> Irish Proverb
+            </div>
+            <nav class="social-media">
+                <ul>
+                    <li>
+                        <a href=""><i class="fab fa-facebook"></i></a>
+                    </li>
+                    <li>
+                        <a href=""><i class="fab fa-pinterest"></i></a>
+                    </li>
+                    <li>
+                        <a href=""><i class="fab fa-instagram"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script src=" https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js "></script>
+    <script src="../scripts/navbar.js"></script>
+    <script type="text/javaScript" src="../scripts/fluke.js"></script>
+</body>
+
+</html>
