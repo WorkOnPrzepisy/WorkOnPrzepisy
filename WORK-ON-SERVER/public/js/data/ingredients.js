@@ -330,7 +330,7 @@ export default [
   "oatmeal",
   "oil",
   "olive oil",
-  "onion",
+  "onions",
   "onion salt",
   "orange",
   "orange blossom water",
