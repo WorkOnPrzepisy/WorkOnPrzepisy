@@ -117,6 +117,7 @@
   list-style: none;
   height: 100%;
   width: 100%;
+  margin-bottom: 0;
 }
 
 .container .nav .nav-links ul li {
@@ -165,6 +166,7 @@
   transition: all 0.3s;
   position: relative;
   white-space: nowrap;
+  font-size: 16px;
 }
 
 .container .nav .nav-links ul li a::before {
