@@ -2,14 +2,20 @@
 <div class="container-fluid">
    <div class="row">
       <div class="col img-col">
-         <img class="img-size" src="../public/img/foodiesfeed.com_oranges-with-ice (1).jpg" alt="">
+         <img class="img-size" src="../public/img/foodiesfeed.com_hot-shakshuka-in-a-cast-iron-pan (2).jpg" alt="">
       </div> 
       <div class="col form-col">
+         <div class="btn-container mb-4">
+
+            <a href="/users/login">
+               <button type="submit" class="btn btn-outline-success">Login</button>
+             </a>
+            <%- include ('partials/messages') %>
+            <a href="/" class="btn-link">
+               <button class="btn btn-outline-primary">Home</button>
+            </a>
+         </div>
          <h2>Register</h2> 
-         <%- include ('partials/messages') %>
-         <a href="/" class="btn-link">
-            <button class="btn btn-outline-primary">Home</button>
-         </a> 
          <form method="POST"> 
             <input type="text"
             name="name" 
@@ -37,9 +43,6 @@
              </div>
             <button type="submit" class="btn btn-outline-primary">Submit</button>
           </form> 
-          <a href="/users/login">
-            <button type="submit" class="btn btn-outline-success mt-2">Login</button>
-          </a>
       </div>
    </div>
 </div>

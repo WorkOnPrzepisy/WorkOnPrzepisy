@@ -3,17 +3,28 @@
     <div class="container-fluid">
        <div class="row">
           <div class="col img-col">
-             <img class="img-size" src="../public/img/foodiesfeed.com_oranges-with-ice (1).jpg" alt="">
+             <img class="img-size" src="../public/img/foodiesfeed.com_hot-shakshuka-in-a-cast-iron-pan (2).jpg" alt="">
           </div> 
+          
           <div class="col form-col">
             <%- include ('partials/messages') %>
-             <a href="/" class="btn-link">
-                <button class="btn btn-outline-primary">Home</button>
-             </a> 
+            
+             <div class="btn-container mb-4">
+               <a href="/" class="btn-link">
+                  <button class="btn btn-outline-primary">Home</button>
+               </a> 
+               <a  href="/users/forgotten">
+                  <button class="btn btn-outline-secondary">Forgotten</button>
+               </a>
+               <a href="/users/register">
+                  <button class="btn btn-outline-info">Register</button>
+               </a> 
+            </div>
+         
              <h2>Login</h2>
              <form method="POST">
                 <div class="form-group">
-                  <input name="email" type="email" class="form-control" placeholder="Username" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input name="email" type="email" class="form-control" placeholder="Email" id="exampleInputEmail1" aria-describedby="emailHelp">
                   <small id="emailHelp" class="form-text text-muted"></small>
                    
                 </div>
@@ -22,13 +33,9 @@
                   <input name="password" type="password" class="form-control" placeholder="password" id="exampleInputPassword1">
                 </div>
                 <button type="submit"  class="btn btn-outline-primary">Submit</button>
-              </form>
-              <a  href="/users/forgotten">
-               <button class="btn btn-outline-secondary mt-2">Forgotten</button>
-            </a>
-            <a href="/users/register">
-               <button class="btn btn-outline-info mt-2">Register</button>
-            </a> 
+              </form> 
+       
+           
           </div>
        </div>
    </div>
