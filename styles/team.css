@@ -1,0 +1,40 @@
+.container .main {
+    padding: 50px;
+    padding-top: 120px;
+    min-height: calc(100vh - 150px);
+}
+.container-team {
+    background-color: #FFF9EB;
+}
+.about-team {
+    background-color:#2AA1B7;
+    display: flex;
+    padding: 10px;
+    margin: 10px 20px;
+    border-radius: 10px;
+
+}
+
+.our-team {
+    padding: 15px;
+    margin: 10px;
+    background-color: #2db0c7;
+    border-radius:10px ;
+
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+
+}
+.team-pictures {
+    height: 150px;
+    width: 150px;
+    border-radius: 100px;
+    background-color:#D8D7D8 ;
+    padding: 10px;
+    margin:  10% 20%;
+    align-self: center;
+}
+#Jakub-pic {
+    background-image: url(img/jakub.png) ;
+}
