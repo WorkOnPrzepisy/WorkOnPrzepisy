@@ -90,10 +90,6 @@ $dark-texts-color: #707070;
                         margin-right: 0px;
                         margin-left: auto;
 
-                        &.for-logged {
-                            display: none;
-                        }
-
                         .login::after {
                             content: "/";
                             margin-left: 5px;
@@ -104,14 +100,10 @@ $dark-texts-color: #707070;
                         }
 
                         a {
-                            font-size: 12px;
+                            font-size: 14px;
                             margin-right: 0px;
                             margin-left: auto;
                         }
-                    }
-
-                    &.for-logged {
-                        display: none;
                     }
 
                     a {

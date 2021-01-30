@@ -137,10 +137,6 @@
   margin-left: auto;
 }
 
-.container .nav .nav-links ul li.right-nav.for-logged {
-  display: none;
-}
-
 .container .nav .nav-links ul li.right-nav .login::after {
   content: "/";
   margin-left: 5px;
@@ -151,13 +147,9 @@
 }
 
 .container .nav .nav-links ul li.right-nav a {
-  font-size: 12px;
+  font-size: 14px;
   margin-right: 0px;
   margin-left: auto;
-}
-
-.container .nav .nav-links ul li.for-logged {
-  display: none;
 }
 
 .container .nav .nav-links ul li a {
