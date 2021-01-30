@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,57 +29,109 @@
               </a>
           </div>
 
-          <a href="#" class="toggle-button">
-              <span class="bar"></span>
-              <span class="bar"></span>
-              <span class="bar"></span>
-          </a>
 
-          <div class="nav-links">
-              <ul>
-                  <li><a href="/" data-content="Main">Main</a></li>
-                  <li><a href="/fluke" data-content="I'm feeling lucky">I'm feeling lucky</a></li>
-                  <li><a href="/search-view" data-content="Recipes">Recipes</a></li>
-                  <li><a href="/basket" data-content="Basket">Basket</a></li>
-              </ul>
-          </div>
-          <div class="login-logout">
-              <a href="/users/login" data-content="Log in">Log in</a>
-              <div class="backslash">/</div>
-              <a href="/users/logout" data-content="Log out">Log out</a>
-          </div>
-      </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eat Me</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../public/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../public/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../public/img/favicons/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 
-   
-    <div class="main"><%- body %></div>
-
-    <footer class="footer">
-      <nav class="footer-nav">
-          <ul>
-              <li><a href="#" data-content="Main">Main</a></li>
-              <li><a href="#" data-content="I'm feeling lucky">I'm feeling lucky</a></li>
-              <li><a href="#" data-content="Recipes">Recipes</a></li>  
-          </ul>
-      </nav>
-      <div class="footer-text">
-          <q>Laughter is brightest where food is best.</q><br> Irish Proverb
-      </div>
-      <nav class="social-media">
-          <ul>
-              <li><a href=""><i class="fab fa-facebook"></i></a></li>
-              <li><a href=""><i class="fab fa-pinterest"></i></a></li>
-              <li><a href=""><i class="fab fa-instagram"></i></a></li>
-          </ul>
-      </nav>
-   </footer>
-      <script type="module" src="../public/js/search-view.js"></script>
-      <script src="../public/js/navbar.js"></script>
-      <script src="../public/js/fluke3.js"></script>
-      <script src="../public/js/fluke.js"></script>
-      <script src="../public/js/carousel.js"></script>
-      <script src="../public/js/newly-added-search.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
 
-    </div> 
-  </body>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="../public/style/base.css">
+    <link rel="stylesheet" href="../public/style/search-main.css">
+    <link rel="stylesheet" href="../public/style/search-view1.css">
+    <link rel="stylesheet" href="../public/style/basket.css" />
+    <link rel="stylesheet" href="../public/style/fluke.css" />
+</head>
+
+<body>
+    <div class="container">
+        <nav class=nav>
+            <div class="brand-logo-wrapper">
+                <a href="/">
+                    <img class="brand-logo" src="../public/img/logo.svg">
+                </a>
+            </div>
+
+
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+
+            <div class="nav-links">
+                <ul>
+                    <li class="nav-item">
+                        <a href="/" data-content="Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/fluke" data-content="I'm Feeling Lucky">I'm Feeling Lucky</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/search-view" data-content="Recipes">Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/basket" data-content="Basket">Basket</a>
+                    </li>
+                    <li class="right-nav login-signup for-unlogged">
+                        <a href="/users/login" data-content="Log In" class="login">Log In</a>
+                        <a href="/users/register" data-content="Sign Up" class="signup">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <div class="main">
+            <%- body %>
+        </div>
+
+        <footer class="footer">
+            <nav class="footer-nav">
+                <ul>
+                    <li class="nav-item">
+                        <a href="/" data-content="Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/fluke" data-content="I'm Feeling Lucky">I'm Feeling Lucky</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/search-view" data-content="Recipes">Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/basket" data-content="Basket">Basket</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="footer-text">
+                <q>Laughter is brightest where food is best.</q><br> Irish Proverb
+            </div>
+            <nav class="social-media">
+                <ul>
+                    <li><a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="https://www.pinterest.co.uk/" target="_blank"><i class="fab fa-pinterest"></i></a></li>
+                    <li><a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </nav>
+        </footer>
+        <script src="../public/js/navbar.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js" type="module"></script>
+        <script src="../public/js/fluke.js" type="module"></script>
+        <script src="../public/js/basket.js" type="module"></script>
+        <script src="../public/js/carousel.js"></script>
+
+
+    </div>
+</body>
+
 </html>

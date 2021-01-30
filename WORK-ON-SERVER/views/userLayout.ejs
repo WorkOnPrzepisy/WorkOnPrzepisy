@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,4 +86,132 @@
 
     </div> 
   </body>
+</html>
+
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eat Me</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../public/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../public/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../public/img/favicons/favicon-16x16.png">
+    <!-- <link rel="manifest" href="/site.webmanifest"> -->
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="../public/style/slider.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="../public/style/base.css">
+    <link rel="stylesheet" href="../public/style/search-main.css">
+    <link rel="stylesheet" href="../public/style/search-view1.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <nav class=nav>
+            <div class="brand-logo-wrapper">
+                <a href="/users/home">
+                    <img class="brand-logo" src="../public/img/logo.svg">
+                </a>
+            </div>
+
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+
+            <div class="nav-links">
+                <ul>
+                    <li class="nav-item">
+                        <a href="/users/home" data-content="Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/happines" data-content="I'm Feeling Lucky">I'm Feeling Lucky</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/search-view" data-content="Recipes">Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/images" data-content="Add Meal">Add Meal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/user-images" data-content="Favourites">Favourites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/basket" data-content="Basket">Basket</a>
+                    </li>
+                    <!-- <li class="right-nav login-signup">
+                        <a href="#" data-content="Log In" class="login">Log In</a>
+                        <a href="#" data-content="Sign Up" class="signup">Sign Up</a>
+                    </li> -->
+                    <li class="right-nav logout">
+                        <a href="/users/logout" data-content="Log Out">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <div class="main">
+            <%- body %>
+        </div>
+
+        <footer class="footer">
+            <nav class="footer-nav">
+                <ul>
+                    <li class="nav-item">
+                        <a href="/users/home" data-content="Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/happines" data-content="I'm Feeling Lucky">I'm Feeling Lucky</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/search-view" data-content="Recipes">Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/images" data-content="Add Meal">Add Meal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/user-images" data-content="Favourites">Favourites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/basket" data-content="Basket">Basket</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="footer-text">
+                <q>Laughter is brightest where food is best.</q><br> Irish Proverb
+            </div>
+            <nav class="social-media">
+                <ul>
+                    <li><a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="https://www.pinterest.co.uk/" target="_blank"><i class="fab fa-pinterest"></i></a></li>
+                    <li><a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </nav>
+        </footer>
+        <script type="module" src="../public/js/search-view.js"></script>
+        <script src="../public/js/navbar.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js" type="module"></script>
+        <script src="../public/js/fluke.js" type="module"></script>
+        <script src="../public/js/basket.js" type="module"></script>
+        <script src="../public/js/carousel.js"></script>
+        <script src="../public/js/data.js"></script>
+
+
+    </div>
+</body>
+
 </html>

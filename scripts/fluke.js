@@ -1,6 +1,5 @@
 const jsPdf = window.jspdf;
 const apiMeal = "https://www.themealdb.com/api/json/v1/1/";
-$("#carouselFade").carousel();
 let idMealPage = '';
 
 let apiDownoand;
@@ -13,39 +12,134 @@ const isFluke = function() {
 };
 const pageIsFluke = isFluke();
 
+const urlParams = Object.fromEntries(new URLSearchParams(document.location.search));
+
 const downloadApi = async(api) => {
     apiDownoand = await (await fetch(api)).json();
+    const idMeal = await apiDownoand.meals[0].idMeal;
+    const idObj = { _id: idMeal };
+    const btnAdd = document.querySelector('#favorite');
+    btnAdd.addEventListener('click', async function(e) {
+
+        await fetch('/users/user-images', {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(idObj),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+    });
     return apiDownoand.meals[0];
 };
 
-const downloadSuitableApi = (pageIsFluke) => {
-    if (pageIsFluke) {
+const downloadDb = async db_id => {
+    const query = new URLSearchParams({ db_id });
+
+    try {
+        const response = await fetch("/users/fluke_id?" + query.toString()).then(_ => _.json());
+
+        another(response)
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const downloadSuitableApi = async(params) => {
+    if (params.db_id) {
+        const btnAdd = document.querySelector('#favorite');
+        btnAdd.style.visibility = "";
+        const buttonFluke = document.querySelector(".try-again");
+        buttonFluke.style.display = "none";
+        await downloadDb(params.db_id);
+
+    } else if (params.api_id) {
+        console.log(params.api_id);
+        const btnAdd = document.querySelector('#favorite');
+        btnAdd.style.visibility = "";
+        const buttonFluke = document.querySelector(".try-again");
+        buttonFluke.style.display = "none";
+        const title = document.querySelector("title");
+        title.innerText = "Recipe";
+        const hrefInPage = window.location.href;
+        const idMeals = hrefInPage.slice(hrefInPage.indexOf("&") + 1);
+        let apiDownoandSuitable = downloadApi(`${apiMeal}lookup.php?i=${params.api_id}`);
+        apiDownoand = apiDownoandSuitable;
+        addElementsFromApi();
+
+    } else {
         let buttonFluke = document.querySelector("#button-draw-recipe");
         buttonFluke.removeAttribute("style");
         const title = document.querySelector("title");
         title.innerText = "Fluke";
         let apiDownoandSuitable = downloadApi(`${apiMeal}random.php`);
-        return apiDownoandSuitable;
-    } else {
-        const title = document.querySelector("title");
-        title.innerText = "Recipe";
-        const hrefInPage = window.location.href;
-        const idMeals = hrefInPage.slice(hrefInPage.indexOf("&") + 1);
-        let apiDownoandSuitable = downloadApi(`${apiMeal}lookup.php?i=${idMeals}`);
-        return apiDownoandSuitable;
+        apiDownoand = apiDownoandSuitable;
+        addElementsFromApi();
     }
 };
 
+const another = async(params) => {
+    const response = await params
+        //VALUES FROM DATABSE
+    const { strMeal, images, strInstructions, strIngredient1 } = response
+    const arrayOfIngridients = []
+    const imageBuffer = images.strMealThumb
+
+    for (const ingridient of strIngredient1) {
+        for (const item in ingridient) {
+            arrayOfIngridients.push(ingridient[item])
+        }
+    }
+
+    const hTitleDish = document.querySelector("#title-dish");
+    const imgDish = document.querySelector("#img-dish");
+    const listIngredients = document.querySelector("#list-ingredients");
+    const description = document.querySelector(".content-description");
+    const p = document.createElement("p");
+    p.classList.add("instructions");
+
+    hTitleDish.innerText = strMeal
+    imgDish.src = `data:image/png;base64, ${imageBuffer}`
+    p.innerText = strInstructions;
+    description.appendChild(p);
+
+    for (let i = 0; i < arrayOfIngridients.length; i++) {
+        const li = document.createElement("li");
+        li.classList.add("li-ingredient");
+        li.innerText = `${arrayOfIngridients[i]}`;
+        listIngredients.appendChild(li);
+    }
+
+    const idImage = await response._id
+    const btnDATA = document.querySelector('#favorite')
+
+    btnDATA.addEventListener('click', async function(e) {
+        const btnAdd = document.querySelector('#favorite');
+        btnAdd.style.visibility = "hidden";
+        const btnAdd2 = document.querySelector('#favorite2');
+        btnAdd2.style.visibility = "";
+        console.log(btnDATA);
+        await fetch('/userek/fave', {
+            method: 'POST',
+            body: JSON.stringify({ id: idImage }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    })
+
+}
+
 const addElementsFromApi = () => {
+    //let apiDownoand = downloadSuitableApi(urlParams);
 
 
     const addInHTMl = apiDownoand
         .then((resp) => {
-
+            //console.log(resp);
             const { idMeal, strMeal, strMealThumb, strInstructions } = resp;
             const tabObiectIngredients = [];
             let i = 1;
-
+            console.log(resp);
             while (!!(resp[`strIngredient${i}`] !== "" && resp[`strIngredient${i}`] != null)) {
                 tabObiectIngredients.push({
                     measure: resp[`strMeasure${i}`],
@@ -59,7 +153,8 @@ const addElementsFromApi = () => {
             return { strMeal, strMealThumb, tabObiectIngredients, strInstructions };
         })
         .catch((e) => {
-            console.dir(`error in unpacking api: ${e}`);
+            console.dir(`
+            error in unpacking api: ${e}`);
         });
 
     addInHTMl
@@ -108,28 +203,27 @@ const removalAddedElementsToHtml = () => {
 
     hTitleDish.innerText = "";
     imgDish.src = "";
-    for (el of listIngredients) {
-        el.remove();
+    console.log(listIngredients);
+    for (let i = 0; i < listIngredients.length; i++) {
+        console.log(listIngredients[i]);
+        listIngredients[i].remove();
     }
     instructions.remove();
 };
 
-apiDownoand = downloadSuitableApi(pageIsFluke);
-addElementsFromApi(apiDownoand);
+downloadSuitableApi(urlParams);
 
 const buttonFluke = document.querySelector("#button-draw-recipe");
 
 buttonFluke.addEventListener("click", () => {
-
-    apiDownoand = downloadSuitableApi(pageIsFluke);
-    addElementsFromApi();
-    removalAddedElementsToHtml(apiDownoand);
+    downloadSuitableApi(urlParams);
+    removalAddedElementsToHtml();
 });
 
 const generateListIngredientsPdf = (doc, margin, recipe) => {
     const liElements = document.querySelectorAll('.li-ingredient');
     let i = 60;
-    lengthLiElements = liElements.length
+    const lengthLiElements = liElements.length
     for (let j = 0; j < lengthLiElements; j++) {
         const liElementText = liElements[j].innerText;
 
@@ -150,7 +244,7 @@ const generateInstructions = (doc, instructions) => {
     const instructionsSAdd = instructionsS.join(" ");
     console.log(instructionsSAdd);
     console.log(instructions);
-    lengthArrayInstructions = instructionsSAdd.length;
+    const lengthArrayInstructions = instructionsSAdd.length;
     let start = 0;
     let multiple = 80;
     let j = 210;
@@ -185,9 +279,8 @@ const generateShoppingListPdf = () => {
     generateListIngredientsPdf(doc, margin);
     doc.save("shoppingList.pdf");
 }
-
 const generateRecipePdf = () => {
-    recipe = true;
+    let recipe = true;
     const doc = jsPdf.jsPDF();
     const hTitleDish = document.querySelector("#title-dish").innerHTML;
     const imgDish = document.querySelector("#img-dish");
@@ -213,6 +306,7 @@ const generateRecipePdf = () => {
 const buttonGenerateListPDF = document.querySelector("#button-generate-list");
 
 buttonGenerateListPDF.addEventListener('click', () => {
+    console.log("tutaj");
     generateShoppingListPdf();
 });
 
@@ -245,13 +339,13 @@ const storeData = (key, item) => {
 const iconAddRecipe = document.querySelector('#icon-add-recipe');
 
 
-const addRecipeToLocalStorage = () => {
+const addRecipeToLocalStorage = (params) => {
 
     const hTitleDish = document.querySelector("#title-dish").innerHTML;
     const key = "Recipe";
 
     const state = {
-        idMeals: idMealPage,
+        idMeals: params.db_id ? params.db_id : idMealPage,
         title: hTitleDish
     }
 
@@ -270,25 +364,7 @@ const addRecipeToLocalStorage = () => {
 
 iconAddRecipe.addEventListener('click', () => {
 
-    addRecipeToLocalStorage();
-});
-
-const buttonFavourite = document.querySelector("#favorite");
-
-let isClick = 0;
-
-buttonFavourite.addEventListener('click', () => {
-
-    buttonFavourite.style.backgroundImage = 'url("../img/heartClick.png")';
-    isClick++;
-});
-
-buttonFavourite.addEventListener('click', () => {
-    if (isClick === 2) {
-        buttonFavourite.style.backgroundImage = 'url("../img/heart.png")';
-        isClick = 0;
-    }
-
+    addRecipeToLocalStorage(urlParams);
 });
 
 const addTryAgain = () => {
@@ -297,9 +373,8 @@ const addTryAgain = () => {
     if (pageIsFluke) {
 
         tryAgain.addEventListener('click', () => {
-            apiDownoand = downloadSuitableApi(pageIsFluke);
-            addElementsFromApi();
-            removalAddedElementsToHtml(apiDownoand);
+            downloadSuitableApi(urlParams);
+            removalAddedElementsToHtml();
         });
     } else if (!pageIsFluke) {
         tryAgain.style.visibility = "hidden";
@@ -307,3 +382,5 @@ const addTryAgain = () => {
 }
 
 addTryAgain();
+
+console.log(urlParams);
