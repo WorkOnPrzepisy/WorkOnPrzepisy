@@ -63,6 +63,10 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.footer {
+  width: 100%;
+}
+
 .container {
   font-family: "Segoe UI", sans-serif;
   display: -webkit-box;
@@ -72,13 +76,28 @@ input::-webkit-inner-spin-button {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   color: #D8D7D8;
   background-color: #FFF9EB;
 }
 
 .container .main {
   min-height: calc(100vh - 400px);
-  margin: 20px 47px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .container .main .m10 {
@@ -86,9 +105,10 @@ input::-webkit-inner-spin-button {
 }
 
 .container .main .search-form {
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 100px;
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
   min-height: calc(100vh - 400px);
   display: -webkit-box;
   display: -ms-flexbox;
