@@ -10,30 +10,31 @@
 <body> 
    <div class="container">
       <div class="row">
-         <div class="col">
+         <div class="col col-image">
             <img class="image-part" src="../public/img/foodiesfeed.com_nicely-served-burgers (1).jpg" alt="">
          </div>
-         <div class="col"> 
+         <div class="col col-part"> 
             <%- include ('partials/messages') %>
-            <h1 class="text-center display-4 my-4">Share yours  best</h1>
-            <form action="/users/images" method="POST" class="form-style" enctype="multipart/form-data">
-               
-               <div class="custom-file mb-3">
-                  <input type="file" name="file" id="file" class="custom-file-input" placeholder="image">
-                  <label for="file"class='custom-file-label'>Pictue</label> 
-               </div> 
-
-               <input type="text" name='strMeal' class="form-control mt-3" id="validationServer01"placeholder='Name of Dish'>
-
-               <textarea name='strIngredient1' class="form-control mt-3" id="validationTextarea"placeholder='ingridient'></textarea>
-
-               <textarea name='strInstructions' class="form-control mt-3" id="validationTextarea" placeholder='Describtion'></textarea>
-
-               <input type="submit" value="submit" class="btn btn-primary btn-block mt-3">
-            </form>
-               <a href="/users/home" class="btn-home">
+            <a href="/users/home" class="btn-link btn-absolute">
                <button class="btn btn-outline-primary">Home</button>
-            </a>
+            </a> 
+            <div class="form-container">
+               <h1 class="text-center display-4 my-4">Share yours  best</h1>
+               <form action="/users/images" method="POST" class="form-style" enctype="multipart/form-data">
+                  
+                  <div class="custom-file mb-3">
+                     <input type="file" name="file" id="file" class="custom-file-input" placeholder="image">
+                     <label for="file"class='custom-file-label'>Pictue</label> 
+                  </div> 
+                     <input type="text" name='strMeal' class="form-control mt-3 text-input" id="validationServer01"placeholder='Name of Dish'>
+                  <textarea name='strIngredient1' class="form-control mt-3" id="validationTextarea"placeholder='ingridient'></textarea>
+   
+                  <textarea name='strInstructions' class="form-control mt-3" id="validationTextarea" placeholder='Describtion'></textarea>
+   
+                  <input type="submit" value="submit" class="btn btn-outline-success btn-block mt-3 btn-styling">
+               </form>
+            </div>
+          
          </div>
       </div>
    </div>

@@ -2,14 +2,21 @@
  <div class="container-fluid">
     <div class="row">
        <div class="col img-col"> 
-          <img class="img-size" src="../public/img/foodiesfeed.com_oranges-with-ice (1).jpg" alt="">
+          <img class="img-size" src="../public/img/foodiesfeed.com_hot-shakshuka-in-a-cast-iron-pan (2).jpg" alt="">
        </div> 
-       <div class="col form-col"> 
+       <div class="col form-col "> 
+          <div class="btn-container mb-3">
+            <a href="/users/login">
+               <button class="btn btn-outline-info">Login</button>
+            </a> 
+            <a href="/" class="btn-link">
+               <button class="btn btn-outline-primary">Home</button>
+            </a> 
+          </div>
+       
           <h2>Forgotten</h2>
           <%- include ('partials/messages') %>
-          <a href="/" class="btn-link">
-             <button class="btn btn-outline-primary">Home</button>
-          </a> 
+        
           <form method="POST">
              <div class="form-group">
                <input type="email" name='email' class="form-control" placeholder="Username" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -23,10 +30,7 @@
                 <input type="password" name="password2" class="form-control" placeholder="retype password">
               </div>
               <button type="submit" class="btn btn-outline-primary">Submit</button>
-            </form> 
-            <a href="/users/login">
-               <button class="btn btn-outline-info mt-2">Login</button>
-            </a> 
+            </form>
        </div>
     </div>
  </div>
