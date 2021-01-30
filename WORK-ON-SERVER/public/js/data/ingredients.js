@@ -76,7 +76,7 @@ export default [
   "caramel sauce",
   "caraway seed",
   "cardamom",
-  "carrot",
+  "carrots",
   "cashew nuts",
   "cashews",
   "caster sugar",
