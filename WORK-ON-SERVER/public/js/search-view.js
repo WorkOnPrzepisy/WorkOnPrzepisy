@@ -44,6 +44,7 @@ const pageInputs = document.querySelectorAll(".page-input");
 const pagesNumberDivs = document.querySelectorAll(".pages-number");
 
 const randomPickBtn = document.querySelector(".random-pick-btn");
+const loader = document.querySelector(".loader");
 
 const capitalizeFirstLetters = (words) => (
     words
@@ -151,11 +152,13 @@ const createMeals = async() => {
     resultsIds.length = 0;
 
     paginationButtonsDivs.display = "none";
+    loader.style.display = "block";
 
     return getMeals().then((mealsToCreate) => {
         const mealsNumber = mealsToCreate.length;
         randomPickBtn.style.display = mealsNumber < 2 ? "none" : "block";
         const innerMealsCreated = [];
+        loader.style.display = "none";
 
         if (mealsNumber > 0) {
             paginationButtonsDivs.display = "flex";
@@ -298,13 +301,22 @@ const getIngredientSmallImgUrl = (ingredientStr) =>
 
 const showIngredientSmall = (ingredientStr) => {
     const newIngredientDiv = document.createElement("div");
+    newIngredientDiv.style.pointerEvents = "none";
     newIngredientDiv.className = "ingredient-selected";
     const newIngredientImg = document.createElement("img");
+    const ingredientLoader = document.createElement("div");
+    ingredientLoader.className = "loader ingredient-loader";
+    ingredientLoader.style.display = "block";
     const newIngredientP = document.createElement("p");
     const ingredientStrUpper = capitalizeFirstLetters(ingredientStr);
     newIngredientP.append(ingredientStrUpper);
     newIngredientImg.src = getIngredientSmallImgUrl(ingredientStr);
     newIngredientDiv.append(newIngredientImg);
+    newIngredientImg.addEventListener("load", () => {
+        ingredientLoader.style.display = "none";
+        newIngredientDiv.style.pointerEvents = "auto";
+    });
+    newIngredientDiv.append(ingredientLoader);
     newIngredientDiv.append(newIngredientP);
     newIngredientDiv.onclick = () => {
         ingredientsSelected = ingredientsSelected.filter((ingredient) =>
