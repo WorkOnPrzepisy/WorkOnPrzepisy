@@ -289,18 +289,8 @@ app.post('/more-added-search', async (req, res) => {
    const {
       name
    } = await req.body
-   const userId = req.session.user
-   const loggedUser = await User.find(userId).exec()
-   const imgFavorites = loggedUser[0].favorites
-   const arrayofFavorites = await Img.find({
-      _id: {
-         $in: imgFavorites
-      }
-   }) 
 
-
-
-
+   const arrayofFavorites = await Img.find({}) 
 
    // DATABSE RESULTSTS   
    const dataBaseResultsName = await arrayofFavorites.map((name) => {
