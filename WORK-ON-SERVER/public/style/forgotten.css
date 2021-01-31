@@ -21,6 +21,10 @@ input{
    width: 60% !important
 }  
 
+input[class='form-control']{ 
+   background-color: #fff9eb
+ }
+
 
 @media screen and (max-width: 1024px){ 
    .form-col{  
@@ -231,7 +235,9 @@ input{
       font-family: 'Loobster';
    }
  
- } 
+ }  
+
+
 
 
 

@@ -124,11 +124,14 @@ body {
 
 
 
-@media screen and (max-width: 5440px) {
+@media screen and (max-width: 540px) {
 
 
    .search-container {
       margin-right: 92px !important
+   } 
+   .new-content{ 
+      border-radius: 5px;
    }
 }
 
