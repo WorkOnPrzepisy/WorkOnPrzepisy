@@ -173,7 +173,13 @@ const createMeals = async() => {
                 mealButton.innerText = "Details";
                 mealButton.type = "button";
                 mealButton.onclick = () => {
-                    window.location.href = `/fluke?api_id=${_id}`;
+
+                    if (window.location.href.match('/users/search-view')) {
+                        window.location.href = `/users/happines?api_id=${_id}`;
+                    } else {
+                        window.location.href = `/fluke?api_id=${_id}`;
+                    }
+
                     /*
                     mealIdInput.value = _id;
                     searchForm.submit();*/
@@ -425,7 +431,7 @@ areaSelect.onclick = () => {
 
 const changeSelectHandler = (select, list) => {
     makeInvisible(results);
-    
+
 
     const selectValue = select.value.toLowerCase();
     if (selectValue !== "") select.style.fontWeight = "bold";
