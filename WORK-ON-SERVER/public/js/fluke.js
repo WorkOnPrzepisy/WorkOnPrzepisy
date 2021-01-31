@@ -5,15 +5,6 @@ let idMealPage = '';
 
 let apiDownoand;
 
-const isFluke = function() {
-    let pageIsFluke;
-    const hrefInPage = window.location.href;
-    pageIsFluke = hrefInPage.slice(hrefInPage.indexOf("=") + 1, hrefInPage.indexOf("&"));
-    return Boolean(pageIsFluke);
-};
-const pageIsFluke = isFluke();
-
-
 const urlParams = Object.fromEntries(new URLSearchParams(document.location.search));
 
 const downloadApi = async(api, random) => {
@@ -23,8 +14,13 @@ const downloadApi = async(api, random) => {
         //const idMeal = await apiDownoand.meals[0].idMeal;
         const idObj = { _id: idMeal };
         const btnAdd = document.querySelector('#favorite');
+        const btnAdd2 = document.querySelector('#favorite2');
         btnAdd.addEventListener('click', async function(e) {
-
+            console.log("tuuuuuuuu00000000000000uuuu");
+            btnAdd.disabled = true;
+            btnAdd.style.visibility = 'hidden';
+            btnAdd2.style.visibility = '';
+            btnAdd2.disabled = true;
             await fetch('/users/user-images', {
                 method: 'POST', // or 'PUT'
                 body: JSON.stringify(idObj),
@@ -32,6 +28,7 @@ const downloadApi = async(api, random) => {
                     "Content-Type": "application/json"
                 }
             });
+
         });
         return apiDownoand[0];
     } else {
@@ -39,8 +36,9 @@ const downloadApi = async(api, random) => {
         //const idMeal = await apiDownoand.meals[0].idMeal;
         const idObj = { _id: idMeal };
         const btnAdd = document.querySelector('#favorite');
+        const btnAdd2 = document.querySelector('#favorite');
         btnAdd.addEventListener('click', async function(e) {
-
+            console.log("tuuuuuuuuuuuu");
             await fetch('/users/user-images', {
                 method: 'POST', // or 'PUT'
                 body: JSON.stringify(idObj),
@@ -48,11 +46,13 @@ const downloadApi = async(api, random) => {
                     "Content-Type": "application/json"
                 }
             });
+            btnAdd.disabled = true;
+            btnAdd.style.visibility = 'hidden';
+            btnAdd2.style.visibility = '';
+            btnAdd2.disabled = true;
         });
         return apiDownoand;
     }
-
-
 };
 
 const downloadDb = async db_id => {
@@ -70,6 +70,7 @@ const downloadDb = async db_id => {
 const downloadSuitableApi = async(params) => {
     let random = false;
     if (params.db_id) {
+        random = false;
         // const btnAdd = document.querySelector('#favorite');
         // btnAdd.style.visibility = "";
         const buttonFluke = document.querySelector(".try-again");
@@ -77,6 +78,7 @@ const downloadSuitableApi = async(params) => {
         await downloadDb(params.db_id);
 
     } else if (params.api_id) {
+        random = false;
         console.log(params.api_id);
         // const btnAdd = document.querySelector('#favorite');
         // btnAdd.style.visibility = "";
@@ -133,18 +135,23 @@ const another = async(params) => {
         listIngredients.appendChild(li);
     }
 
-    const idImage = await response._id
-    const btnDATA = document.querySelector('#favorite')
+    const idImage = await response._id;
+    const btnDATA = document.querySelector('#favorite');
+    const btnDATA2 = document.querySelector('#favorite2');
 
     btnDATA.addEventListener('click', async function(e) {
-        console.log(btnDATA);
+        console.log("heeej", btnDATA);
+
         await fetch('/userek/fave', {
             method: 'POST',
             body: JSON.stringify({ id: idImage }),
             headers: {
                 "Content-Type": "application/json"
             }
-        })
+        });
+        btnDATA.disabled = true;
+        btnDATA.style('visibility: hidden;');
+        btnDATA2.style('visibility:')
     })
 
 }
@@ -361,16 +368,10 @@ iconAddRecipe.addEventListener('click', () => {
 
 const addTryAgain = () => {
     const tryAgain = document.querySelector(".try-again");
-
-    if (pageIsFluke) {
-
-        tryAgain.addEventListener('click', () => {
-            downloadSuitableApi(urlParams);
-            removalAddedElementsToHtml();
-        });
-    } else if (!pageIsFluke) {
-        tryAgain.style.visibility = "hidden";
-    }
+    tryAgain.addEventListener('click', () => {
+        downloadSuitableApi(urlParams);
+        removalAddedElementsToHtml();
+    });
 }
 
 addTryAgain();
