@@ -43,8 +43,8 @@ app.use(flash())
 
 
 const store = new MongoDBStore({
-   // uri: 'mongodb://127.0.0.1:27017/',
-   uri: 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority',
+   uri: 'mongodb://127.0.0.1:27017/',
+   // uri: 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority',
    collection: 'mySessions'
 });
 
@@ -296,7 +296,9 @@ app.post('/more-added-search', async (req, res) => {
       _id: {
          $in: imgFavorites
       }
-   })
+   }) 
+
+
 
 
 
@@ -307,13 +309,14 @@ app.post('/more-added-search', async (req, res) => {
          _id: name._id,
          img: name.images.strMealThumb
       }
-   })
+   }) 
+
 
 
 
    // SINGLE RESULT BY NAME
 
-   function findKey(arr, strName) {
+   function findKey(arr, strName) { 
       // Loop over the array
       for (var i = 0; i < arr.length; i++) {
          for (var key in arr[i]) {

@@ -468,4 +468,42 @@
     font-size: 16px;
   }
 }
+
+@media (max-width: 400px) {
+  .container .nav {
+    min-height: 85px;
+    max-height: 85px;
+  }
+  .container .nav .toggle-button {
+    top: 31px;
+  }
+  .container .nav .brand-logo-wrapper {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
+  .container .nav .brand-logo-wrapper:hover .brand-logo {
+    -webkit-transform: scale(0.67);
+            transform: scale(0.67);
+  }
+  .container .nav .brand-logo-wrapper .brand-logo {
+    -webkit-transform: scale(0.6);
+            transform: scale(0.6);
+  }
+  .container .footer {
+    padding: 0;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .container .footer .footer-text {
+    display: none;
+  }
+  .container .footer .social-media ul li a i {
+    font-size: 50px;
+  }
+}
 /*# sourceMappingURL=base.css.map */
