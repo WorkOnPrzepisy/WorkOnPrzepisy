@@ -447,7 +447,26 @@ $dark-texts-color: #707070;
 
                 }
             }
+        }
 
+        .footer {
+            padding: 0;
+            align-items: center;
+            justify-content: center;
+            .footer-text {
+                display: none;
+            }
+            .social-media {
+                ul {
+                    li {
+                        a {
+                            i {
+                                font-size: 50px;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
