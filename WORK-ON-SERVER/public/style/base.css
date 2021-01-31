@@ -187,6 +187,10 @@
   width: 100%;
 }
 
+.container .main {
+  min-height: calc(100vh - 600px);
+}
+
 .container .footer {
   height: 150px;
   background-color: #2AA1B7;

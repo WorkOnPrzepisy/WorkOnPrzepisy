@@ -527,7 +527,12 @@ for (const node of pageInputs) {
 
 randomPickBtn.onclick = () => {
     const value = resultsIds[Math.floor(Math.random() * resultsIds.length)];
-    window.location.href = `/fluke?api_id=${value}`;
+    
+    if (window.location.href.match('/users/search-view')) {
+        window.location.href = `/users/happines?api_id=${value}`;
+    } else {
+        window.location.href = `/fluke?api_id=${value}`;
+    }
     // searchForm.submit();
 }
 

@@ -26,7 +26,7 @@ formId.addEventListener('submit', async function (e) {
 
       conterenek.style.display = "flex"
       newContainer.style.display = 'none'
-      conterenek.classList.add('fade-in')
+      window.location.reload()
    } else if (valueOfInput !== "") {
 
       const contentDisplay = () => {
