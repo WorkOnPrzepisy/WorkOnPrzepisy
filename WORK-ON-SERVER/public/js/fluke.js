@@ -356,6 +356,7 @@ const addRecipeToLocalStorage = (params) => {
 iconAddRecipe.addEventListener('click', () => {
 
     addRecipeToLocalStorage(urlParams);
+
 });
 
 const addTryAgain = () => {
