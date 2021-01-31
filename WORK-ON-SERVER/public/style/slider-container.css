@@ -1,0 +1,15 @@
+.slider-containere2{ 
+   height: 250px;
+} 
+
+
+.caption2{ 
+   position: absolute;
+   bottom: 25px;
+   left: 100px;
+   right: 100px;
+   box-sizing: border-box;
+   justify-content: center;
+   align-items: center;
+ 
+}

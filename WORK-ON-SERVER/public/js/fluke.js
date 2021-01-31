@@ -77,7 +77,7 @@ const downloadSuitableApi = async(params) => {
         await downloadDb(params.db_id);
 
     } else if (params.api_id) {
-        console.log(params.api_id);
+      //   console.log(params.api_id);
         // const btnAdd = document.querySelector('#favorite');
         // btnAdd.style.visibility = "";
         const buttonFluke = document.querySelector(".try-again");
@@ -95,7 +95,7 @@ const downloadSuitableApi = async(params) => {
         const title = document.querySelector("title");
         title.innerText = "Fluke";
         let apiDownoandSuitable = await downloadApi(`${apiMeal}random`, random);
-        console.log("tttttt", apiDownoandSuitable);
+      //   console.log("tttttt", apiDownoandSuitable);
         apiDownoand = apiDownoandSuitable;
         addElementsFromApi();
     }
@@ -137,7 +137,7 @@ const another = async(params) => {
     const btnDATA = document.querySelector('#favorite')
 
     btnDATA.addEventListener('click', async function(e) {
-        console.log(btnDATA);
+      //   console.log(btnDATA);
         await fetch('/userek/fave', {
             method: 'POST',
             body: JSON.stringify({ id: idImage }),
