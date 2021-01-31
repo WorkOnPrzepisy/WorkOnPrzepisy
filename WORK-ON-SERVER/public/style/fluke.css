@@ -28,13 +28,13 @@ body {
     background-position: center;
 }
 
-.slider-container {
+.main .slider-container {
     margin-top: 50px;
     width: 100%;
     height: 250px;
 }
 
-.caption {
+.main .caption {
     bottom: 50px;
 }
 
