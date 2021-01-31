@@ -27,4 +27,3 @@ toggleButton.onclick = () => {
 // logoutButton.onclick = () => {
 //     handleLogin("none", "flex");
 // }
-
