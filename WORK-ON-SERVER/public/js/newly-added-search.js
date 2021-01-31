@@ -37,8 +37,6 @@ formId.addEventListener('submit', async function (e) {
          } = keyData1
          const imgData = images.imgThumb
          conterenek.style.display = "none";
-
-
          const html = `<div class="new-added">
                <div class="new-content">
                   <div class="header">

@@ -5,7 +5,7 @@ router.get('/', (req,res)=> res.render('base',{layout:'layout'}))
 
 router.get('/fluke', (req,res)=> res.render('fluke',{layout: 'layout'}))
 
-router.get('/search-view', (req,res)=> res.render('search-view',{layout: 'layout'}))
+router.get('/search-view', (req,res)=> res.render('search-view',{layout: 'userLayout'}))
 
 router.get('/basket', (req,res)=> res.render('basket',{layout: 'layout'}))
 
