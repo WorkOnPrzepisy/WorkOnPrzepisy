@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,18 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-
-
-    <link rel="stylesheet" href="../public/style/slider.css">
-
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="../public/style/base.css">
-    <link rel="stylesheet" href="../public/style/search-main.css">
-
-    <link rel="stylesheet" href="../public/style/search-results.css">
-    <link rel="stylesheet" href="../public/style/basket-recipe.css">
-    <link rel="stylesheet" href="../public/style/main.css" />
-
+    <link rel="stylesheet" href="../public/style/slider.css">
 </head>
 
 <body>
@@ -66,10 +55,6 @@
                     <li class="nav-item">
                         <a href="/users/basket" data-content="Basket">Basket</a>
                     </li>
-                    <!-- <li class="right-nav login-signup">
-                        <a href="#" data-content="Log In" class="login">Log In</a>
-                        <a href="#" data-content="Sign Up" class="signup">Sign Up</a>
-                    </li> -->
                     <li class="right-nav logout">
                         <a href="/users/logout" data-content="Log Out">Log Out</a>
                     </li>
@@ -77,6 +62,45 @@
             </div>
         </nav>
 
+        <div class="slider-container">
+         <div class="slider">
+             <div class="slide slide1">
+                 <div class="caption">
+                     <h2> If more of us valued food and cheer and song above hoarded gold, it would be a merrier world.</h2>
+                     <p>~~ J.R.R. Tolkien
+                     </p>
+                 </div>
+             </div>
+             <div class="slide slide2">
+                 <div class="caption">
+                     <h2> One cannot think well, love well, sleep well, if one has not dined well.</h2>
+                     <p>~~ Virginia Woolf, A Room of One's Own
+                     </p>
+                 </div>
+             </div>
+             <div class="slide slide3">
+                 <div class="caption">
+                     <h2> Ask not what you can do for your country. Ask what’s for lunch.</h2>
+                     <p>~~ Orson Welles
+                     </p>
+                 </div>
+             </div>
+             <div class="slide slide4">
+                 <div class="caption">
+                     <h2> There is no love sincerer than the love of food.</h2>
+                     <p> George Bernard Shaw, Man and Superman
+                     </p>
+                 </div>
+             </div>
+             <div class="slide slide5">
+                 <div class="caption">
+                     <h2> I cook with wine, sometimes I even add it to the food.</h2>
+                     <p>W.C. Fields
+                     </p>
+                 </div>
+             </div>
+         </div>
+     </div>
 
         <div class="main">
             <%- body %>

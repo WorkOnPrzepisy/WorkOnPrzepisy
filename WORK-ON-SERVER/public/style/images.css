@@ -11,21 +11,23 @@
 
 .col-part h1{ 
    font-size: 2rem;
+   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-
-
-h1{ 
-   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+body {
+   background-color: #fdf9f1;
+   overflow-x: hidden;
 } 
+
+.form-container  textarea, input[type='text'] { 
+   background: #fdf9f1;
+}
 
 
 .form-container{ 
    width: 400px;
 }
-body{ 
-   overflow-x: hidden;
-}  
+
 
 
 @media screen and (max-width: 1024px){ 

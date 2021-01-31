@@ -4,36 +4,42 @@ const newContainer = document.querySelector('#new-container')
 
 
 
-formId.addEventListener('submit', async function(e){ 
-         const searchInputData = document.querySelector('#searchInputData')
-         e.preventDefault()
-         const valueOfInput= searchInputData.value
-         const respones= await fetch('/more-added-search',{ 
-            method: 'POST',
-            body: JSON.stringify({name: valueOfInput}),
-            headers: { 
-            "Content-Type": "application/json"
-            }
-         })  
-         const data =  await respones.json()
-         
-      // DATABASE CONTENT TO SHOW   
-         const keyData1 = data.key
-         
-         if(valueOfInput == ""){ 
+formId.addEventListener('submit', async function (e) {
+   const searchInputData = document.querySelector('#searchInputData')
+   e.preventDefault()
+   const valueOfInput = searchInputData.value
+   const respones = await fetch('/more-added-search', {
+      method: 'POST',
+      body: JSON.stringify({
+         name: valueOfInput
+      }),
+      headers: {
+         "Content-Type": "application/json"
+      }
+   })
+   const data = await respones.json()
 
-            conterenek.style.display = "flex"
-            newContainer.style.display= 'none'
-            conterenek.classList.add('fade-in')
-         } else if(valueOfInput !== ""){ 
+   // DATABASE CONTENT TO SHOW   
+   const keyData1 = data.key
 
-            const contentDisplay =()=>{ 
-               const {name, _id, images} = keyData1
-               const imgData = images.imgThumb
-               conterenek.style.display = "none";
+   if (valueOfInput == "") {
 
-   
-               const html=  `<div class="new-added">
+      conterenek.style.display = "flex"
+      newContainer.style.display = 'none'
+      conterenek.classList.add('fade-in')
+   } else if (valueOfInput !== "") {
+
+      const contentDisplay = () => {
+         const {
+            name,
+            _id,
+            images
+         } = keyData1
+         const imgData = images.imgThumb
+         conterenek.style.display = "none";
+
+
+         const html = `<div class="new-added">
                <div class="new-content">
                   <div class="header">
                      <h3 id='dish-name1'>${name}</h3>
@@ -48,23 +54,20 @@ formId.addEventListener('submit', async function(e){
                      </div> 
                   </div>
                </div>`
-               
-               newContainer.innerHTML = html
-               newContainer.classList.add('fade-in')
-   
-            }
 
-            contentDisplay() 
-         }
+         newContainer.innerHTML = html
+         newContainer.classList.add('fade-in')
+         searchInputData.value = ''
 
-        
-      
+      }
 
-
-      
-
-      })  
+      contentDisplay()
+   }
 
 
 
 
+
+
+
+})
