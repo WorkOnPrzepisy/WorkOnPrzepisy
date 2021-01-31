@@ -420,3 +420,35 @@ $dark-texts-color: #707070;
         }
     }
 }
+
+@media (max-width: 400px) {
+    .container {
+
+        .nav {
+            min-height: 85px;
+            max-height: 85px;
+
+            .toggle-button {
+                top: 31px;
+            }
+
+            .brand-logo-wrapper {
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+    
+                &:hover .brand-logo {
+                    transform: scale(0.67);
+                }
+    
+                .brand-logo {
+
+                    transform: scale(0.6);
+
+                }
+            }
+
+        }
+    }
+
+}

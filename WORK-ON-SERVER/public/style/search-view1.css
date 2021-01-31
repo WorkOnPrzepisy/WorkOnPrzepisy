@@ -84,13 +84,13 @@ input::-webkit-inner-spin-button {
 }
 
 .container .main {
-  min-height: calc(100vh - 400px);
+  min-height: calc(100vh - 100px);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -98,6 +98,7 @@ input::-webkit-inner-spin-button {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  width: 100%;
 }
 
 .container .main .m10 {
@@ -105,7 +106,6 @@ input::-webkit-inner-spin-button {
 }
 
 .container .main .search-form {
-  margin-top: 100px;
   padding-top: 50px;
   padding-left: 50px;
   padding-right: 50px;
@@ -121,6 +121,7 @@ input::-webkit-inner-spin-button {
       -ms-flex-align: center;
           align-items: center;
   max-width: 920px;
+  width: 100%;
   color: #707070;
 }
 
