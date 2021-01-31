@@ -373,5 +373,3 @@ const addTryAgain = () => {
 }
 
 addTryAgain();
-
-console.log(urlParams);

@@ -5,8 +5,6 @@ toggleButton.onclick = () => {
     nav.classList.toggle('active');
 }
 
-
-
 // temporary functions for fake log in and log out
 
 // const loginButton = document.querySelector(".login-signup a");
