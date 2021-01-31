@@ -51,16 +51,17 @@ formId.addEventListener('submit', async function(e){
          </div>` 
          newContainer.innerHTML = html
          newContainer.classList.add('fade-in')
+         searchInputData.value = ''
          } else if(keyData1 == undefined){ 
             
-            const {name, _id, images} = keyData
+            const {strMeal, _id, images} = keyData
             const imgData = images.imgThumb
             conterenek.style.display = "none";
 
             const html=  `<div class="new-added">
             <div class="new-content">
                <div class="header">
-                  <h3 id='dish-name1'>${name}</h3>
+                  <h3 id='dish-name1'>${strMeal}</h3>
                </div> 
                <div class="image-content" id='new-image'>
                   <img src="data:image/png;base64,${imgData}" height='300px' width='300px' alt=""> 
@@ -75,14 +76,10 @@ formId.addEventListener('submit', async function(e){
             
             newContainer.innerHTML = html
             newContainer.classList.add('fade-in')
-
+            searchInputData.value = ''
          }
       }
        contentDisplay() 
-
-
-      
-
       })  
 
 

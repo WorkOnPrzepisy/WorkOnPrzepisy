@@ -137,10 +137,6 @@ const another = async(params) => {
     const btnDATA = document.querySelector('#favorite')
 
     btnDATA.addEventListener('click', async function(e) {
-        const btnAdd = document.querySelector('#favorite');
-        btnAdd.style.visibility = "hidden";
-        const btnAdd2 = document.querySelector('#favorite2');
-        btnAdd2.style.visibility = "";
         console.log(btnDATA);
         await fetch('/userek/fave', {
             method: 'POST',

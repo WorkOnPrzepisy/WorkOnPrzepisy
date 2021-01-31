@@ -1,3 +1,7 @@
+
+body {
+   background-color: #fff9eb;
+}
 .img-size{ 
    height: 100vh;
    width: 100%;
@@ -16,121 +20,9 @@
 input{ 
    width: 60% !important
 }  
-body{ 
-   background-color: #fbfaf8;
-}
 
 
-
-@media screen and (max-width: 360px){ 
-  .form-col{  
-
-   margin-top: 180px;
-  }  
-
-  form{ 
-   display: inline-grid;
-  } 
-
-  .btn-container a button{ 
-
-   margin-bottom: 4px;
-  }
-
-   form input{ 
-   padding: -0.625rem .75rem;
-  }
-  h2{ 
-   font-family: 'Loobster';
-}
-
-
-}  
-
-
-
-
-@media screen and (max-width: 411px){ 
-   .form-col{  
- 
-    margin-top: 180px;
-   }  
- 
-   form{ 
-    display: inline-grid;
-   } 
- 
-   .btn-container a button{ 
- 
-    margin-bottom: 4px;
-   }
- 
-    form input{ 
-    padding: -0.625rem .75rem;
-   } 
-
-   h2{ 
-      font-family: 'Loobster';
-   }
- 
- }  
-
-
-
-@media screen and (max-width: 320px){ 
-  .container-fluid .form-col{  
- 
-    margin-top: 100px;
-   }  
- 
-   form{ 
-    display: inline-grid;
-   } 
- 
-   .btn-container a button{ 
- 
-    margin-bottom: 4px;
-   }
- 
-    form input{ 
-    padding: -0.625rem .75rem;
-   } 
-
-   h2{ 
-      font-family: 'Loobster';
-   }
- 
- }  
-
-
- @media screen and (max-width: 414px){ 
-   .form-col{  
- 
-    margin-top: 220px;
-   }  
- 
-   form{ 
-    display: inline-grid;
-   } 
- 
-   .btn-container a button{ 
- 
-    margin-bottom: 4px;
-   }
- 
-    form input{ 
-    padding: -0.625rem .75rem;
-   } 
-
-   h2{ 
-      font-family: 'Loobster';
-   }
- 
- }  
-
-
-
- @media screen and (max-width: 1024px){ 
+@media screen and (max-width: 1024px){ 
    .form-col{  
  
     margin-top: 480px;
@@ -176,10 +68,144 @@ body{
 
    h2{ 
       font-family: 'Loobster';
+   } 
+   .col-part .btn-absolute{ 
+      top: -100px;
+   }
+ 
+ } 
+
+
+ @media screen and (max-width: 414px){ 
+   .form-col{  
+ 
+    margin-top: 220px;
+   }  
+ 
+   form{ 
+    display: inline-grid;
+   } 
+ 
+   .btn-container a button{ 
+ 
+    margin-bottom: 4px;
+   }
+ 
+    form input{ 
+    padding: -0.625rem .75rem;
+   } 
+
+   h2{ 
+      font-family: 'Loobster';
+   } 
+
+   .col-part .btn-absolute{ 
+      top: -120px;
+   }
+ 
+ }   
+
+
+
+
+
+@media screen and (max-width: 411px){ 
+   .form-col{  
+ 
+    margin-top: 180px;
+   }  
+ 
+   form{ 
+    display: inline-grid;
+   } 
+ 
+   .btn-container a button{ 
+ 
+    margin-bottom: 4px;
+   }
+ 
+    form input{ 
+    padding: -0.625rem .75rem;
+   } 
+
+   h2{ 
+      font-family: 'Loobster';
+   } 
+
+   .col-part .btn-absolute{ 
+      top: -123px;
    }
  
  }  
 
+
+@media screen and (max-width: 375px){ 
+
+  .btn-absolute button{ 
+
+      padding: 5px 10px
+   }
+}
+
+
+
+@media screen and (max-width: 360px){ 
+  .form-col{  
+
+   margin-top: 180px;
+  }  
+
+  form{ 
+   display: inline-grid;
+  } 
+
+  .btn-container a button{ 
+
+   margin-bottom: 4px;
+  }
+
+   form input{ 
+   padding: -0.625rem .75rem;
+  }
+  h2{ 
+   font-family: 'Loobster';
+} 
+.col-part .btn-absolute{ 
+   top: -123px;
+}
+
+}  
+
+
+
+@media screen and (max-width: 320px){ 
+  .container-fluid .form-col{  
+ 
+    margin-top: 100px;
+   }  
+ 
+   form{ 
+    display: inline-grid;
+   } 
+ 
+   .btn-container a button{ 
+ 
+    margin-bottom: 4px;
+   }
+ 
+    form input{ 
+    padding: -0.625rem .75rem;
+   } 
+
+   h2{ 
+      font-family: 'Loobster';
+   } 
+
+   .col-part .btn-absolute{ 
+      top: -100px;
+   }
+ 
+ }  
 
 
  @media screen and (max-width: 280px){ 
