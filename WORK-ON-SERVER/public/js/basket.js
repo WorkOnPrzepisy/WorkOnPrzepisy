@@ -627,4 +627,12 @@ const buttonGenerateShoppingListBasket = document.querySelector('#generate-shopp
 buttonGenerateShoppingListBasket.addEventListener('click', () => {
     generateShoppingListPdfBasket();
 })
+
+const hiddenSlider = () => {
+    if (window.location.href.match('/users/basket')) {
+        const btnAdd = document.querySelectorAll('.slider-container');
+        btnAdd[1].style.display = 'none';
+    }
+}
+hiddenSlider();
 addItemHTMLBasket();
