@@ -397,8 +397,8 @@
         margin-left: 0px;
     }
     .container .nav.active {
-        max-height: 330px;
-        min-height: 330px;
+        max-height: 310px;
+        min-height: 310px;
     }
     .container .nav.active .nav-links {
         display: -webkit-box;
@@ -518,6 +518,7 @@
     border-radius: 10px;
     display: flex;
     justify-content: center;
+    margin-left: 3px;
 }
 
 #countBasketRecipeP {
