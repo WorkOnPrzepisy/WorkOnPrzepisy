@@ -32,6 +32,7 @@ formId.addEventListener('submit', async function(e){
         else if(keyData == undefined){ 
          
          const {idMeal,strMeal,strMealThumb} = keyData1
+         
          conterenek.style.display = "none";
 
          const html = `<div class="new-added">

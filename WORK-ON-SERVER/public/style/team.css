@@ -1,0 +1,153 @@
+
+
+.container-team {
+    background-color: #FFF9EB;
+    justify-content: center;
+}
+.about-team {
+    background-color:#2AA1B7;
+    display: flex;
+    justify-content: center;
+    padding: 2em;
+    margin: 1em 2em 4em;
+    border-radius: 1em;
+}
+
+.our-team {
+    padding: 1.5em;
+    margin: 1em  ;
+    background-color: #2db0c7;
+    border-radius:1em ;
+  
+}
+.our-team:hover {
+   -webkit-box-shadow: 3px 3px 5px 6px rgb(0, 0, 0, 0.39); 
+  -moz-box-shadow:    3px 3px 5px 6px rgb(0, 0, 0, 0.39);  
+  box-shadow:         3px 3px 5px 6px rgba(0, 0, 0, 0.39);}
+.our-team h3 {
+    font-family: Lobster , script;
+    margin: 1em 20%
+}
+.about-team-title {
+    padding: 1em;
+    margin: 1.5em 38%;
+    justify-content: center;
+    align-items: center;
+}
+.about-team-title h1 {
+    font-family: Lobster, script;
+    color:  #707070;
+}
+.team-pictures {
+    height: 10em;
+    width: 10em;
+    border-radius: 100em;
+    background-color:#D8D7D8 ;
+    padding: 1em;
+    margin:  10% 20%;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+
+    
+}
+#Jakub-pic {
+    background-image: url() ;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-position: center;
+    
+}
+#Damian-pic {
+    background-image: url(../img/damian.png) ;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-position: center;
+}
+#Kamila-pic {
+    background-image: url(../img/kamila.png) ;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-position: center;
+}
+#Paulina-pic {
+    background-image: url(../img/paulina.png) ;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-position: center;
+}
+
+ #Jakub-pic:hover {
+    background-color: rgba(0, 0, 0, 0);
+    background-blend-mode: normal;
+}
+ #Damian-pic:hover {
+    background-color: rgba(0, 0, 0, 0);
+    background-blend-mode: normal;
+ }
+ #Kamila-pic:hover {
+    background-color: rgba(0, 0, 0, 0);
+    background-blend-mode: normal;
+ }
+ #Paulina-pic:hover {
+    background-color: rgba(0, 0, 0, 0);
+    background-blend-mode: normal;}
+
+ @media (max-width: 800px) {
+    .about-team {
+        background-color:#2AA1B7;
+        display: flex;
+        flex-direction: column;
+        padding: 1.5em;
+        margin: 1em 2em 4em;
+        border-radius: 1em;
+    
+    }
+    
+    .our-team {
+        padding: 10px;
+        margin: 10px  ;
+        background-color: #2db0c7;
+        border-radius:10px ;
+    
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    
+    }
+    .our-team:hover {
+       -webkit-box-shadow: 3px 3px 5px 6px rgb(0, 0, 0, 0.39); 
+      -moz-box-shadow:    3px 3px 5px 6px rgb(0, 0, 0, 0.39);  
+      box-shadow:         3px 3px 5px 6px rgba(0, 0, 0, 0.39);}
+    .our-team h3 {
+        font-family: Lobster , script;
+        margin: 10px 30%
+    }
+    .about-team-title {
+        height: 80px;
+        padding: 5px;
+        margin: 20px 40%;
+        display: flex;
+
+    
+    }
+    .about-team-title h1 {
+        font-family: Lobster, script;
+        color:  #707070;
+        font-size:30px ;
+        
+    }
+    .team-pictures {
+        height: 150px;
+        width: 150px;
+        border-radius: 100px;
+        background-color:#D8D7D8 ;
+        padding: 10px;
+        margin:  10% 20%;
+        align-self: center;
+    }
+ }

@@ -7,7 +7,10 @@
    .image-content>img {
       height: 235px;
       width: 233px;
-   }
+   } 
+   #new-image-content {
+      width: 235px;
+      height: 232px;
 }
 
 
@@ -40,7 +43,12 @@
 
    .input-search .search-container {
       justify-content: center;
-   }
+   } 
+   
+.main #new-image-content {
+    width: 256px;
+    height: 253px;
+}
 
 }
 

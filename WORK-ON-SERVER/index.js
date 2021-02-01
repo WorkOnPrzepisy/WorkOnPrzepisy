@@ -10,6 +10,8 @@ const {
 const {
    Img
 } = require("./models/index");
+
+
 const expresssLayouts = require('express-ejs-layouts')
 const session = require('express-session')
 const flash = require('connect-flash')
@@ -18,7 +20,7 @@ const mongoose = require('mongoose')
 const User = require('./models/User')
 const MongoDBStore = require('connect-mongodb-session')(session);
 
-const Port = process.env.PORT || 7000;
+const Port =  7000;
 const app = express();
 const nodeFetch = require('./node-fetch')
 const nodeFetchApiName = require('./nodeFetchApi');
@@ -255,9 +257,10 @@ app.post('/users/favorites', async (req, res) => {
                   ...arrayDATA,
                   images: {
                      imgThumb: Buffer.from(arrayDATA.img.buffer).toString('base64')
-                  }
+                  },
+                   
                }
-               return img
+               return img 
 
             }
          }

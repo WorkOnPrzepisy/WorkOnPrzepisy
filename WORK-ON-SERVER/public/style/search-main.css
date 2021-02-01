@@ -1,99 +1,3 @@
-/* /* 
-#search-input{ 
-   padding: 10px 25px;
-   border-radius: 10px;
-} 
-
-
-
-.search-container{ 
-
-   display: flex;
-   justify-content: flex-end;
-   margin-right: 200px
-} 
-
-.search-container input{ 
-   padding: 5px 20px;
-   outline: none;
-   border: none;
-} 
-
-.search-container button { 
-   padding: 7px 25px;
-   background-color: #FFD471;
-   border: none;
-   border-radius: 8px;
-   outline: none;
-   cursor: pointer;
-   
-}  
-
-
-
-
-.search-container input:hover{ 
-  
-  border: 1px solid rgb(193, 193, 193);
-} 
-
-
-.search-container button:hover{ 
-   
-   background-color: #e0b142;
- 
-} 
-
-.new-added{ 
-   margin: 15px;
-   display: flex;
-   justify-content: space-evenly;
-} 
-.new-added .buttonn{ 
-
-   display: flex;
-   justify-content: center;
-   
-
-} 
-
-.new-added .header{ 
-   display: flex;
-   justify-content: center;
-   margin-bottom: 15px;
-   padding-top: 10px;
-   font-family: 'Lobster';
-   
-} 
-
-.new-added button { 
-   padding:  10px 55px;
-   border-radius: 15px;
-   border: none;
-   margin-top: 20px;
-   background-color: #2AA1B7;
-   color: #D8D7Db;
-   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-   outline: none;
-   cursor: pointer;
-
-} 
-
-.new-added button:hover { 
-  background-color: #1db4cf
-
-} 
-
-
-.new-content{ 
-   background-color: #FFD471;
-   width: 400px;
-   height: 430px;
-   color:  #2AA1B7;
-   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}  
-
-
 
 
 /* Media Query */
@@ -115,25 +19,17 @@
 
 
 
-/* @media screen and (max-width:320px){ 
-   .search-container #search-form{ 
-      flex-direction: column;
-      
-   }
-}
-@media screen and (max-width:320px){ 
-   .search-container { 
-      justify-content: center;
-      
-   }
-}   */
-
-
 
 @media screen and (max-width:360px){ 
    .new-added .new-content { 
       width: 280px;
       height: 300 px;
+   }
+   .input-search .search-container{ 
+      justify-content: center;
+   } 
+   .main.slider-container{ 
+      height: 387px;
    }
 }
 
@@ -151,30 +47,13 @@
       flex-direction: column; 
       
    }
-   .search-container { 
+   .input-search .search-container { 
       justify-content: center;
       
    }
  }  
  
- /* @media screen and (max-width:375px){ 
-    .new-added .new-content.button { 
-       margin-top: 10px;
-    }
- }
- 
- @media screen and (max-width:375px){ 
-    .search-container #search-form{ 
-       flex-direction: column; 
-       
-    }
- }
- @media screen and (max-width:375px){ 
-    .search-container { 
-       justify-content: center;
-       
-    }
- } */
+
 
 
  @media screen and(max-width:414px){ 
@@ -269,4 +148,4 @@
 .more{ 
    cursor: pointer;
 }
- */
+
