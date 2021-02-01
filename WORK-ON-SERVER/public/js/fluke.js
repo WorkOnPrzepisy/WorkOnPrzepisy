@@ -4,27 +4,22 @@ const apiMeal = "http://localhost:7000/meals/";
 let idMealPage = '';
 
 let apiDownoand;
-
-const isFluke = function() {
-    let pageIsFluke;
-    const hrefInPage = window.location.href;
-    pageIsFluke = hrefInPage.slice(hrefInPage.indexOf("=") + 1, hrefInPage.indexOf("&"));
-    return Boolean(pageIsFluke);
-};
-const pageIsFluke = isFluke();
-
-
+const countBasketRecipe = document.querySelector('#countBasketRecipe');
+const countBasketRecipeP = document.querySelector('#countBasketRecipeP');
 const urlParams = Object.fromEntries(new URLSearchParams(document.location.search));
 
 const downloadApi = async(api, random) => {
     apiDownoand = await (await fetch(api)).json();
     if (random) {
-        const idMeal = await apiDownoand[0]._id; // zmienilam zobacz czy dziala
-        //const idMeal = await apiDownoand.meals[0].idMeal;
+        const idMeal = await apiDownoand[0]._id;
         const idObj = { _id: idMeal };
         const btnAdd = document.querySelector('#favorite');
+        const btnAdd2 = document.querySelector('#favorite2');
         btnAdd.addEventListener('click', async function(e) {
-
+            btnAdd.disabled = true;
+            btnAdd.style.visibility = 'hidden';
+            btnAdd2.style.visibility = '';
+            btnAdd2.disabled = true;
             await fetch('/users/user-images', {
                 method: 'POST', // or 'PUT'
                 body: JSON.stringify(idObj),
@@ -32,15 +27,15 @@ const downloadApi = async(api, random) => {
                     "Content-Type": "application/json"
                 }
             });
+
         });
         return apiDownoand[0];
     } else {
-        const idMeal = await apiDownoand._id; // zmienilam zobacz czy dziala
-        //const idMeal = await apiDownoand.meals[0].idMeal;
+        const idMeal = await apiDownoand._id;
         const idObj = { _id: idMeal };
         const btnAdd = document.querySelector('#favorite');
+        const btnAdd2 = document.querySelector('#favorite');
         btnAdd.addEventListener('click', async function(e) {
-
             await fetch('/users/user-images', {
                 method: 'POST', // or 'PUT'
                 body: JSON.stringify(idObj),
@@ -48,11 +43,13 @@ const downloadApi = async(api, random) => {
                     "Content-Type": "application/json"
                 }
             });
+            btnAdd.disabled = true;
+            btnAdd.style.visibility = 'hidden';
+            btnAdd2.style.visibility = '';
+            btnAdd2.disabled = true;
         });
         return apiDownoand;
     }
-
-
 };
 
 const downloadDb = async db_id => {
@@ -70,16 +67,14 @@ const downloadDb = async db_id => {
 const downloadSuitableApi = async(params) => {
     let random = false;
     if (params.db_id) {
-        // const btnAdd = document.querySelector('#favorite');
-        // btnAdd.style.visibility = "";
+        random = false;
         const buttonFluke = document.querySelector(".try-again");
         buttonFluke.style.display = "none";
         await downloadDb(params.db_id);
 
     } else if (params.api_id) {
-      //   console.log(params.api_id);
-        // const btnAdd = document.querySelector('#favorite');
-        // btnAdd.style.visibility = "";
+
+        random = false;
         const buttonFluke = document.querySelector(".try-again");
         buttonFluke.style.display = "none";
         const title = document.querySelector("title");
@@ -95,7 +90,6 @@ const downloadSuitableApi = async(params) => {
         const title = document.querySelector("title");
         title.innerText = "Fluke";
         let apiDownoandSuitable = await downloadApi(`${apiMeal}random`, random);
-      //   console.log("tttttt", apiDownoandSuitable);
         apiDownoand = apiDownoandSuitable;
         addElementsFromApi();
     }
@@ -133,18 +127,22 @@ const another = async(params) => {
         listIngredients.appendChild(li);
     }
 
-    const idImage = await response._id
-    const btnDATA = document.querySelector('#favorite')
+    const idImage = await response._id;
+    const btnDATA = document.querySelector('#favorite');
+    const btnDATA2 = document.querySelector('#favorite2');
 
     btnDATA.addEventListener('click', async function(e) {
-      //   console.log(btnDATA);
+
         await fetch('/userek/fave', {
             method: 'POST',
             body: JSON.stringify({ id: idImage }),
             headers: {
                 "Content-Type": "application/json"
             }
-        })
+        });
+        btnDATA.disabled = true;
+        btnDATA.style('visibility: hidden;');
+        btnDATA2.style('visibility:')
     })
 
 }
@@ -194,9 +192,7 @@ const removalAddedElementsToHtml = () => {
 
     hTitleDish.innerText = "";
     imgDish.src = "";
-    console.log(listIngredients);
     for (let i = 0; i < listIngredients.length; i++) {
-        console.log(listIngredients[i]);
         listIngredients[i].remove();
     }
     instructions.remove();
@@ -207,8 +203,19 @@ downloadSuitableApi(urlParams);
 const buttonFluke = document.querySelector("#button-draw-recipe");
 
 buttonFluke.addEventListener("click", () => {
-    downloadSuitableApi(urlParams);
-    removalAddedElementsToHtml();
+    if (window.location.href.match('/users/happines')) {
+        const btnAdd = document.querySelector('#favorite');
+        const btnAdd2 = document.querySelector('#favorite2');
+        btnAdd.disabled = false;
+        btnAdd.style.visibility = '';
+        btnAdd2.style.visibility = 'hidden';
+        btnAdd2.disabled = false;
+        downloadSuitableApi(urlParams);
+        removalAddedElementsToHtml();
+    } else {
+        downloadSuitableApi(urlParams);
+        removalAddedElementsToHtml();
+    }
 });
 
 const generateListIngredientsPdf = (doc, margin, recipe) => {
@@ -233,8 +240,6 @@ const generateListIngredientsPdf = (doc, margin, recipe) => {
 const generateInstructions = (doc, instructions) => {
     const instructionsS = instructions.split('<br>');
     const instructionsSAdd = instructionsS.join(" ");
-    console.log(instructionsSAdd);
-    console.log(instructions);
     const lengthArrayInstructions = instructionsSAdd.length;
     let start = 0;
     let multiple = 80;
@@ -297,7 +302,6 @@ const generateRecipePdf = () => {
 const buttonGenerateListPDF = document.querySelector("#button-generate-list");
 
 buttonGenerateListPDF.addEventListener('click', () => {
-    console.log("tutaj");
     generateShoppingListPdf();
 });
 
@@ -327,6 +331,34 @@ const storeData = (key, item) => {
     }
 }
 
+const countArrWthMealsBasket = (listRecipe) => {
+    const copyArrWithMeals = listRecipe
+
+    for (let i = 0; i < copyArrWithMeals.length; i++) {
+        let arrWithCountMeals = [];
+        copyArrWithMeals[i].countMeal = (copyArrWithMeals[i].countMeal ? copyArrWithMeals[i].countMeal : 1);
+        for (let j = i; j < copyArrWithMeals.length; j++) {
+
+
+            if (copyArrWithMeals[i].idMeals === copyArrWithMeals[j].idMeals) {
+                copyArrWithMeals[i].countMeal += 1;
+                copyArrWithMeals[i].countMeal - 1;
+                arrWithCountMeals.push(j);
+            }
+        }
+
+        copyArrWithMeals[i].countMeal -= 1;
+
+        for (let i = arrWithCountMeals.length - 1; i > 0; i--) {
+            copyArrWithMeals.splice(arrWithCountMeals[i], 1);
+        }
+    }
+
+    storeData("Recipe", copyArrWithMeals)
+
+}
+
+
 const iconAddRecipe = document.querySelector('#icon-add-recipe');
 
 
@@ -349,28 +381,38 @@ const addRecipeToLocalStorage = (params) => {
     } else {
         let listRecipe = tabWithIdMealLocalStoage.concat(dataLocalS);
         listRecipe.push(state);
-        storeData(key, listRecipe);
+        countArrWthMealsBasket(listRecipe);
     }
 };
 
 iconAddRecipe.addEventListener('click', () => {
-
     addRecipeToLocalStorage(urlParams);
+    const local = getData('Recipe');
+    console.log(local);
+    const countBasketRecipePInnerText = local.length;
+    countBasketRecipeP.innerText = countBasketRecipePInnerText.toString();
+
 
 });
 
 const addTryAgain = () => {
+
     const tryAgain = document.querySelector(".try-again");
-
-    if (pageIsFluke) {
-
-        tryAgain.addEventListener('click', () => {
+    tryAgain.addEventListener('click', () => {
+        if (window.location.href.match('/users/happines')) {
+            const btnAdd = document.querySelector('#favorite');
+            const btnAdd2 = document.querySelector('#favorite2');
+            btnAdd.disabled = false;
+            btnAdd.style.visibility = '';
+            btnAdd2.style.visibility = 'hidden';
+            btnAdd2.disabled = false;
             downloadSuitableApi(urlParams);
             removalAddedElementsToHtml();
-        });
-    } else if (!pageIsFluke) {
-        tryAgain.style.visibility = "hidden";
-    }
+        } else {
+            downloadSuitableApi(urlParams);
+            removalAddedElementsToHtml();
+        }
+    });
 }
 
 addTryAgain();
