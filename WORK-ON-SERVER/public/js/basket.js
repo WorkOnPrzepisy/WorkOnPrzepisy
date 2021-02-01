@@ -133,30 +133,7 @@ const countArrWthMealsBasket = () => {
     const arrWithMeals = addDataFromLocalStorageBasket();
     const copyArrWithMeals = JSON.parse(JSON.stringify(arrWithMeals));
 
-
-    for (let i = 0; i < copyArrWithMeals.length; i++) {
-        let arrWithCountMeals = [];
-        copyArrWithMeals[i].countMeal = (copyArrWithMeals[i].countMeal ? copyArrWithMeals[i].countMeal : 1);
-        for (let j = i; j < copyArrWithMeals.length; j++) {
-
-
-            if (copyArrWithMeals[i].idMeals === copyArrWithMeals[j].idMeals) {
-                copyArrWithMeals[i].countMeal += 1;
-                copyArrWithMeals[i].countMeal - 1;
-                arrWithCountMeals.push(j);
-            }
-        }
-
-        copyArrWithMeals[i].countMeal -= 1;
-
-        for (let i = arrWithCountMeals.length - 1; i > 0; i--) {
-            copyArrWithMeals.splice(arrWithCountMeals[i], 1);
-        }
-    }
-
-    storeDataBasket("Recipe", copyArrWithMeals)
-
-    return copyArrWithMeals;
+    return arrWithMeals;
 }
 
 const addItemHTMLBasket = () => {
@@ -221,6 +198,10 @@ const selectBasketBasket = (key, getTabeWithData) => {
     storeDataBasket(key, getTabeWithData);
     const removeTbody = document.querySelectorAll('.tbody-table-1 tr');
     removeItemHtmlBasket(removeTbody);
+    const local = getData('Recipe');
+    console.log(local);
+    const countBasketRecipePInnerText = local.length;
+    countBasketRecipeP.innerText = countBasketRecipePInnerText.toString();
     addItemHTMLBasket();
 }
 
@@ -237,6 +218,7 @@ removeIconButtonTbodyBasket.addEventListener('click', (e) => {
         const key = "Recipe";
 
         selectBasketBasket(key, getTabeWithData);
+
     }
 })
 
@@ -324,7 +306,6 @@ removeIconButtonTbodyBasket.addEventListener('click', (e) => {
 
 const getIngredientsBasket = async(idMeal) => {
 
-    const tabApi = [];
     const tabDb = [];
     if (idMeal.length > 6) {
 
