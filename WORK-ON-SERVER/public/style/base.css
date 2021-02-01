@@ -417,10 +417,10 @@
         -webkit-transform: rotate(-45deg) translateY(-13px);
         transform: rotate(-45deg) translateY(-13px);
     }
-    .footer {
+    .container .footer {
         padding: 10px;
         -ms-flex-pack: distribute;
-        justify-content: space-around;
+        justify-content: space-evenly;
     }
     .footer .footer-nav {
         display: none;
