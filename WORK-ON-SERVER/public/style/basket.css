@@ -31,7 +31,6 @@ body {
 .slide4,
 .slide5 {
     background: url("../img/flukeBanner.jpg");
-    background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: multiply;
     background-size: cover;
     background-position: center;
