@@ -11,46 +11,34 @@ const urlParams = Object.fromEntries(new URLSearchParams(document.location.searc
 const downloadApi = async(api, random) => {
     apiDownoand = await (await fetch(api)).json();
     if (random) {
-        const idMeal = await apiDownoand[0]._id;
-        const idObj = { _id: idMeal };
-        const btnAdd = document.querySelector('#favorite');
-        const btnAdd2 = document.querySelector('#favorite2');
-        btnAdd.addEventListener('click', async function(e) {
-            btnAdd.disabled = true;
-            btnAdd.style.visibility = 'hidden';
-            btnAdd2.style.visibility = '';
-            btnAdd2.disabled = true;
-            await fetch('/users/user-images', {
-                method: 'POST', // or 'PUT'
-                body: JSON.stringify(idObj),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-
-        });
         return apiDownoand[0];
     } else {
-        const idMeal = await apiDownoand._id;
-        const idObj = { _id: idMeal };
-        const btnAdd = document.querySelector('#favorite');
-        const btnAdd2 = document.querySelector('#favorite');
-        btnAdd.addEventListener('click', async function(e) {
-            await fetch('/users/user-images', {
-                method: 'POST', // or 'PUT'
-                body: JSON.stringify(idObj),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-            btnAdd.disabled = true;
-            btnAdd.style.visibility = 'hidden';
-            btnAdd2.style.visibility = '';
-            btnAdd2.disabled = true;
-        });
         return apiDownoand;
     }
 };
+
+const btnAdd = document.querySelector('#favorite');
+const btnAdd2 = document.querySelector('#favorite2');
+
+btnAdd.addEventListener('click', async() => {
+    if (!window.location.href.match('db_id')) {
+        const idMeal = await apiDownoand._id;
+        const idObj = { _id: idMeal };
+        btnAdd.disabled = true;
+        btnAdd.style.visibility = 'hidden';
+        btnAdd2.style.visibility = '';
+        await fetch('/users/user-images', {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(idObj),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+    }
+
+})
+
+const addToFavorites = () => {}
 
 const downloadDb = async db_id => {
     const query = new URLSearchParams({ db_id });
@@ -132,7 +120,9 @@ const another = async(params) => {
     const btnDATA2 = document.querySelector('#favorite2');
 
     btnDATA.addEventListener('click', async function(e) {
-
+        btnDATA.disabled = true;
+        btnDATA.style.visibility = 'hidden';
+        btnDATA2.style.visibility = '';
         await fetch('/userek/fave', {
             method: 'POST',
             body: JSON.stringify({ id: idImage }),
@@ -140,9 +130,7 @@ const another = async(params) => {
                 "Content-Type": "application/json"
             }
         });
-        btnDATA.disabled = true;
-        btnDATA.style('visibility: hidden;');
-        btnDATA2.style('visibility:')
+
     })
 
 }
@@ -204,12 +192,9 @@ const buttonFluke = document.querySelector("#button-draw-recipe");
 
 buttonFluke.addEventListener("click", () => {
     if (window.location.href.match('/users/happines')) {
-        const btnAdd = document.querySelector('#favorite');
-        const btnAdd2 = document.querySelector('#favorite2');
         btnAdd.disabled = false;
         btnAdd.style.visibility = '';
         btnAdd2.style.visibility = 'hidden';
-        btnAdd2.disabled = false;
         downloadSuitableApi(urlParams);
         removalAddedElementsToHtml();
     } else {
@@ -241,7 +226,6 @@ const generateInstructions = (doc, instructions) => {
     const instructionsS = instructions.split('<br>');
     const instructionsSAdd = instructionsS.join(" ");
     const instructionsAr = instructionsSAdd.split(' ');
-    console.log(instructionsAr);
     const instructionsArLength = instructionsAr.length;
     let start = 0;
     let multiple = 80;
@@ -251,11 +235,8 @@ const generateInstructions = (doc, instructions) => {
     for (let i = 0; i < instructionsArLength; i++) {
         if (start <= multiple) {
             arrayWithString += ` ${instructionsAr[i]}`;
-            console.log(arrayWithString);
             start += instructionsAr[i].length + 1;
-            console.log(start, multiple);
         } else {
-            console.log("2", arrayWithString);
             doc.text(20, j, `${arrayWithString}`);
             arrayWithString = '';
 
@@ -396,7 +377,6 @@ const addRecipeToLocalStorage = (params) => {
 iconAddRecipe.addEventListener('click', () => {
     addRecipeToLocalStorage(urlParams);
     const local = getData('Recipe');
-    console.log(local);
     const countBasketRecipePInnerText = local.length;
     countBasketRecipeP.innerText = countBasketRecipePInnerText.toString();
 
@@ -408,12 +388,9 @@ const addTryAgain = () => {
     const tryAgain = document.querySelector(".try-again");
     tryAgain.addEventListener('click', () => {
         if (window.location.href.match('/users/happines')) {
-            const btnAdd = document.querySelector('#favorite');
-            const btnAdd2 = document.querySelector('#favorite2');
             btnAdd.disabled = false;
             btnAdd.style.visibility = '';
             btnAdd2.style.visibility = 'hidden';
-            btnAdd2.disabled = false;
             downloadSuitableApi(urlParams);
             removalAddedElementsToHtml();
         } else {
