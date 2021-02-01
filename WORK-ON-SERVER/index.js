@@ -43,8 +43,7 @@ app.use(flash())
 
 
 const store = new MongoDBStore({
-   uri: 'mongodb://127.0.0.1:27017/',
-   // uri: 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority',
+   uri: 'mongodb://127.0.0.1:27017/', 
    collection: 'mySessions'
 });
 
@@ -104,7 +103,6 @@ app.get("/users/home", async (req, res) => {
       });
    } catch (error) {
       console.log(error);
-      // res.render('error', { message: "dupa"})
    }
 });
 

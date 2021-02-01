@@ -1,13 +1,10 @@
 // const dbConnect =require("dotenv").config();
 const { connect } = require("mongoose");
 
-<<<<<<< HEAD
+
 // const uri = 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority'
-const uri = 'mongodb://127.0.0.1:27017/'
-=======
-const uri = 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority'
-    // const uri = 'mongodb://127.0.0.1:27017/'
->>>>>>> e91ca22b0856ca023b255a6a60b0e8b9eefe4536
+    const uri = 'mongodb://127.0.0.1:27017/'
+
 
 
 
