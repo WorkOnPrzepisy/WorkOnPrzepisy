@@ -240,16 +240,25 @@ const generateListIngredientsPdf = (doc, margin, recipe) => {
 const generateInstructions = (doc, instructions) => {
     const instructionsS = instructions.split('<br>');
     const instructionsSAdd = instructionsS.join(" ");
-    const lengthArrayInstructions = instructionsSAdd.length;
+    const instructionsAr = instructionsSAdd.split(' ');
+    console.log(instructionsAr);
+    const instructionsArLength = instructionsAr.length;
     let start = 0;
     let multiple = 80;
     let j = 210;
+    let arrayWithString = '';
 
-    for (let i = 0; i < lengthArrayInstructions; i++) {
-        if (i === multiple) {
-            const arrayWithString = instructionsSAdd.substring(start, i);
+    for (let i = 0; i < instructionsArLength; i++) {
+        if (start <= multiple) {
+            arrayWithString += ` ${instructionsAr[i]}`;
+            console.log(arrayWithString);
+            start += instructionsAr[i].length + 1;
+            console.log(start, multiple);
+        } else {
+            console.log("2", arrayWithString);
             doc.text(20, j, `${arrayWithString}`);
-            start = i;
+            arrayWithString = '';
+
             multiple += 80;
             j += 10;
         }
@@ -258,7 +267,6 @@ const generateInstructions = (doc, instructions) => {
             j = 20;
         }
     }
-    const arrayWithString = instructionsSAdd.substring(start);
     doc.text(20, j, `${arrayWithString}`);
 }
 
