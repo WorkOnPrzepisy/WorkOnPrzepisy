@@ -17,9 +17,7 @@ const getData = (key) => {
 
 const displayBasket = () => {
     const local = getData('Recipe');
-    console.log(local);
     const countBasketRecipePInnerText = local.length;
-    console.log(local.length);
     countBasketRecipeP.innerText = countBasketRecipePInnerText.toString();
 }
 

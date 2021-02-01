@@ -199,7 +199,6 @@ const selectBasketBasket = (key, getTabeWithData) => {
     const removeTbody = document.querySelectorAll('.tbody-table-1 tr');
     removeItemHtmlBasket(removeTbody);
     const local = getData('Recipe');
-    console.log(local);
     const countBasketRecipePInnerText = local.length;
     countBasketRecipeP.innerText = countBasketRecipePInnerText.toString();
     addItemHTMLBasket();
@@ -339,11 +338,9 @@ const getIngredientsBasket = async(idMeal) => {
 }
 
 const splitIngredientsBasket = (tabWithIngredients) => {
-    console.log("split", tabWithIngredients);
     const regex = /[^0-9]/i;
     let tabWithIngred = [];
     for (let i = 0; i < tabWithIngredients.length; i++) {
-        console.log("co to", tabWithIngredients[i]);
         let meal = {
             measure: '',
             ingredient: ''
@@ -629,10 +626,10 @@ buttonGenerateShoppingListBasket.addEventListener('click', () => {
 })
 
 const hiddenSlider = () => {
-    if (window.location.href.match('/users/basket')) {
-        const btnAdd = document.querySelectorAll('.slider-container');
-        btnAdd[1].style.display = 'none';
+        if (window.location.href.match('/users/basket')) {
+            //const btnAdd = document.querySelectorAll('.slider-container');
+            //btnAdd[1].style.display = 'none';
+        }
     }
-}
-hiddenSlider();
+    //hiddenSlider();
 addItemHTMLBasket();
