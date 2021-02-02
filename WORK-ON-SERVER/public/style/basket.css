@@ -390,7 +390,7 @@ button:focus {
     background-color: rgba(255, 249, 235, 1);
     width: 320px;
     height: 150px;
-    margin: 30% auto 20% auto;
+    margin: 20% auto 20% auto;
     display: flex;
     align-items: center;
     justify-content: center;

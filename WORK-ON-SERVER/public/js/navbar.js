@@ -16,9 +16,15 @@ const getData = (key) => {
 }
 
 const displayBasket = () => {
+    countBasketRecipeP = document.querySelector('#countBasketRecipeP');
     const local = getData('Recipe');
-    const countBasketRecipePInnerText = local.length;
-    countBasketRecipeP.innerText = countBasketRecipePInnerText.toString();
+    if (local === null) {
+        countBasketRecipeP.innerText = 0;
+    } else {
+        const countBasketRecipePInnerText = local.length;
+        countBasketRecipeP.innerText = countBasketRecipePInnerText.toString();
+    }
+
 }
 
 displayBasket();

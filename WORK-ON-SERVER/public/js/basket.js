@@ -275,8 +275,10 @@ removeIconButtonTbodyBasket.addEventListener('click', (e) => {
             const buttonDelete = modal.querySelector('.button-delete');
 
             buttonCancel.addEventListener('click', () => {
+                console.log("dodaj");
                 arrWithCountMeals[nrIndexTab].countMeal += 1;
                 modal.style.display = 'none';
+                selectBasketBasket(key, arrWithCountMeals);
 
             })
             buttonDelete.addEventListener('click', () => {
