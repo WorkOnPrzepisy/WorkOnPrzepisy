@@ -20,7 +20,7 @@ const mongoose = require('mongoose')
 const User = require('./models/User')
 const MongoDBStore = require('connect-mongodb-session')(session);
 
-const Port = 7005;
+const Port = 7000;
 const app = express();
 const nodeFetch = require('./node-fetch')
 const nodeFetchApiName = require('./nodeFetchApi');
@@ -45,7 +45,8 @@ app.use(flash())
 
 
 const store = new MongoDBStore({
-    uri: 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority',
+   //  uri: 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority',
+   uri: 'mongodb://127.0.0.1:27017/',
     collection: 'mySessions'
 });
 

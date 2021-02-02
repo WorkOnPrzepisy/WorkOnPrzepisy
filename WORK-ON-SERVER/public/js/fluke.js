@@ -1,6 +1,6 @@
 const jsPdf = window.jspdf;
 
-const apiMeal = "http://localhost:7005/meals/";
+const apiMeal = "http://localhost:7000/meals/";
 let idMealPage = '';
 
 let apiDownoand;
