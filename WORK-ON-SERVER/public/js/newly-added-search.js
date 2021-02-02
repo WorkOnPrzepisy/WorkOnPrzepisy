@@ -43,7 +43,9 @@ formId.addEventListener('submit', async function (e) {
                      <h3 id='dish-name1'>${name}</h3>
                   </div> 
                   <div class="image-content" id='new-image'>
-                     <img src="data:image/png;base64,${imgData}" height='300px' width='300px' alt=""> 
+                     <img 
+                     id='new-image-content'
+                      src="data:image/png;base64,${imgData}" height='300px' width='300px' alt=""> 
                   </div>
                   <div class="buttonn">
                      <a href="/fluke?db_id=${_id}" class="btn-verify">
