@@ -20,7 +20,7 @@ const mongoose = require('mongoose')
 const User = require('./models/User')
 const MongoDBStore = require('connect-mongodb-session')(session);
 
-const Port =  7000;
+const Port =  7005;
 const app = express();
 const nodeFetch = require('./node-fetch')
 const nodeFetchApiName = require('./nodeFetchApi');
@@ -217,6 +217,9 @@ app.post('/users/favorites', async (req, res) => {
    const {
       name
    } = await req.body
+
+   // const firstLetterCapitalize = name.charAt(0).toUpperCase() + name.slice(1);
+
    const userId = req.session.user
    const loggedUser = await User.find(userId).exec()
    const imgFavorites = loggedUser[0].favorites
@@ -237,7 +240,7 @@ app.post('/users/favorites', async (req, res) => {
          img: name.images.strMealThumb
       }
    }) 
-   console.log(dataBaseResultsName);
+   
 
    // API NAME RESULTS []
    const apiFetchResult = await nodeFetchApiName(faveIdNum)
@@ -260,11 +263,12 @@ app.post('/users/favorites', async (req, res) => {
                   },
                    
                }
-               return img 
-
+               return img  
+               
             }
          }
       }
+      
    }
    const apiName = (array, strName) => {
 

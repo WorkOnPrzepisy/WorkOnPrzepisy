@@ -26,6 +26,10 @@ body {
 
 .form-container{ 
    width: 400px;
+} 
+
+#imgAdd{ 
+   object-fit: cover;
 }
 
 

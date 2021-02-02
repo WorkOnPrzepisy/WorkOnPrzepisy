@@ -168,7 +168,9 @@ router.post('/login', async (req, res, next) => {
       else {
        const isMatch = await bcrypt.compare(password, user.password);
        if(!isMatch){ 
-        return res.redirect("/users/login")
+          req.flash('error', 'Incorrrect Password')
+          res.redirect("/users/login")
+
      }
       else {
          req.session.user = user._id
