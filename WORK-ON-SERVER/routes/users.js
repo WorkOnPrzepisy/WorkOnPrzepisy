@@ -182,14 +182,12 @@ router.post('/login', async (req, res, next) => {
    } catch (error) {
       console.log(error)
    }
- });
- 
- 
- router.get('/logout', (req,res)=>{ 
-    req.flash('success_msg', 'You are logged out')
-    res.redirect("/users/login")
+});
+router.get('/logout', (req,res)=>{ 
+   req.flash('success_msg', 'You are logged out')
+   res.redirect("/users/login")
    //  req.logout()
- }) 
+}) 
 
 
 
