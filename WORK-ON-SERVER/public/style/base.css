@@ -397,8 +397,8 @@
         margin-left: 0px;
     }
     .container .nav.active {
-        max-height: 310px;
-        min-height: 310px;
+        max-height: 360px;
+        min-height: 360px;
     }
     .container .nav.active .nav-links {
         display: -webkit-box;
