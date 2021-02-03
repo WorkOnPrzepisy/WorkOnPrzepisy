@@ -4,9 +4,9 @@ Welcome to EatMe! Our website will help you to find new, delicious recepies. Sta
 
 # Creators
 
-Jakub Żyła
-Kamila Liśkiewicz
-[Damian Tułacz](https://www.linkedin.com/in/damiant94/)
+Jakub Żyła\
+Kamila Liśkiewicz\
+[Damian Tułacz](https://www.linkedin.com/in/damiant94/)\
 Paulina Lewandowska
 
 # Demo
