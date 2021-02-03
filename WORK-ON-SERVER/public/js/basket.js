@@ -74,11 +74,20 @@ const addElementInTableHtmlBasket = (i, idMeal, title, count) => {
     tdcol2h4.innerText = title;
     const aElement = document.createElement('a');
     aElement.classList.add('aElementTitle');
-    if (idMeal.length > 6) {
-        aElement.href = `/fluke?db_id=${idMeal}`;
+    if (window.location.href.match('/users')) {
+        if (idMeal.length > 6) {
+            aElement.href = `/users/happines?db_id=${idMeal}`;
+        } else {
+            aElement.href = `/users/happines?api_id=${idMeal}`;
+        }
     } else {
-        aElement.href = `/fluke?api_id=${idMeal}`;
+        if (idMeal.length > 6) {
+            aElement.href = `/fluke?db_id=${idMeal}`;
+        } else {
+            aElement.href = `/fluke?api_id=${idMeal}`;
+        }
     }
+
 
 
     aElement.appendChild(tdcol2h4)
