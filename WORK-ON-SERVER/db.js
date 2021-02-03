@@ -2,7 +2,8 @@
 const { connect } = require("mongoose");
 
 
-const uri = 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority'
+const uri = 'mongodb+srv://WorkOnPrzepisy:2021WorkOnFrontend@cluster0.pmwld.mongodb.net/eatme?retryWrites=true&w=majority'
+// const uri = 'mongodb+srv://damiant94:dtHasSQnmbgPzNsU@cluster0.haa8v.mongodb.net/<dbname>?retryWrites=true&w=majority'
     // const uri = 'mongodb://127.0.0.1:27017/'
 
 
