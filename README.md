@@ -11,5 +11,5 @@ Paulina Lewandowska
 
 # Demo
 
-[https://eatme.fork-on.ovh/](https://eatme.fork-on.ovh/) (deploying in progress...)
+[https://eatme.fork-on.ovh/](https://eatme.fork-on.ovh/)
 
